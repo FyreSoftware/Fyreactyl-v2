@@ -11,9 +11,8 @@ Mono repository with NestJS and React with business logic and separated componen
 So, the repository has 4 parts:
 
 - `client` A React application.
-- `components` Graphics components used in `client`. The package has hot reload.
+- `common` Logic shared between client and server.
 - `NestJS` The NestJS application.
-- `business-logic` Logic shared between client and server. The package has hot reload.
 
 ## How to start it
 
