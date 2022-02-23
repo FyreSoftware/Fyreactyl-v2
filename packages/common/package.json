@@ -1,0 +1,25 @@
+{
+  "name": "@fyreactyl/common",
+  "version": "0.1.0",
+  "description": "Connects the api with the client",
+  "author": "Tovade",
+  "homepage": "",
+  "license": "Apache-2.0",
+  "main": "dist/index.js",
+  "source": "src/index.ts",
+  "directories": {
+    "lib": "lib",
+    "test": "tests"
+  },
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "build": "microbundle-crl --no-compress --format modern,cjs",
+    "start": "microbundle-crl watch --no-compress --format modern,cjs",
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "dependencies": {
+    "microbundle": "^0.13.0"
+  }
+}

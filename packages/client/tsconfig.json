@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "incremental": true,
+    "noEmit": true,
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true, // set to true (requirement for SWC / babel)
+    "module": "esnext", // set to esnext (for dynamic import() support)
+    "moduleResolution": "node", // set to node (to match webpack resolution)
+    "resolveJsonModule": true, // set to true (to match webpack resolution)
+    "isolatedModules": true, // set to true (requirement for SWC / babel)
+    "jsx": "preserve", // next.js implements its own optimized jsx transform
+    "baseUrl": ".", // need adjustment when using absolute import
+    "paths": {
+      "@/components/*": ["./components/*"],
+      "@/libraries/*": ["./libraries/*"],
+      "@/styles/*": ["./styles/*"],
+      "~/*": ["./public/*"]
+    }
+  },
+  "moduleResolution": ["node_modules", ".next", "node"],
+  "include": ["next-env.d.ts", "next-modules.d.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
+}
