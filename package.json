@@ -2,14 +2,14 @@
   "name": "root",
   "private": true,
   "workspaces": [
-    "packages/**"
+    "packages/**",
+    "apps/**"
   ],
   "devDependencies": {
     "concurrently": "^7.0.0",
-    "lerna": "^3.22.1",
     "typescript": "^4.1.3"
   },
   "scripts": {
-    "dev": "yarn run concurrently \"yarn workspace @fyreactyl/client dev\" \"yarn workspace @fyreactyl/server dev\""
+    "dev": "yarn run concurrently \"yarn workspace @root/client dev\" \"yarn workspace @root/server dev\""
   }
 }
