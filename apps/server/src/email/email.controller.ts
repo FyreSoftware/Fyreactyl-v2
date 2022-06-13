@@ -65,7 +65,10 @@ export class EmailController {
   @ApiOperation({
     summary: 'Send Confirmation Email Callback - Activate User Email',
   })
-  @ApiResponse({ status: 200, description: '{success: true, message: result.response.message}' })
+  @ApiResponse({
+    status: 200,
+    description: '{success: true, message: result.response.message}',
+  })
   @Get('/activateEmail')
   async activateEmail(@Query() query, @Request() req, @Response() res) {
     // 1. Check if there is "userId" query in the URL
@@ -88,7 +91,9 @@ export class EmailController {
           { displayName: resp.response.user.displayName },
           resp.response.user.email,
         );
-        res.status(HttpStatus.OK).redirect(`${process.env.CLIENT_SIDE_URL}/profile`);
+        res
+          .status(HttpStatus.OK)
+          .redirect(`${process.env.CLIENT_SIDE_URL}/profile`);
       } else {
         throw resp;
       }
@@ -100,7 +105,8 @@ export class EmailController {
   @ApiOperation({ summary: 'Sending out Reset Password Email' })
   @ApiResponse({
     status: 200,
-    description: '{ success: true,  message: "Please check your email for link to reset password!"}',
+    description:
+      '{ success: true,  message: "Please check your email for link to reset password!"}',
   })
   @Post('/resetPassword')
   async sendResetPasswordEmail(
@@ -130,7 +136,7 @@ export class EmailController {
           );
           // 2. Send a reset_password email to user with link to reset password
           if (et) {
-            await this.emailService
+            /* await this.emailService
               .sendEmail({
                 from: `Huyen from Mern Temp <${process.env.EMAIL_ADDRESS_FROM}>`,
                 to: [user.email],
@@ -150,6 +156,7 @@ export class EmailController {
                   message: 'Something went wrong. Please try again later!',
                 });
               });
+              */
           }
         } catch (err) {
           res.status(HttpStatus.BAD_REQUEST).json({
@@ -176,7 +183,10 @@ export class EmailController {
    * Reset User password
    */
   @ApiOperation({ summary: 'Reset Password ' })
-  @ApiResponse({ status: 200, description: '{success: true, message: resp.response.message}' })
+  @ApiResponse({
+    status: 200,
+    description: '{success: true, message: resp.response.message}',
+  })
   @Post('/resetPassword/password')
   async resetPassword(
     @Param() params,
@@ -193,13 +203,15 @@ export class EmailController {
         resetPasswordDto.email,
       );
       if (resp.success) {
-        res.status(HttpStatus.OK).json({success: true, message: resp.response.message});
+        res
+          .status(HttpStatus.OK)
+          .json({ success: true, message: resp.response.message });
         return;
       }
-      
+
       res
         .status(HttpStatus.BAD_REQUEST)
-        .json({sucess: false, message: resp.response.message });
+        .json({ sucess: false, message: resp.response.message });
       return;
     }
     // 3. If not, send res with code of 400

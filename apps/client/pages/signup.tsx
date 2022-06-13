@@ -1,19 +1,19 @@
-import React, { CSSProperties } from 'react';
-import Head from 'next/head';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
-import Link from 'next/link';
-import Router from 'next/router';
-import * as classes from '../lib/styles/styles';
-import LoadingBar from '../components/LoadingBar';
-import auth from '../lib/api/authApi';
-import { notify } from '../components/Notifier';
-import withAuth from '../lib/withAuth';
+import React, { CSSProperties } from "react";
+import Head from "next/head";
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import TextField from "@material-ui/core/TextField";
+import Link from "next/link";
+import Router from "next/router";
+import * as classes from "../lib/styles/styles";
+import LoadingBar from "../components/LoadingBar";
+import auth from "../lib/api/authApi";
+import { notify } from "../components/Notifier";
+import withAuth from "../lib/withAuth";
 
 type SignupState = {
   signUpInProgress: boolean;
@@ -34,11 +34,11 @@ class SignUp extends React.Component<{}, SignupState> {
       signUpInProgress: false,
       shouldRedirect: false,
       user: {
-        firstName: '',
-        lastName: '',
-        username: '',
-        password: '',
-        email: '',
+        firstName: "",
+        lastName: "",
+        username: "",
+        password: "",
+        email: "",
       },
       error: {},
     };
@@ -49,7 +49,7 @@ class SignUp extends React.Component<{}, SignupState> {
 
   handleOnChange = (e) => {
     const { name } = e.target;
-    console.log('name', name);
+    console.log("name", name);
     const user = { ...this.state.user };
     user[name] = e.target.value;
     this.setState({ user, error: {} });
@@ -57,25 +57,25 @@ class SignUp extends React.Component<{}, SignupState> {
 
   isValid = () => {
     if (!this.state.user.username) {
-      this.setState({ error: { username: 'Username is Required.' } });
+      this.setState({ error: { username: "Username is Required." } });
       return false;
     }
     if (!this.state.user.email) {
-      this.setState({ error: { email: 'Email is Required.' } });
+      this.setState({ error: { email: "Email is Required." } });
       return false;
     }
     if (!this.state.user.password) {
-      this.setState({ error: { password: 'Password is Required.' } });
+      this.setState({ error: { password: "Password is Required." } });
       return false;
     }
     if (!(this.state.user.password.length >= 8)) {
       this.setState({
-        error: { password: 'Invalid Password. Please try again!' },
+        error: { password: "Invalid Password. Please try again!" },
       });
       return false;
     }
     if (!this.state.user.email.trim().match(/.+@.+\..+/)) {
-      this.setState({ error: { email: 'Invalid Email. Please try agains!' } });
+      this.setState({ error: { email: "Invalid Email. Please try agains!" } });
       return false;
     }
     this.setState({ error: {} });
@@ -108,18 +108,32 @@ class SignUp extends React.Component<{}, SignupState> {
     return (
       <div>
         <Head>
-          <title> Sign Up</title>
-          <meta name='description' content='This is the Sign Up page' />
+          <title>Sign Up</title>
+          <meta name="description" content="This is the Sign Up page" />
         </Head>
-        <Grid container spacing={3} justify='center' style={classes.container}>
-          <Grid item sx={10} sm={8} md={4}>
-            <Card variant='outlined' style={classes.card as CSSProperties}>
-              <CardContent>
+        <Grid
+          container
+          spacing={3}
+          justifyContent="center"
+          alignItems="center"
+          alignContent="center"
+          style={classes.container}
+        >
+          <Grid item xs={10} sm={8} md={4}>
+            <Card variant="outlined" style={classes.card}>
+              <CardContent
+                style={{
+                  display: "grid",
+                  justifyContent: "center",
+                  justifyItems: "center",
+                  alignItems: "center",
+                }}
+              >
                 <Typography
-                  color='secondary'
-                  align='center'
-                  variant='h5'
-                  component='h2'
+                  color="secondary"
+                  align="center"
+                  variant="h5"
+                  component="h2"
                 >
                   Sign Up
                 </Typography>
@@ -128,60 +142,60 @@ class SignUp extends React.Component<{}, SignupState> {
                 <br />
                 <br />
                 <Button
-                  variant='contained'
+                  variant="contained"
                   style={{
                     ...classes.oAuthLoginBtn,
-                    backgroundColor: '#f50057',
-                    color: '#fff',
+                    backgroundColor: "#f50057",
+                    color: "#fff",
                   }}
-                  href='http://localhost:3000/auth/google'
+                  href="http://localhost:3000/auth/google"
                 >
-                  Login with Google
+                  Sign up with Google
                 </Button>
                 <br />
                 <br />
-                <Typography align='center' variant='h6'>
+                <Typography align="center" variant="h6">
                   OR
                 </Typography>
-                <Typography align='center' variant='h6'>
+                <Typography align="center" variant="h6">
                   Register a New Account
                 </Typography>
                 <TextField
-                  name='firstName'
+                  name="firstName"
                   value={this.state.user.firstName}
                   onChange={this.handleOnChange}
-                  label='First Name'
-                  margin='normal'
+                  label="First Name"
+                  margin="normal"
                   style={classes.textField}
                 />
                 <TextField
-                  name='lastName'
+                  name="lastName"
                   value={this.state.user.lastName}
                   onChange={this.handleOnChange}
-                  label='Last Name'
-                  margin='normal'
+                  label="Last Name"
+                  margin="normal"
                   style={classes.textField}
                 />
                 <TextField
-                  name='username'
+                  name="username"
                   value={this.state.user.username}
                   onChange={this.handleOnChange}
-                  label='User Name'
-                  margin='normal'
+                  label="User Name"
+                  margin="normal"
                   style={classes.textField}
                   helperText={
                     this.state.error.username
                       ? this.state.error.username
-                      : 'Username is Required'
+                      : "Username is Required"
                   }
                   error={!!this.state.error.username}
                 />
                 <TextField
-                  name='password'
+                  name="password"
                   value={this.state.user.password}
                   onChange={this.handleOnChange}
-                  label='Password'
-                  margin='normal'
+                  label="Password"
+                  margin="normal"
                   style={classes.textField}
                   helperText={
                     this.state.error.password
@@ -192,34 +206,34 @@ class SignUp extends React.Component<{}, SignupState> {
                   error={!!this.state.error.password}
                 />
                 <TextField
-                  name='email'
+                  name="email"
                   value={this.state.user.email}
                   onChange={this.handleOnChange}
-                  label='Email'
-                  margin='normal'
+                  label="Email"
+                  margin="normal"
                   style={classes.textField}
                   helperText={
                     this.state.error.email
                       ? this.state.error.email
-                      : 'Email is Required. Email should be like abc@example.com'
+                      : "Email is Required. Email should be like abc@example.com"
                   }
                   error={!!this.state.error.email}
                 />
               </CardContent>
               <CardActions>
                 <Button
-                  variant='contained'
-                  color='secondary'
-                  size='large'
-                  style={{ margin: '0 auto' }}
+                  variant="contained"
+                  color="secondary"
+                  size="large"
+                  style={{ margin: "0 auto" }}
                   onClick={this.handleSubmit}
                 >
                   Submit
                 </Button>
               </CardActions>
               <p>
-                Already An User?{' '}
-                <Link href='/login'>
+                Already An User?{" "}
+                <Link href="/login">
                   <a>Log In</a>
                 </Link>
               </p>

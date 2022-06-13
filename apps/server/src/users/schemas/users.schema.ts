@@ -12,11 +12,11 @@ export class User {
   OAuthId: string;
 
   @Prop({
+    required: true,
     trim: true,
-    unique: 'Email already exists',
-    match: [/.+@.+\..+/, 'Please enter valid email address'],
+    unique: true,
+    match: /.+@.+\..+/,
   })
-  @Prop({ required: true, unique: true })
   email: string;
 
   @Prop({ default: false })

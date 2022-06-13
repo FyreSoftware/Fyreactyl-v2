@@ -5,7 +5,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { PassportLocalModel } from 'mongoose';
 import { UsersService } from '../../users/users.service';
 
-require('dotenv').config();
+require('dotenv').config({ path: '../../.env' });
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {

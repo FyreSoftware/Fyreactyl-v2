@@ -1,17 +1,30 @@
-import React from 'react';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import { InputLabel } from '@material-ui/core';
+import React from "react";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import { InputLabel } from "@material-ui/core";
 
-class UploadImageForm extends React.Component {
+type CustomProps = {
+  openImage: any;
+  handleClose: any;
+  uploadImage: any;
+};
+
+class UploadImageForm extends React.Component<CustomProps> {
+  constructor(props: CustomProps) {
+    super({
+      openImage: props.openImage,
+      handleClose: props.handleClose,
+      uploadImage: props.uploadImage,
+    });
+  }
   state = {
-    file: '',
-    fileName: '',
-    error: '',
+    file: "",
+    fileName: "",
+    error: "",
   };
 
   handleOnChange = (e) => {
@@ -25,9 +38,9 @@ class UploadImageForm extends React.Component {
     if (this.isValid()) {
       this.props.uploadImage(this.state.file, this.state.fileName);
       this.setState({
-        file: '',
-        fileName: '',
-        error: '',
+        file: "",
+        fileName: "",
+        error: "",
       });
       this.props.handleClose();
     }
@@ -35,15 +48,15 @@ class UploadImageForm extends React.Component {
 
   isValid = () => {
     if (!this.state.fileName) {
-      this.setState({ error: 'File is Required' });
+      this.setState({ error: "File is Required" });
       return false;
     }
     const { fileName } = this.state;
-    if (!['jpg', 'jpeg', 'png', 'gif'].includes(fileName.split('.')[1])) {
-      this.setState({ error: 'jpg/jpeg/gif/png file is required. ' });
+    if (!["jpg", "jpeg", "png", "gif"].includes(fileName.split(".")[1])) {
+      this.setState({ error: "jpg/jpeg/gif/png file is required. " });
       return false;
     }
-    this.setState({ error: '' });
+    this.setState({ error: "" });
     return true;
   };
 
@@ -65,11 +78,15 @@ class UploadImageForm extends React.Component {
           <input
             type="file"
             name="imageFile"
-            style={{ margin: '20px 0' }}
+            style={{ margin: "20px 0" }}
             onChange={this.handleOnChange}
             value={this.state.fileName}
           />
-          {this.state.error ? <span style={{ color: 'red' }}>{this.state.error}</span> : <span />}
+          {this.state.error ? (
+            <span style={{ color: "red" }}>{this.state.error}</span>
+          ) : (
+            <span />
+          )}
         </DialogContent>
         <DialogActions>
           <Button onClick={this.props.handleClose} color="primary">

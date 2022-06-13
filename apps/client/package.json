@@ -1,5 +1,5 @@
 {
-  "name": "client",
+  "name": "@root/client",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -13,12 +13,12 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/styles": "^4.10.0",
     "fontsource-roboto": "^3.0.3",
-    "next": "^10.0.7",
+    "next": "^12.1.6",
     "nprogress": "^0.2.0",
     "prettier": "^2.2.1",
     "prop-types": "^15.7.2",
-    "react": "16.13.1",
-    "react-dom": "^16.13.1",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
     "react-redux": "^7.2.2",
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",

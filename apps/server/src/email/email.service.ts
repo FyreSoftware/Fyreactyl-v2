@@ -12,47 +12,12 @@ export class EmailService {
     @InjectModel('Email') private EmailTemplateModel: Model<EmailTemplate>,
   ) {}
 
-  sendEmail(options: any): Promise<any> {
-    // 1. Configure Simple Email Service using aws-sdk
-    const aws = require('aws-sdk');
-    const ses = new aws.SES({
-      apiVersion: 'latest',
-      region: process.env.AWS_REGION,
-      accessKeyId: process.env.AWS_ACCESSKEYID,
-      secretAccessKey: process.env.AWS_SECRETACCESSKEY,
-    });
-
-    // 2. The function returns a promise which will fullfill when email is sent successfully
-    return new Promise((resolve, reject) => {
-      ses.sendEmail(
-        {
-          Source: options.from,
-          Destination: {
-            ToAddresses: options.to,
-          },
-          Message: {
-            Subject: {
-              Data: options.subject,
-            },
-            Body: {
-              Html: {
-                Data: options.body,
-              },
-            },
-          },
-        },
-        (err, info) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve(info);
-          }
-        },
-      );
-    });
+  sendEmail(options: any): void {
+    //TODO: WRITE EMAIL SENDER
   }
 
   async insertEmailTemplate(): Promise<void> {
+    //TODO: REWRIE EMAIL TEMPLATES
     const emailTemplates = [
       {
         name: 'welcome',
@@ -88,7 +53,8 @@ export class EmailService {
     let name;
     let subject;
     let message;
-    for (const t of emailTemplates) { //eslint-disable-line
+    for (const t of emailTemplates) {
+      //eslint-disable-line
       // 1. Call "findOne" to find if an email template exists
       name = t.name.replace(/\n/g, ' ').replace(/[ ]/g, ' ').trim();
       message = t.message.replace(/\n/g, ' ').replace(/[ ]/g, ' ').trim();
@@ -97,7 +63,10 @@ export class EmailService {
       // 2. If it exists, use "updateOne" to update new subject or body
       if (et) {
         if (subject !== et.subject || message !== et.message) {
-          await this.EmailTemplateModel.updateOne({ _id: et._id }, { $set: { message, subject } }); //eslint-disable-line
+          await this.EmailTemplateModel.updateOne(
+            { _id: et._id },
+            { $set: { message, subject } },
+          ); //eslint-disable-line
         }
       }
       // 3. If not, use "create" to insert the new template into the DB

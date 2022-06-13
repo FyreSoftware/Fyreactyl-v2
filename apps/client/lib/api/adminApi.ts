@@ -14,7 +14,6 @@ const fetchUsers = async () => {
     if (response.status === 401) {
       authApi.clearJWT();
       const error = new Error('Unauthorized!');
-      error.success = false;
       throw error;
     }
     return await response.json();
@@ -36,7 +35,6 @@ const fetchUser = async (userId) => {
     if (response.status === 401) {
       authApi.clearJWT();
       const error = new Error('Unauthorized!');
-      error.success = false;
       throw error;
     }
     return await response.json();
@@ -61,7 +59,6 @@ const updateUser = async (user, userId) => {
     if (response.status === 401) {
       authApi.clearJWT();
       const error = new Error('Unauthorized!');
-      error.success = false;
       throw error;
     }
     return await response.json();
@@ -84,7 +81,6 @@ const deleteUser = async (userId) => {
     if (response.status === 401) {
       authApi.clearJWT();
       const error = new Error('Unauthorized!');
-      error.success = false;
       throw error;
     }
     return await response.json();
@@ -112,7 +108,6 @@ const uploadProfileImage = async (file, userId) => {
     if (response.status === 401) {
       authApi.clearJWT();
       const error = new Error('Unauthorized!');
-      error.success = false;
       throw error;
     }
     return await response.json();

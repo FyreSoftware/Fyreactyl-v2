@@ -7,7 +7,6 @@ import { JwtStrategy } from '../auth/strategies/jwt.strategy';
 import { PoliciesGuard } from './guards/casl-policy.guard';
 import { CaslAbilityFactory } from '../shared/casl/casl-ability.factory';
 import { MulterModule} from '@nestjs/platform-express';
-import multer from 'multer';
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),

@@ -1,19 +1,19 @@
-import React from 'react';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import * as classes from '../lib/styles/styles';
+import React from "react";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import * as classes from "../lib/styles/styles";
 
 class EditProfileForm extends React.Component {
   state = {
     user: {
-      firstName: this.props.user.firstName || '',
-      lastName: this.props.user.lastName || '',
-      email: this.props.user.email || '',
+      firstName: this.props.user.firstName || "",
+      lastName: this.props.user.lastName || "",
+      email: this.props.user.email || "",
     },
     error: {},
   };
@@ -27,11 +27,11 @@ class EditProfileForm extends React.Component {
 
   isValid = () => {
     if (!this.state.user.email) {
-      this.setState({ error: { email: 'Email is Required.' } });
+      this.setState({ error: { email: "Email is Required." } });
       return false;
     }
     if (!this.state.user.email.trim().match(/.+@.+\..+/)) {
-      this.setState({ error: { email: 'Invalid Email. Please try agains!' } });
+      this.setState({ error: { email: "Invalid Email. Please try agains!" } });
       return false;
     }
     this.setState({ error: {} });
@@ -44,9 +44,9 @@ class EditProfileForm extends React.Component {
       this.props.handleUpdate(this.state.user);
       this.setState({
         user: {
-          firstName: this.props.user.firstName || '',
-          lastName: this.props.user.lastName || '',
-          email: this.props.user.email || '',
+          firstName: this.props.user.firstName || "",
+          lastName: this.props.user.lastName || "",
+          email: this.props.user.email || "",
         },
       });
       this.props.handleClose();
@@ -65,7 +65,8 @@ class EditProfileForm extends React.Component {
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            To change your profile information, please fill in the form below and press Submit.
+            To change your profile information, please fill in the form below
+            and press Submit.
           </DialogContentText>
           <TextField
             name="firstName"
@@ -93,7 +94,7 @@ class EditProfileForm extends React.Component {
             helperText={
               this.state.error.email
                 ? this.state.error.email
-                : 'Email is Required. Email should be like abc@example.com'
+                : "Email is Required. Email should be like abc@example.com"
             }
             error={!!this.state.error.email}
           />

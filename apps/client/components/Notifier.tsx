@@ -38,7 +38,7 @@ export class Notifier extends React.Component {
           open={this.state.open}
           onClick={this.handleClose}
           TransitionComponent={Fade}
-          autoHideDuration={5000}
+          autoHideDuration={1000}
           message={this.state.message}
           key={Fade.name}
         />

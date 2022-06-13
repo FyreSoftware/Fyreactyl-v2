@@ -1,28 +1,27 @@
-import React from 'react';
-import Head from 'next/head';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import Router from 'next/router';
-import LoadingBar from '../components/LoadingBar';
-import * as classes from '../lib/styles/styles';
-import auth from '../lib/api/authApi';
+import React from "react";
+import Head from "next/head";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import Router from "next/router";
+import LoadingBar from "../components/LoadingBar";
+import * as classes from "../lib/styles/styles";
+import auth from "../lib/api/authApi";
 
 class OAuthRedirect extends React.Component {
-    constructor (props){
-        super(props);
-        this.state = {
-            shouldRedirect: false,
-          };
-        
-    }
- 
+  constructor(props) {
+    super(props);
+    this.state = {
+      shouldRedirect: false,
+    };
+  }
+
   componentDidMount() {
     setTimeout(() => {
       if (document.cookie) {
-        const cookie = document.cookie.split('=');
-        if (cookie[0] === 'nest-cookie') {
+        const cookie = document.cookie.split("=");
+        if (cookie[0] === "nest-cookie") {
           auth.authenticate(cookie[1], () => {
             this.setState({ shouldRedirect: true });
           });
@@ -39,7 +38,12 @@ class OAuthRedirect extends React.Component {
           <title> OAuth Redirect</title>
           <meta name="description" content="This is the OAuth Redirect page" />
         </Head>
-        <Grid container spacing={3} justify="center" style={classes.container}>
+        <Grid
+          container
+          spacing={3}
+          justifyContent="center"
+          style={classes.container}
+        >
           <Grid item sx={10} sm={8} md={4}>
             <Card variant="outlined" style={classes.card}>
               <CardContent>

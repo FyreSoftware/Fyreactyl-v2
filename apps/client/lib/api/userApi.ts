@@ -2,7 +2,7 @@ import authApi from "./authApi";
 import baseUrl from "../baseUrl";
 
 const fetchProfile = async (jwt = "") => {
-  if(!jwt){
+  if (!jwt) {
     if (authApi.isAuthenticated()) jwt = authApi.isAuthenticated();
   }
   try {
@@ -45,6 +45,7 @@ const updateProfile = async (profile) => {
       error.success = false;
       throw error;
     }
+    console.log(response.json());
     return await response.json();
   } catch (err) {
     return err;

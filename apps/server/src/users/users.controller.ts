@@ -19,7 +19,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import {Express} from "express";
+import { Express } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { UsersService } from './users.service';
@@ -31,8 +31,7 @@ import { UpdateUserDto } from '../shared/dto/updateUserDto.dto';
 import { User, Users } from './schemas/users.schema';
 import { Action } from '../shared/casl/action';
 
-
-
+require('dotenv').config({ path: '../../../.env' });
 
 @ApiTags('User CRUD Methods')
 @ApiBearerAuth()
@@ -46,7 +45,10 @@ export class UsersController {
 
   //Admin Route
   @ApiOperation({ summary: 'Fetch Users - Admin Only' })
-  @ApiResponse({ status: 200, description: '{ "success": true, "response": { "users": []}}' })
+  @ApiResponse({
+    status: 200,
+    description: '{ "success": true, "response": { "users": []}}',
+  })
   @Get()
   @UseGuards(PoliciesGuard)
   @CheckPolicies((ability: AppAbility) => ability.can(Action.Read, Users))
@@ -66,7 +68,10 @@ export class UsersController {
   }
 
   @ApiOperation({ summary: 'Fetch User Profile - Admin and User with the ID' })
-  @ApiResponse({ status: 200, description: '{ "success": true, "response": { "user": []}}' })
+  @ApiResponse({
+    status: 200,
+    description: '{ "success": true, "response": { "user": []}}',
+  })
   @Get('/profile/:id')
   @UseGuards(PoliciesGuard)
   @CheckPolicies((ability: AppAbility) => ability.can(Action.Read, User))
@@ -155,7 +160,8 @@ export class UsersController {
   @ApiOperation({ summary: 'Upload Profile Image' })
   @ApiResponse({
     status: 200,
-    description: '{sucess: true, response: {message : "Update User Profile Successfully"}',
+    description:
+      '{sucess: true, response: {message : "Update User Profile Successfully"}',
   })
   @Post('/profile/uploadImage')
   @UseGuards(PoliciesGuard)
@@ -164,7 +170,7 @@ export class UsersController {
   async uploadProfileImage(
     @Request() req,
     @Response() res,
-    @UploadedFile() file : Express.Multer.File
+    @UploadedFile() file: Express.Multer.File,
   ) {
     const img = file.filename;
     try {
@@ -175,7 +181,9 @@ export class UsersController {
         res.status(200).json(resp);
       } else throw Error(resp.response.message || 'Something went wrong');
     } catch (err) {
-      res.status(500).json({ success: false, message: err.message || err.toString() });
+      res
+        .status(500)
+        .json({ success: false, message: err.message || err.toString() });
     }
   }
 }

@@ -16,7 +16,19 @@ import ResetPassword from "../components/ResetPassword";
 import baseUrl from "../lib/baseUrl";
 import withAuth from "../lib/withAuth";
 
-class Login extends React.Component {
+class Login extends React.Component<
+  {},
+  {
+    loginInProgress: boolean;
+    shouldRedirect: boolean;
+    user: {
+      username: string;
+      password: string;
+    };
+    openResetPassword: boolean;
+    error: any;
+  }
+> {
   constructor(props) {
     super(props);
     this.state = {
@@ -69,19 +81,19 @@ class Login extends React.Component {
       try {
         this.setState({ loginInProgress: true });
         const resp = await auth.login(this.state.user);
-        if(resp.success){
+        if (resp.success) {
           document.cookie = resp.cookie;
-          if(document.cookie) {
+          if (document.cookie) {
             const token = document.cookie.split("=")[1];
             auth.authenticate(token, () => {
               this.setState({
-                shouldRedirect: true
-              })
-            })
+                shouldRedirect: true,
+              });
+            });
           }
         }
-        this.setState({ loginInProgress: false});
-        notify({message: resp.message});
+        this.setState({ loginInProgress: false });
+        notify({ message: resp.message });
       } catch (err) {
         console.log(err);
       }
@@ -93,7 +105,7 @@ class Login extends React.Component {
   };
 
   render() {
-    if(this.state.shouldRedirect) Router.push("/");
+    if (this.state.shouldRedirect) Router.push("/");
     return (
       <div>
         <Head>
@@ -101,8 +113,13 @@ class Login extends React.Component {
           <meta name="description" content="This is the Log In page" />
         </Head>
 
-        <Grid container spacing={3} justify="center" style={classes.container}>
-          <Grid item sx={10} sm={8} md={4}>
+        <Grid
+          container
+          spacing={3}
+          justifyContent="center"
+          style={classes.container}
+        >
+          <Grid item xs={10} sm={8} md={4}>
             <Card variant="outlined" style={classes.card}>
               <CardContent>
                 <Typography
@@ -184,4 +201,4 @@ class Login extends React.Component {
   }
 }
 
-export default withAuth(Login, {loginRequired: false, logoutRequired: true});
+export default withAuth(Login, { loginRequired: false, logoutRequired: true });

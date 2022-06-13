@@ -4,12 +4,11 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { EmailModule } from './email/email.module';
 
-require('dotenv').config();
+require('dotenv').config({ path: '../../.env' });
 @Module({
   imports: [
-    MongooseModule.forRoot(process.env.MONGO_URL_TEST, {
+    MongooseModule.forRoot(process.env.MONGO_URL, {
       useNewUrlParser: true,
-      useCreateIndex: true,
       useUnifiedTopology: true,
     }),
     AuthModule,

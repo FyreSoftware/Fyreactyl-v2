@@ -10,7 +10,16 @@ import * as classes from "../lib/styles/styles";
 import auth from "../lib/api/authApi";
 import { notify } from "./Notifier";
 
-class ResetPassword extends React.Component {
+class ResetPassword extends React.Component<
+  {
+    handleClose: any;
+    open: any;
+  },
+  {
+    email: string;
+    error: any;
+  }
+> {
   constructor(props) {
     super(props);
     this.state = {

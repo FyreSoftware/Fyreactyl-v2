@@ -1,30 +1,35 @@
-import React from 'react';
-import Grid from '@material-ui/core/Grid';
-import Avatar from '@material-ui/core/Avatar';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Badge from '@material-ui/core/Badge';
-import Chip from '@material-ui/core/Chip';
-import CardHeader from '@material-ui/core/CardHeader';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import { Edit, DeleteSharp, ArrowBack } from '@material-ui/icons';
-import Divider from '@material-ui/core/Divider';
-import { green, red } from '@material-ui/core/colors';
-import Tooltip from '@material-ui/core/Tooltip';
-import Fab from '@material-ui/core/Fab';
-import * as classes from '../lib/styles/styles';
+import React from "react";
+import Grid from "@material-ui/core/Grid";
+import Avatar from "@material-ui/core/Avatar";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Badge from "@material-ui/core/Badge";
+import Chip from "@material-ui/core/Chip";
+import CardHeader from "@material-ui/core/CardHeader";
+import IconButton from "@material-ui/core/IconButton";
+import Typography from "@material-ui/core/Typography";
+import { Edit, DeleteSharp, ArrowBack } from "@material-ui/icons";
+import Divider from "@material-ui/core/Divider";
+import { green, red } from "@material-ui/core/colors";
+import Tooltip from "@material-ui/core/Tooltip";
+import Fab from "@material-ui/core/Fab";
+import * as classes from "../lib/styles/styles";
 
-import UploadImageForm from './UploadImageForm';
-import EditProfileForm from './EditProfileForm';
-import DeleteForm from './DeleteForm';
-import ConfirmEmailForm from './ConfirmEmailForm';
+import UploadImageForm from "./UploadImageForm";
+import EditProfileForm from "./EditProfileForm";
+import DeleteForm from "./DeleteForm";
+import ConfirmEmailForm from "./ConfirmEmailForm";
 
 function UserProfile(props) {
   return (
-    <Grid container spacing={3} justify="center" style={classes.container}>
+    <Grid
+      container
+      spacing={3}
+      justifyContent="center"
+      style={classes.container}
+    >
       {props.backToUserList && (
-        <Grid item sx={12} style={{ textAlign: 'center' }}>
+        <Grid item sx={12} style={{ textAlign: "center" }}>
           <Tooltip title="Back to User List" aria-label="add">
             <Fab color="primary">
               <IconButton onClick={props.backToUserList}>
@@ -39,30 +44,30 @@ function UserProfile(props) {
           <div>
             <CardHeader
               style={{
-                textAlign: 'center',
-                textTransform: 'uppercase',
-                fontSize: '16px',
+                textAlign: "center",
+                textTransform: "uppercase",
+                fontSize: "16px",
               }}
               color="primary"
               title="User Profile"
             />
             <Divider />
             <br />
-            <div style={{ textAlign: 'center' }}>
+            <div style={{ textAlign: "center" }}>
               <Badge
-                overlap="circle"
+                overlap="circular"
                 anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'right',
+                  vertical: "bottom",
+                  horizontal: "right",
                 }}
                 badgeContent={
                   <IconButton
                     style={{
-                      width: '22',
-                      height: '22',
+                      width: "22",
+                      height: "22",
                       backgroundColor: green[500],
-                      color: '#fff',
-                      border: '2px solid #FFF',
+                      color: "#fff",
+                      border: "2px solid #FFF",
                     }}
                     onClick={props.toggleImageForm}
                   >
@@ -71,16 +76,20 @@ function UserProfile(props) {
                 }
               >
                 <Avatar
-                  style={{ width: '150px', height: 'auto', borderRadius: '50%' }}
+                  style={{
+                    borderRadius: "50%",
+                    width: "150px",
+                    height: "150px",
+                  }}
                   src={
                     props.user.avatarUrl ||
-                    'https://cdn4.iconfinder.com/data/icons/green-shopper/1068/user.png'
+                    "https://cdn4.iconfinder.com/data/icons/green-shopper/1068/user.png"
                   }
                   alt="User Profile Image"
                 />
               </Badge>
             </div>
-            <CardContent style={{ padding: '20px' }}>
+            <CardContent style={{ padding: "20px" }}>
               <Typography component="h5" variant="h5">
                 {props.user.displayName}
               </Typography>
@@ -89,26 +98,38 @@ function UserProfile(props) {
               </Typography>
               <br />
               <Divider />
-              <p style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+              <p
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
                 <span>
                   <Chip
-                    style={{ marginTop: '5px', marginRight: '10px' }}
-                    label={props.user.isAdmin ? 'Admin' : 'User'}
+                    style={{ marginTop: "5px", marginRight: "10px" }}
+                    label={props.user.isAdmin ? "Admin" : "User"}
                     color="secondary"
                     variant="outlined"
                   />
                   <Chip
-                    style={{ marginTop: '5px' }}
+                    style={{ marginTop: "5px" }}
                     clickable
-                    label={props.user.emailActivated ? 'Active Email' : 'Activate Email Now'}
-                    color={props.user.emailActivated ? 'secondary' : 'primary'}
-                    onClick={!props.user.emailActivated && props.toggleConfirmEmailForm}
+                    label={
+                      props.user.emailActivated
+                        ? "Active Email"
+                        : "Activate Email Now"
+                    }
+                    color={props.user.emailActivated ? "secondary" : "primary"}
+                    onClick={
+                      !props.user.emailActivated && props.toggleConfirmEmailForm
+                    }
                   />
                 </span>
                 <span>
                   <IconButton
                     style={{
-                      display: 'inline-block',
+                      display: "inline-block",
                       color: green[500],
                     }}
                     onClick={props.toggleEditForm}
@@ -134,7 +155,8 @@ function UserProfile(props) {
                 <strong>Last Name:</strong> {props.user.lastName}
               </p>
               <p>
-                <strong>Joined at:</strong> {new Date(props.user.createdAt).toDateString()}
+                <strong>Joined at:</strong>{" "}
+                {new Date(props.user.createdAt).toDateString()}
               </p>
               <EditProfileForm
                 user={props.user}

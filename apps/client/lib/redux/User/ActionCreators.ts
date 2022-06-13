@@ -36,7 +36,7 @@ const updateProfileSuccess = (resp) => {
   };
 };
 
-const updateProfileFailure = (err) => {
+const updateProfileFailure = (resp) => {
   return {
     type: ActionTypes.UPDATE_PROFILE_FAILURE,
     error: true,
@@ -57,7 +57,7 @@ const uploadImageSuccess = (resp) => {
   };
 };
 
-const uploadImageFailure = (err) => {
+const uploadImageFailure = (resp) => {
   return {
     type: ActionTypes.UPLOAD_IMAGE_FAILURE,
     error: true,

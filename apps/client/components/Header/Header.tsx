@@ -7,6 +7,7 @@ import { FilterVintage } from "@material-ui/icons";
 import MenuWithAvatar from "./MenuWithAvatar";
 import baseUrl from "../../lib/baseUrl";
 import { styledToolbar } from "../../lib/styles/styles";
+import { Button } from "@material-ui/core";
 
 const optionsMenu = [
   {
@@ -15,13 +16,12 @@ const optionsMenu = [
   },
   {
     text: "My Account",
-    href: "/profile"
+    href: "/profile",
   },
   {
     text: "Log out",
     href: `/logout`,
   },
- 
 ];
 
 const propTypes = {
@@ -42,7 +42,7 @@ function Header({ user }) {
         <Grid
           container
           direction="row"
-          justify="space-around"
+          justifyContent="space-around"
           alignItems="center"
         >
           <Grid item sm={11} xs={9} style={{ textAlign: "left" }}>
@@ -56,7 +56,7 @@ function Header({ user }) {
           </Grid>
           <Grid item sm={1} xs={3} style={{ textAlign: "right" }}>
             {user ? (
-              <div style={{ whiteSpace: " nowrap" }}>
+              <div style={{ whiteSpace: "nowrap" }}>
                 <MenuWithAvatar
                   options={optionsMenu}
                   src={user.avatarUrl}
@@ -65,13 +65,11 @@ function Header({ user }) {
                 />
               </div>
             ) : (
-              <Link href="/signup">
-                <a
-                  style={{ margin: "0px 20px 0px auto", whiteSpace: "nowrap" }}
-                >
-                  Sign Up
-                </a>
-              </Link>
+              <div>
+                <Button variant="contained" color="primary" href="/signup">
+                  Sign up
+                </Button>
+              </div>
             )}
           </Grid>
         </Grid>

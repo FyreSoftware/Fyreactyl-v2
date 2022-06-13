@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 import {
   Grid,
   Paper,
@@ -10,12 +10,12 @@ import {
   Avatar,
   ListItemAvatar,
   IconButton,
-} from '@material-ui/core';
-import { ArrowForward } from '@material-ui/icons';
-import { notify } from '../Notifier';
-import UserProfile from '../UserProfile';
-import * as classes from '../../lib/styles/styles';
-import auth from '../../lib/api/adminApi';
+} from "@material-ui/core";
+import { ArrowForward } from "@material-ui/icons";
+import { notify } from "../Notifier";
+import UserProfile from "../UserProfile";
+import * as classes from "../../lib/styles/styles";
+import auth from "../../lib/api/adminApi";
 
 class AdminDashBoard extends React.Component {
   static propsTypes = {
@@ -37,7 +37,7 @@ class AdminDashBoard extends React.Component {
     openImageForm: false,
     openDeleteForm: false,
     openConfirmEmailForm: false,
-    userId: '',
+    userId: "",
   };
 
   componentDidMount() {
@@ -47,10 +47,9 @@ class AdminDashBoard extends React.Component {
 
   componentDidUpdate() {
     if (this.state.shouldRerender) {
-      this.setState({shouldRerender : false})
+      this.setState({ shouldRerender: false });
       this.props.loadUsers();
       if (this.props.message) notify({ message: this.props.message });
-      
     }
   }
 
@@ -97,7 +96,7 @@ class AdminDashBoard extends React.Component {
   };
 
   backToUserList = () => {
-    this.setState({ showUserProfile: false, userId: '' });
+    this.setState({ showUserProfile: false, userId: "" });
   };
 
   render() {
@@ -122,10 +121,19 @@ class AdminDashBoard extends React.Component {
       );
     return (
       <div>
-        <Grid container spacing={3} justify="center" style={classes.container}>
+        <Grid
+          container
+          spacing={3}
+          justifyContent="center"
+          style={classes.container}
+        >
           <Grid item sx={10} sm={8} md={4}>
-            <Paper style={{ padding: '10px' }} elevation={4}>
-              <Typography style={{ margin: '20px' }} color="secondary" variant="h6">
+            <Paper style={{ padding: "10px" }} elevation={4}>
+              <Typography
+                style={{ margin: "20px" }}
+                color="secondary"
+                variant="h6"
+              >
                 Users List
               </Typography>
               <List>
@@ -133,18 +141,27 @@ class AdminDashBoard extends React.Component {
                   this.props.users.map((user, idx) => {
                     return (
                       <ListItem key={idx}>
-                        <ListItemAvatar style={{ marginRight: '20px' }}>
+                        <ListItemAvatar style={{ marginRight: "20px" }}>
                           <Avatar
-                            style={{ width: '50px', height: 'auto', borderRadius: '50%' }}
+                            style={{
+                              width: "50px",
+                              height: "auto",
+                              borderRadius: "50%",
+                            }}
                             src={
                               user.avatarUrl ||
-                              'https://cdn4.iconfinder.com/data/icons/green-shopper/1068/user.png'
+                              "https://cdn4.iconfinder.com/data/icons/green-shopper/1068/user.png"
                             }
                             alt="User Profile Image"
                           />
                         </ListItemAvatar>
-                        <ListItemText primary={user.displayName} secondary={user.email} />
-                        <IconButton onClick={() => this.showUserProfile(user._id)}>
+                        <ListItemText
+                          primary={user.displayName}
+                          secondary={user.email}
+                        />
+                        <IconButton
+                          onClick={() => this.showUserProfile(user._id)}
+                        >
                           <ArrowForward />
                         </IconButton>
                       </ListItem>

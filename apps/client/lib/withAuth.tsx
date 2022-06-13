@@ -8,9 +8,8 @@ export default function withAuth(
   BaseComponent,
   { loginRequired = true, logoutRequired = false } = {}
 ) {
-
   class App extends React.Component {
-    // Using getInitialProps() insteads of getStaticProps() or getServerSideProps() 
+    // Using getInitialProps() insteads of getStaticProps() or getServerSideProps()
     // because this is High Order Component for both Static and Server Side Generation
     static async getInitialProps(ctx) {
       let props = {};
@@ -19,15 +18,17 @@ export default function withAuth(
       let resp;
 
       // If withAuth HOC is called on the browser => ctx.req = undefined
-      if (authApi.isAuthenticated()){
+      if (authApi.isAuthenticated()) {
         resp = await userApi.fetchProfile();
       }
 
       // If withAuth HOC is called on the browser => ctx.req is availale
-      if ( ctx.req && ctx.req.headers.cookie && ctx.req.headers.cookie.split("=")[1]){
-        resp = await userApi.fetchProfile(
-          ctx.req.headers.cookie.split("=")[1]
-        );
+      if (
+        ctx.req &&
+        ctx.req.headers.cookie &&
+        ctx.req.headers.cookie.split("=")[1]
+      ) {
+        resp = await userApi.fetchProfile(ctx.req.headers.cookie.split("=")[1]);
       }
 
       if (resp && resp.success) {
@@ -41,13 +42,11 @@ export default function withAuth(
         );
       }
       props = { ...compProps, user };
-      console.log("Props in withAuth", props);
       return props;
     }
 
     componentDidMount() {
       const { user } = this.props;
-      console.log("user", user);
       if (loginRequired && !logoutRequired && !user) {
         Router.push("/public/login", "/login");
         return;
@@ -81,7 +80,7 @@ export default function withAuth(
     user: PropTypes.shape({
       id: PropTypes.string,
       isAdmin: PropTypes.bool,
-    })
+    }),
   };
 
   const defaultProps = {

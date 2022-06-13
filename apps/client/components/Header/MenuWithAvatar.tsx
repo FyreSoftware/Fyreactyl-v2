@@ -3,42 +3,53 @@ import { MenuItem, Menu, IconButton, Avatar } from "@material-ui/core";
 import { Person } from "@material-ui/icons";
 import authApi from "../../lib/api/authApi";
 import Router from "next/router";
-import {notify} from "../Notifier";
+import { notify } from "../Notifier";
 import Link from "next/link";
 
-export default class MenuWithAvatar extends React.Component{
-  constructor(props){
+export default class MenuWithAvatar extends React.Component<
+  {
+    isAdmin: boolean;
+    options: any;
+    src: any;
+    alt: any;
+  },
+  {
+    anchorEl: any;
+    shouldRedirect: boolean;
+  }
+> {
+  constructor(props) {
     super(props);
     this.state = {
-      anchorEl : null,
-      shouldRedirect : false
-    }
+      anchorEl: null,
+      shouldRedirect: false,
+    };
     this.handleMenu = this.handleMenu.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
   }
 
   handleMenu = (event) => {
-    this.setState({ anchorEl : event.currentTarget });
+    this.setState({ anchorEl: event.currentTarget });
   };
 
   handleClose = () => {
-    this.setState({anchorEl : null});
+    this.setState({ anchorEl: null });
   };
 
   handleLogout = async () => {
     const resp = await authApi.logout();
-    if(resp.success) {
+    if (resp.success) {
       this.setState({
-        anchorEl : null,
-        shouldRedirect : true
-      })
-      notify({message : resp.message});
+        anchorEl: null,
+        shouldRedirect: true,
+      });
+      notify({ message: resp.message });
     }
-  } 
+  };
 
   render() {
-    if(this.state.shouldRedirect) Router.push("/");
+    if (this.state.shouldRedirect) Router.push("/");
     return (
       <div>
         <IconButton
@@ -77,8 +88,8 @@ export default class MenuWithAvatar extends React.Component{
             </Link>
           )}
           {this.props.options.map((option, id) => {
-            if(option.href === "/logout"){
-              return(
+            if (option.href === "/logout") {
+              return (
                 <MenuItem key={id} onClick={this.handleLogout}>
                   {option.text}
                 </MenuItem>
@@ -86,9 +97,7 @@ export default class MenuWithAvatar extends React.Component{
             }
             return (
               <Link href={option.href}>
-                <MenuItem key={id}>
-                    {option.text}
-                </MenuItem>
+                <MenuItem key={id}>{option.text}</MenuItem>
               </Link>
             );
           })}
@@ -96,5 +105,4 @@ export default class MenuWithAvatar extends React.Component{
       </div>
     );
   }
-  
 }

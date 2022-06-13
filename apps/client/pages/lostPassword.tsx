@@ -1,33 +1,32 @@
-import React from 'react';
+import React from "react";
 import Head from "next/head";
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
-import Router from 'next/router';
-import * as classes from '../lib/styles/styles';
-import LoadingBar from '../components/LoadingBar';
-import auth from '../lib/api/authApi';
-import { notify } from '../components/Notifier';
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import TextField from "@material-ui/core/TextField";
+import Router from "next/router";
+import * as classes from "../lib/styles/styles";
+import LoadingBar from "../components/LoadingBar";
+import auth from "../lib/api/authApi";
+import { notify } from "../components/Notifier";
 
 export default class LostPassword extends React.Component {
-  constructor (props){
-      super(props);
-      this. state = {
-        loading: false,
-        shouldRedirect: false,
-        password: '',
-        email: '',
-        error: {},
-      };
-      this.handleOnChange = this.handleOnChange.bind(this);
-      this.isValid = this.isValid.bind(this);
-      this.handleSubmit = this.handleSubmit.bind(this);
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: false,
+      shouldRedirect: false,
+      password: "",
+      email: "",
+      error: {},
+    };
+    this.handleOnChange = this.handleOnChange.bind(this);
+    this.isValid = this.isValid.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
- 
 
   handleOnChange = (e) => {
     const newState = { ...this.state };
@@ -37,19 +36,21 @@ export default class LostPassword extends React.Component {
 
   isValid = () => {
     if (!this.state.password) {
-      this.setState({ error: { password: 'Password is Required.' } });
+      this.setState({ error: { password: "Password is Required." } });
       return false;
     }
     if (!this.state.email) {
-      this.setState({ error: { email: 'Email is Required.' } });
+      this.setState({ error: { email: "Email is Required." } });
       return false;
     }
     if (!(this.state.password.length >= 8)) {
-      this.setState({ error: { password: 'Invalid Password. Please try again!' } });
+      this.setState({
+        error: { password: "Invalid Password. Please try again!" },
+      });
       return false;
     }
     if (!this.state.email.trim().match(/.+@.+\..+/)) {
-      this.setState({ error: { email: 'Invalid Email. Please try again!' } });
+      this.setState({ error: { email: "Invalid Email. Please try again!" } });
       return false;
     }
     this.setState({ error: {} });
@@ -61,7 +62,10 @@ export default class LostPassword extends React.Component {
     if (this.isValid()) {
       try {
         this.setState({ loading: true });
-        const resp = await auth.sendNewPassword(this.state.password, this.state.email);
+        const resp = await auth.sendNewPassword(
+          this.state.password,
+          this.state.email
+        );
         if (resp.success) {
           this.setState({
             loading: false,
@@ -85,11 +89,21 @@ export default class LostPassword extends React.Component {
           <title> Reset Password</title>
           <meta name="description" content="This is Reset Password Page" />
         </Head>
-        <Grid container spacing={3} justify="center" style={classes.container}>
+        <Grid
+          container
+          spacing={3}
+          justifyContent="center"
+          style={classes.container}
+        >
           <Grid item sx={10} sm={8} md={4}>
             <Card variant="outlined" style={classes.card}>
               <CardContent>
-                <Typography color="secondary" align="center" variant="h5" component="h2">
+                <Typography
+                  color="secondary"
+                  align="center"
+                  variant="h5"
+                  component="h2"
+                >
                   Reset Password
                 </Typography>
                 <br />
@@ -121,7 +135,7 @@ export default class LostPassword extends React.Component {
                   helperText={
                     this.state.error.email
                       ? this.state.error.email
-                      : 'Email is Required. Email should be like abc@example.com'
+                      : "Email is Required. Email should be like abc@example.com"
                   }
                   error={!!this.state.error.email}
                 />
@@ -131,7 +145,7 @@ export default class LostPassword extends React.Component {
                   variant="contained"
                   color="secondary"
                   size="large"
-                  style={{ margin: '0 auto' }}
+                  style={{ margin: "0 auto" }}
                   onClick={this.handleSubmit}
                 >
                   Submit
