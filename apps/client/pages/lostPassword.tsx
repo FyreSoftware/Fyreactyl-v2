@@ -13,7 +13,14 @@ import LoadingBar from "../components/LoadingBar";
 import auth from "../lib/api/authApi";
 import { notify } from "../components/Notifier";
 
-export default class LostPassword extends React.Component {
+export interface IState {
+  loading: boolean,
+  shouldRedirect: boolean,
+  password: string,
+  email: string,
+  error: any
+}
+export default class LostPassword extends React.Component<{}, IState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -95,7 +102,7 @@ export default class LostPassword extends React.Component {
           justifyContent="center"
           style={classes.container}
         >
-          <Grid item sx={10} sm={8} md={4}>
+          <Grid item xs={10} sm={8} md={4}>
             <Card variant="outlined" style={classes.card}>
               <CardContent>
                 <Typography

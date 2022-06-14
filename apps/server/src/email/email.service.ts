@@ -12,12 +12,12 @@ export class EmailService {
     @InjectModel('Email') private EmailTemplateModel: Model<EmailTemplate>,
   ) {}
 
-  sendEmail(options: any): void {
+  sendEmail(_options: any): void {
     //TODO: WRITE EMAIL SENDER
   }
 
   async insertEmailTemplate(): Promise<void> {
-    //TODO: REWRIE EMAIL TEMPLATES
+    //TODO: REWRITE EMAIL TEMPLATES
     const emailTemplates = [
       {
         name: 'welcome',
@@ -33,7 +33,7 @@ export class EmailService {
         subject: 'Please confirm your email to activate your email at Mern!',
         message: `<%= displayName%>,
               <p>Thank you for signing up for NestJS-NextJSTemplate Template! </p>
-              <p>In order for us to give you the best expriences at Mern, please confirm your email by clicking the link below</p>
+              <p>In order for us to give you the best experience at Mern, please confirm your email by clicking the link below</p>
               <p><%= CONFIRM_URL%></p>
               <p>Thank you so much for your cooperation!</p>
               <p>Huyen Nguyen</p>
@@ -56,9 +56,9 @@ export class EmailService {
     for (const t of emailTemplates) {
       //eslint-disable-line
       // 1. Call "findOne" to find if an email template exists
-      name = t.name.replace(/\n/g, ' ').replace(/[ ]/g, ' ').trim();
-      message = t.message.replace(/\n/g, ' ').replace(/[ ]/g, ' ').trim();
-      subject = t.subject.replace(/\n/g, ' ').replace(/[ ]/g, ' ').trim();
+      name = t.name.replace(/\n/g, ' ').replace(/[]/g, ' ').trim();
+      message = t.message.replace(/\n/g, ' ').replace(/[]/g, ' ').trim();
+      subject = t.subject.replace(/\n/g, ' ').replace(/[]/g, ' ').trim();
       const et = await this.EmailTemplateModel.findOne({ name }); //eslint-disable-line
       // 2. If it exists, use "updateOne" to update new subject or body
       if (et) {
@@ -113,7 +113,7 @@ export class EmailService {
     try {
       // 1. Use getEmailTemplate to populate options object with the template
       const et = await this.getEmailTemplate(tempName, params);
-      // 2. If yes, Use sendEmail to send an new email to the users
+      // 2. If yes, Use sendEmail to send a new email to the users
       if (et.success) {
         await this.sendEmail({
           from: `Huyen from NestJS-NextJS Template <${process.env.EMAIL_ADDRESS_FROM}>`,

@@ -6,7 +6,12 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-function DeleteForm(props) {
+export interface IProps {
+    openDelete: any,
+    handleClose: any,
+    handleDelete: any
+}
+function DeleteForm(props: IProps) {
   return (
     <Dialog open={props.openDelete} onClose={props.handleClose} aria-labelledby="form-dialog-title">
       <DialogTitle color="secondary" id="form-dialog-title">

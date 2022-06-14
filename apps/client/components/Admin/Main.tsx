@@ -37,6 +37,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const Admin = connect(mapStateToProps, mapDispatchToProps)(AdminDashBoard);
+const Admin = connect<any, any, any>(mapStateToProps, mapDispatchToProps)(AdminDashBoard as any);
 
 export default Admin;

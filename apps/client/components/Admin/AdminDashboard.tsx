@@ -15,9 +15,20 @@ import { ArrowForward } from "@material-ui/icons";
 import { notify } from "../Notifier";
 import UserProfile from "../UserProfile";
 import * as classes from "../../lib/styles/styles";
-import auth from "../../lib/api/adminApi";
+import userAuth from "../../lib/api/authApi"
 
-class AdminDashBoard extends React.Component {
+export interface IProps {
+  users: any[],
+  user: any,
+  message: string,
+  loadUsers: any,
+  loadProfile: any,
+  updateProfile: any,
+  deleteProfile: any,
+  uploadImage: any,
+  error: boolean
+}
+class AdminDashBoard extends React.Component<IProps> {
   static propsTypes = {
     users: PropTypes.array,
     user: PropTypes.object.isRequired,
@@ -75,7 +86,7 @@ class AdminDashBoard extends React.Component {
 
   handleSendEmail = async () => {
     this.toggleConfirmEmailForm();
-    const resp = await auth.sendConfirmEmail(this.state.userId);
+    const resp = await userAuth.sendConfirmEmail(this.state.userId);
     resp.message && notify({ message: resp.message });
   };
 
@@ -127,7 +138,7 @@ class AdminDashBoard extends React.Component {
           justifyContent="center"
           style={classes.container}
         >
-          <Grid item sx={10} sm={8} md={4}>
+          <Grid item xs={10} sm={8} md={4}>
             <Paper style={{ padding: "10px" }} elevation={4}>
               <Typography
                 style={{ margin: "20px" }}

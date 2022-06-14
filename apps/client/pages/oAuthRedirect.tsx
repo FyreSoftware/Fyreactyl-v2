@@ -9,7 +9,9 @@ import LoadingBar from "../components/LoadingBar";
 import * as classes from "../lib/styles/styles";
 import auth from "../lib/api/authApi";
 
-class OAuthRedirect extends React.Component {
+class OAuthRedirect extends React.Component<{}, {
+  shouldRedirect: boolean
+}> {
   constructor(props) {
     super(props);
     this.state = {
@@ -44,7 +46,7 @@ class OAuthRedirect extends React.Component {
           justifyContent="center"
           style={classes.container}
         >
-          <Grid item sx={10} sm={8} md={4}>
+          <Grid item xs={10} sm={8} md={4}>
             <Card variant="outlined" style={classes.card}>
               <CardContent>
                 <Typography color="secondary" align="center" variant="h5">

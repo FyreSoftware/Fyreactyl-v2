@@ -1,18 +1,20 @@
 import React from "react";
-import PropTypes from "prop-types";
 import Router from "next/router";
 import authApi from "./api/authApi";
 import userApi from "./api/userApi";
 
+export interface IProps {
+  user: any,
+}
 export default function withAuth(
   BaseComponent,
   { loginRequired = true, logoutRequired = false } = {}
 ) {
-  class App extends React.Component {
+  class App extends React.Component<IProps> {
     // Using getInitialProps() insteads of getStaticProps() or getServerSideProps()
     // because this is High Order Component for both Static and Server Side Generation
     static async getInitialProps(ctx) {
-      let props = {};
+      let props: {};
       let user = null;
       const compProps = {};
       let resp;
@@ -76,19 +78,7 @@ export default function withAuth(
     }
   }
 
-  const propTypes = {
-    user: PropTypes.shape({
-      id: PropTypes.string,
-      isAdmin: PropTypes.bool,
-    }),
-  };
 
-  const defaultProps = {
-    user: null,
-  };
-
-  App.propTypes = propTypes;
-  App.defaultProps = defaultProps;
 
   return App;
 }

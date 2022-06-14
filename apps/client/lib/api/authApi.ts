@@ -31,7 +31,7 @@ const login = async (user) => {
     });
     if (response.status === 401) {
       const error = new Error("Unauthorized!");
-      error.success = false;
+      error
       throw error;
     }
     return await response.json();
@@ -107,7 +107,7 @@ const sendConfirmEmail = async (userId) => {
       const error = new Error(
         "Unauthorized. Please log into your account to continue."
       );
-      error.success = false;
+      error
       throw error;
     }
     return await response.json();
