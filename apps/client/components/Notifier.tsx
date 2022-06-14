@@ -4,7 +4,11 @@ import Fade from "@material-ui/core/Fade";
 
 let openNotifier;
 
-export class Notifier extends React.Component {
+export interface IState {
+  open: boolean,
+  message: string
+}
+export class Notifier extends React.Component<{}, IState> {
   constructor(props) {
     super(props);
     this.state = {

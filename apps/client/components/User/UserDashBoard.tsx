@@ -4,7 +4,15 @@ import { notify } from '../Notifier';
 import UserProfile from '../UserProfile';
 import auth from '../../lib/api/authApi';
 
-class UserDashBoard extends React.Component {
+export interface IProps {
+  user: any,
+  message: string,
+  loadProfile: any,
+  updateProfile: any,
+  uploadImage: any,
+  error: boolean
+}
+class UserDashBoard extends React.Component<IProps> {
   static propsTypes = {
     user: PropTypes.object.isRequired,
     message: PropTypes.string,

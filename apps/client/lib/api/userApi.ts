@@ -16,9 +16,7 @@ const fetchProfile = async (jwt = "") => {
     });
     if (response.status === 401) {
       authApi.clearJWT();
-      const error = new Error("Unauthorized!");
-      error.success = false;
-      throw error;
+      throw Error("Unauthorized!");
     }
     return await response.json();
   } catch (err) {
@@ -41,8 +39,7 @@ const updateProfile = async (profile) => {
     });
     if (response.status === 401) {
       authApi.clearJWT();
-      const error = new Error("Unauthorized!");
-      error.success = false;
+      const error = new Error("Unauthorized!")
       throw error;
     }
     console.log(response.json());
@@ -70,7 +67,6 @@ const uploadProfileImage = async (file) => {
     if (response.status === 401) {
       authApi.clearJWT();
       const error = new Error("Unauthorized!");
-      error.success = false;
       throw error;
     }
     return await response.json();

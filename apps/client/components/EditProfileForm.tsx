@@ -7,15 +7,28 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import * as classes from "../lib/styles/styles";
+export interface IState {
+  user: any,
+  error: any
+}
+export interface IProps {
+  user: any,
+  error: any,
+  handleClose: any,
+  handleUpdate: any,
+  openEdit: any
+}
 
-class EditProfileForm extends React.Component {
+class EditProfileForm extends React.Component<IProps, IState> {
   state = {
     user: {
       firstName: this.props.user.firstName || "",
       lastName: this.props.user.lastName || "",
       email: this.props.user.email || "",
     },
-    error: {},
+    error: {
+      email: false
+    },
   };
 
   handleOnChange = (e) => {
@@ -93,7 +106,7 @@ class EditProfileForm extends React.Component {
             style={classes.textField}
             helperText={
               this.state.error.email
-                ? this.state.error.email
+                 ? this.state.error.email
                 : "Email is Required. Email should be like abc@example.com"
             }
             error={!!this.state.error.email}

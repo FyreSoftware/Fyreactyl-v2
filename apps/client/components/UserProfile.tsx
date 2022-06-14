@@ -29,7 +29,7 @@ function UserProfile(props) {
       style={classes.container}
     >
       {props.backToUserList && (
-        <Grid item sx={12} style={{ textAlign: "center" }}>
+        <Grid item xs={12} style={{ textAlign: "center" }}>
           <Tooltip title="Back to User List" aria-label="add">
             <Fab color="primary">
               <IconButton onClick={props.backToUserList}>
@@ -39,7 +39,7 @@ function UserProfile(props) {
           </Tooltip>
         </Grid>
       )}
-      <Grid item sx={10} sm={8} md={4}>
+      <Grid item xs={10} sm={8} md={4}>
         <Card>
           <div>
             <CardHeader
@@ -163,6 +163,7 @@ function UserProfile(props) {
                 openEdit={props.openEditForm}
                 handleClose={props.toggleEditForm}
                 handleUpdate={props.handleUpdateProfile}
+                error={false}
               />
               <UploadImageForm
                 openImage={props.openImageForm}

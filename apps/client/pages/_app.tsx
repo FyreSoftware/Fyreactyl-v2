@@ -17,7 +17,11 @@ import {Notifier} from "../components/Notifier";
 
 let store = ConfigStore();
 
-export default class MyApp extends App {
+export interface IProps {
+    Component: any,
+    pageProps: any
+}
+export default class MyApp extends App<IProps> {
     componentDidMount() {
         const jssStyles = document.querySelector("#jss-server-side");
         if (jssStyles && jssStyles.parentNode) {
@@ -40,7 +44,7 @@ export default class MyApp extends App {
                     <CssBaseline/>
                     <Header {...pageProps} />
                     <Component {...pageProps} />
-                    <Notifier/>
+                    <Notifier />
                 </ThemeProvider>
             </Provider>
         );
