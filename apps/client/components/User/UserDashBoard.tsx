@@ -1,11 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { notify } from '../Notifier';
 import UserProfile from '../UserProfile';
 import auth from '../../lib/api/authApi';
-
+import IUser from "../../lib/interfaces/user"
 export interface IProps {
-  user: any,
+  user: IUser,
   message: string,
   loadProfile: any,
   updateProfile: any,
@@ -13,14 +12,6 @@ export interface IProps {
   error: boolean
 }
 class UserDashBoard extends React.Component<IProps> {
-  static propsTypes = {
-    user: PropTypes.object.isRequired,
-    message: PropTypes.string,
-    loadProfile: PropTypes.func.isRequired,
-    updateProfile: PropTypes.func.isRequired,
-    uploadImage: PropTypes.func.isRequired,
-    error: PropTypes.bool.isRequired,
-  };
 
   state = {
     shouldRerender: false,

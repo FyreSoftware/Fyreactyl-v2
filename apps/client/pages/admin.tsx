@@ -8,7 +8,7 @@ function AdminDashboard() {
     return (
     <>
       <Head>
-        <title> Admin Dashboard</title>
+        <title>Admin Dashboard</title>
         <meta name="description" content="Admin Dashboard" />
       </Head>
       <Admin />

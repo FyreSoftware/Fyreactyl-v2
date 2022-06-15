@@ -1,4 +1,4 @@
-import React, { CSSProperties } from "react";
+import React  from "react";
 import Head from "next/head";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -104,7 +104,7 @@ class SignUp extends React.Component<{}, SignupState> {
   };
 
   render() {
-    if (this.state.shouldRedirect) Router.push(`/login`);
+    if (this.state.shouldRedirect) Router.push(`/dashboard`);
     return (
       <div>
         <Head>

@@ -50,12 +50,12 @@ export default function withAuth(
     componentDidMount() {
       const { user } = this.props;
       if (loginRequired && !logoutRequired && !user) {
-        Router.push("/public/login", "/login");
+        Router.push("/login", "/login");
         return;
       }
 
       if (logoutRequired && user) {
-        Router.push("/");
+        Router.push("/dashboard");
       }
     }
 

@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import {
   Grid,
   Paper,
@@ -29,17 +28,6 @@ export interface IProps {
   error: boolean
 }
 class AdminDashBoard extends React.Component<IProps> {
-  static propsTypes = {
-    users: PropTypes.array,
-    user: PropTypes.object.isRequired,
-    message: PropTypes.string,
-    loadUsers: PropTypes.func.isRequired,
-    loadProfile: PropTypes.func.isRequired,
-    updateProfile: PropTypes.func.isRequired,
-    deleteProfile: PropTypes.func.isRequired,
-    uploadImage: PropTypes.func.isRequired,
-    error: PropTypes.bool.isRequired,
-  };
 
   state = {
     showUserProfile: false,

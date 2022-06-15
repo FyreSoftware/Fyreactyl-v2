@@ -107,7 +107,6 @@ const sendConfirmEmail = async (userId) => {
       const error = new Error(
         "Unauthorized. Please log into your account to continue."
       );
-      error
       throw error;
     }
     return await response.json();

@@ -1,11 +1,9 @@
-import PropTypes from "prop-types";
 import Link from "next/link";
 import Toolbar from "@material-ui/core/Toolbar";
 import Grid from "@material-ui/core/Grid";
 import Avatar from "@material-ui/core/Avatar";
 import { FilterVintage } from "@material-ui/icons";
 import MenuWithAvatar from "./MenuWithAvatar";
-import baseUrl from "../../lib/baseUrl";
 import { styledToolbar } from "../../lib/styles/styles";
 import { Button } from "@material-ui/core";
 
@@ -23,17 +21,6 @@ const optionsMenu = [
     href: `/logout`,
   },
 ];
-
-const propTypes = {
-  user: PropTypes.shape({
-    avatarUrl: PropTypes.string,
-    displayName: PropTypes.string,
-  }),
-};
-
-const defaultProps = {
-  user: null,
-};
 
 function Header({ user }) {
   return (
@@ -77,8 +64,5 @@ function Header({ user }) {
     </div>
   );
 }
-
-Header.propTypes = propTypes;
-Header.defaultProps = defaultProps;
 
 export default Header;
