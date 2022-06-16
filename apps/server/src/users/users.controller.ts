@@ -161,7 +161,7 @@ export class UsersController {
   @ApiResponse({
     status: 200,
     description:
-      '{sucess: true, response: {message : "Update User Profile Successfully"}',
+      '{success: true, response: {message : "Update User Profile Successfully"}',
   })
   @Post('/profile/uploadImage')
   @UseGuards(PoliciesGuard)

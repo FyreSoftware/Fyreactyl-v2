@@ -14,10 +14,8 @@ import { MulterModule} from '@nestjs/platform-express';
       dest: "public/images",
       fileFilter: (req, file, cb) => {
                     if (!file.originalname.match(/\.(jpg|jpeg|gif|png)$/)) {
-                      // You can always pass an error if something goes wrong:
                       cb(new Error('You can only upload image files'), null);
                     }
-                    // To accept the file pass `true`, like so:
                     cb(null, true);
                   }
     })

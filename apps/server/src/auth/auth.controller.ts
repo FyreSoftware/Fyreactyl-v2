@@ -42,7 +42,7 @@ export class AuthController {
   }
 
   @ApiOperation({ summary: 'Login User By UserName and Password' })
-  @ApiResponse({ status: 200, description: '{sucess: true; cookie: "nest-cookie=jwtToken; expires=Date.toString()"; message: "Login Successfully"}' })
+  @ApiResponse({ status: 200, description: '{success: true; cookie: "nest-cookie=jwtToken; expires=Date.toString()"; message: "Login Successfully"}' })
   @Post('/local/login')
   @UseGuards(LocalAuthGuard)
   async login(@Request() req, @Response() res, @Body() user: LoginUserDto) {

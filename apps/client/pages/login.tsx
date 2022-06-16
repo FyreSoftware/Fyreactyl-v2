@@ -121,7 +121,13 @@ class Login extends React.Component<
         >
           <Grid item xs={10} sm={8} md={4}>
             <Card variant="outlined" style={classes.card}>
-              <CardContent>
+              <CardContent
+              style={{
+                display: "grid",
+                justifyContent: "center",
+                justifyItems: "center",
+                alignItems: "center"
+              }}>
                 <Typography
                   color="secondary"
                   align="center"

@@ -3,18 +3,13 @@ import {
   Response,
   Query,
   Body,
-  Put,
   Request,
   Post,
-  Delete,
-  UseGuards,
   Get,
   HttpStatus,
-  Headers,
   Param,
 } from '@nestjs/common';
 import {
-  ApiBearerAuth,
   ApiOperation,
   ApiResponse,
   ApiTags,
@@ -81,12 +76,9 @@ export class EmailController {
       });
     }
     try {
-      // 3. If yes, use User.activateUserEmail to activate email property
-      // and send welcome email to new users
       const resp = await this.usersService.activateUserEmail(query.userId);
       if (resp.success) {
-        // 4. If succeeds, sendback success message and redirect user to homepage
-        const result = await this.emailService.sendTemplateEmail(
+      await this.emailService.sendTemplateEmail(
           'welcome',
           { displayName: resp.response.user.displayName },
           resp.response.user.email,
@@ -113,19 +105,15 @@ export class EmailController {
     @Response() res,
     @Body() resetPasswordEmailDto: resetPasswordEmailDto,
   ) {
-    // 1. Check if there is an "email" in the req.body
     if (
       resetPasswordEmailDto.email &&
       resetPasswordEmailDto.email.match(/.+@.+\..+/)
     ) {
-      // 2. Check if there is an user of this email
       const user = await this.usersService.getUserByEmail(
         resetPasswordEmailDto.email,
       );
       if (user) {
-        // 3. If yes, send the user an "reset_password" email
         try {
-          // 1. Get "reset_password" template
           const RESET_PASSWORD_URL = `${process.env.RESET_PASSWORD_ROOT_URL}`;
           const et = await this.emailService.getEmailTemplate(
             'reset_password',
@@ -134,7 +122,6 @@ export class EmailController {
               RESET_PASSWORD_URL,
             },
           );
-          // 2. Send a reset_password email to user with link to reset password
           if (et) {
             /* await this.emailService
               .sendEmail({
@@ -171,7 +158,6 @@ export class EmailController {
         });
       }
     } else {
-      // 4. If not, redirect the user back to /resetPassword
       res.status(HttpStatus.BAD_REQUEST).json({
         success: false,
         message: 'Invalid Email Address. Please try again!',
@@ -194,10 +180,8 @@ export class EmailController {
     @Response() res,
     @Body() resetPasswordDto: ResetPasswordDto,
   ) {
-    // 1. Check if there is a password in the req.body
     if (resetPasswordDto.password) {
-      // 2. If yes, reset password for the user with req.query.email
-      let resp = undefined;
+      let resp;
       resp = await this.usersService.resetPassword(
         resetPasswordDto.password,
         resetPasswordDto.email,
@@ -211,10 +195,9 @@ export class EmailController {
 
       res
         .status(HttpStatus.BAD_REQUEST)
-        .json({ sucess: false, message: resp.response.message });
+        .json({ success: false, message: resp.response.message });
       return;
     }
-    // 3. If not, send res with code of 400
     res
       .status(400)
       .json({ success: false, message: 'Invalid Password. Please try again!' });
