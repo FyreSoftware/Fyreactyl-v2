@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) tovade 2022.
+ * All rights reserved
+ */
+
 import React from "react";
 import Head from "next/head";
 import Card from "@material-ui/core/Card";
@@ -8,10 +13,10 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Router from "next/router";
-import * as classes from "../lib/styles/styles";
-import LoadingBar from "../components/LoadingBar";
-import auth from "../lib/api/authApi";
-import { notify } from "../components/Notifier";
+import * as classes from "../../lib/styles/styles";
+import LoadingBar from "../../components/LoadingBar";
+import auth from "../../lib/api/authApi";
+import { notify } from "../../components/Notifier";
 
 export interface IState {
   loading: boolean,

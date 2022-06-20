@@ -29,7 +29,7 @@ function Index() {
                 Login
               </Button>
               <Button size="small" color="secondary">
-                <Link href="/signup">Sign Up</Link>
+                <Link href="/auth/signup">Sign Up</Link>
               </Button>
             </CardActions>
           </Card>

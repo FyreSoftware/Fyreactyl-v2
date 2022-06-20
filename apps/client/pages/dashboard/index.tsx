@@ -5,7 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import withAuth from "../../lib/withAuth";
 
-function Index() {
+function DashboardIndex() {
     return (
         <div>
             <Grid
@@ -27,4 +27,4 @@ function Index() {
         </div>
     );
 }
-export default withAuth(Index, { loginRequired: true });
+export default withAuth(DashboardIndex, { loginRequired: true });

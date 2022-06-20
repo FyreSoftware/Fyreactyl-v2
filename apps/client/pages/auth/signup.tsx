@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) tovade 2022.
+ * All rights reserved
+ */
+
 import React  from "react";
 import Head from "next/head";
 import Card from "@material-ui/core/Card";
@@ -9,11 +14,11 @@ import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Link from "next/link";
 import Router from "next/router";
-import * as classes from "../lib/styles/styles";
-import LoadingBar from "../components/LoadingBar";
-import auth from "../lib/api/authApi";
-import { notify } from "../components/Notifier";
-import withAuth from "../lib/withAuth";
+import * as classes from "../../lib/styles/styles";
+import LoadingBar from "../../components/LoadingBar";
+import auth from "../../lib/api/authApi";
+import { notify } from "../../components/Notifier";
+import withAuth from "../../lib/withAuth";
 
 type SignupState = {
   signUpInProgress: boolean;
@@ -233,7 +238,7 @@ class SignUp extends React.Component<{}, SignupState> {
               </CardActions>
               <p>
                 Already An User?{" "}
-                <Link href="/login">
+                <Link href="/auth/login">
                   <a>Log In</a>
                 </Link>
               </p>

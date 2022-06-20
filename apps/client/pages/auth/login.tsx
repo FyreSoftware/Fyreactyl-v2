@@ -8,13 +8,13 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Router from "next/router";
-import * as classes from "../lib/styles/styles";
-import LoadingBar from "../components/LoadingBar";
-import auth from "../lib/api/authApi";
-import { notify } from "../components/Notifier";
-import ResetPassword from "../components/ResetPassword";
-import baseUrl from "../lib/baseUrl";
-import withAuth from "../lib/withAuth";
+import * as classes from "../../lib/styles/styles";
+import LoadingBar from "../../components/LoadingBar";
+import auth from "../../lib/api/authApi";
+import { notify } from "../../components/Notifier";
+import ResetPassword from "../../components/ResetPassword";
+import baseUrl from "../../lib/baseUrl";
+import withAuth from "../../lib/withAuth";
 
 class Login extends React.Component<
   {},
