@@ -1,7 +1,12 @@
+/*
+ * Copyright (c) tovade 2022.
+ * All rights reserved
+ */
+
 import React from "react";
 import Head from "next/head";
-import UserProfile from "../components/User/Main";
-import withAuth from "../lib/withAuth";
+import UserProfile from "../../components/User/Main";
+import withAuth from "../../lib/withAuth";
 
 function Profile () {
     return (
