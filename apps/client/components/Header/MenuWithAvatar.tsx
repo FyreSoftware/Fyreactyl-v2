@@ -1,22 +1,24 @@
-import React from "react";
-import authApi from "../../lib/api/authApi";
-import Router from "next/router";
-import Link from "next/link";
-import { MenuItem, Menu, IconButton, Avatar } from "@mui/material";
-import { Person } from "@mui/icons-material";
-import { notify } from "../Notifier";
+import React from 'react';
+import Router from 'next/router';
+import Link from 'next/link';
+import {
+  MenuItem, Menu, IconButton, Avatar,
+} from '@mui/material';
+import { Person } from '@mui/icons-material';
+import authApi from '../../lib/api/authApi';
+import { notify } from '../Notifier';
 
 export default class MenuWithAvatar extends React.Component<
-  {
-    isAdmin: boolean;
-    options: any;
-    src: any;
-    alt: any;
-  },
-  {
-    anchorEl: any;
-    shouldRedirect: boolean;
-  }
+{
+  isAdmin: boolean;
+  options: any;
+  src: any;
+  alt: any;
+},
+{
+  anchorEl: any;
+  shouldRedirect: boolean;
+}
 > {
   constructor(props) {
     super(props);
@@ -49,7 +51,7 @@ export default class MenuWithAvatar extends React.Component<
   };
 
   render() {
-    if (this.state.shouldRedirect) Router.push("/");
+    if (this.state.shouldRedirect) Router.push('/');
     return (
       <div>
         <IconButton
@@ -71,13 +73,13 @@ export default class MenuWithAvatar extends React.Component<
           id="menu-appbar"
           anchorEl={this.state.anchorEl}
           anchorOrigin={{
-            vertical: "top",
-            horizontal: "right",
+            vertical: 'top',
+            horizontal: 'right',
           }}
           keepMounted
           transformOrigin={{
-            vertical: "top",
-            horizontal: "right",
+            vertical: 'top',
+            horizontal: 'right',
           }}
           open={Boolean(this.state.anchorEl)}
           onClose={this.handleClose}
@@ -88,7 +90,7 @@ export default class MenuWithAvatar extends React.Component<
             </Link>
           )}
           {this.props.options.map((option, id) => {
-            if (option.href === "/logout") {
+            if (option.href === '/logout') {
               return (
                 <MenuItem key={id} onClick={this.handleLogout}>
                   {option.text}

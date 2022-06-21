@@ -1,21 +1,23 @@
-import Link from "next/link";
-import MenuWithAvatar from "./MenuWithAvatar";
-import { FilterVintage } from "@mui/icons-material";
-import { styledToolbar } from "../../lib/styles/styles";
-import { Button, Toolbar, Grid, Avatar } from "@mui/material";
+import Link from 'next/link';
+import { FilterVintage } from '@mui/icons-material';
+import {
+  Button, Toolbar, Grid, Avatar,
+} from '@mui/material';
+import MenuWithAvatar from './MenuWithAvatar';
+import { styledToolbar } from '../../lib/styles/styles';
 
 const optionsMenu = [
   {
-    text: "Source Code",
-    href: "https://github.com/huyenNguyen20",
+    text: 'Source Code',
+    href: 'https://github.com/huyenNguyen20',
   },
   {
-    text: "My Account",
-    href: "/dashboard/profile",
+    text: 'My Account',
+    href: '/dashboard/profile',
   },
   {
-    text: "Log out",
-    href: `/logout`,
+    text: 'Log out',
+    href: '/logout',
   },
 ];
 
@@ -29,7 +31,7 @@ function Header({ user }) {
           justifyContent="space-around"
           alignItems="center"
         >
-          <Grid item sm={11} xs={9} style={{ textAlign: "left" }}>
+          <Grid item sm={11} xs={9} style={{ textAlign: 'left' }}>
             {user ? null : (
               <Link href="/">
                 <Avatar>
@@ -38,9 +40,9 @@ function Header({ user }) {
               </Link>
             )}
           </Grid>
-          <Grid item sm={1} xs={3} style={{ textAlign: "right" }}>
+          <Grid item sm={1} xs={3} style={{ textAlign: 'right' }}>
             {user ? (
-              <div style={{ whiteSpace: "nowrap" }}>
+              <div style={{ whiteSpace: 'nowrap' }}>
                 <MenuWithAvatar
                   options={optionsMenu}
                   src={user.avatarUrl}

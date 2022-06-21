@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Button,
   Dialog,
@@ -6,7 +6,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-} from "@mui/material";
+} from '@mui/material';
 
 export interface IProps {
   openConfirm: any;
@@ -28,7 +28,7 @@ function ConfirmEmailForm(props: IProps) {
           By clicking Send, you will receive a confirmation email to activate
           your email at Mern Template. By doing this, you will able to receive
           our latest emails and promotions. Please check your email for further
-          instructions. Thank you!{" "}
+          instructions. Thank you!
         </DialogContentText>
       </DialogContent>
       <DialogActions>

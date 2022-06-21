@@ -1,69 +1,50 @@
-// import Client from "../api/Client";
 import * as ActionTypes from './ActionTypes';
 import userProfileApi from '../../api/userApi';
 
-const loadProfileRequest = () => {
-  return {
-    type: ActionTypes.LOAD_PROFILE_REQUEST,
-  };
-};
+const loadProfileRequest = () => ({
+  type: ActionTypes.LOAD_PROFILE_REQUEST,
+});
 
-const loadProfileSuccess = (resp) => {
-  return {
-    type: ActionTypes.LOAD_PROFILE_SUCCESS,
-    profile: resp.response.user,
-  };
-};
+const loadProfileSuccess = (resp) => ({
+  type: ActionTypes.LOAD_PROFILE_SUCCESS,
+  profile: resp.response.user,
+});
 
-const loadProfileFailure = (err) => {
-  return {
-    type: ActionTypes.LOAD_PROFILE_FAILURE,
-    error: true,
-    message: err.message || err.response.message,
-  };
-};
+const loadProfileFailure = (err) => ({
+  type: ActionTypes.LOAD_PROFILE_FAILURE,
+  error: true,
+  message: err.message || err.response.message,
+});
 
-const updateProfileRequest = () => {
-  return {
-    type: ActionTypes.UPDATE_PROFILE_REQUEST,
-  };
-};
+const updateProfileRequest = () => ({
+  type: ActionTypes.UPDATE_PROFILE_REQUEST,
+});
 
-const updateProfileSuccess = (resp) => {
-  return {
-    type: ActionTypes.UPDATE_PROFILE_SUCCESS,
-    message: resp.message || resp.response.message,
-  };
-};
+const updateProfileSuccess = (resp) => ({
+  type: ActionTypes.UPDATE_PROFILE_SUCCESS,
+  message: resp.message || resp.response.message,
+});
 
-const updateProfileFailure = (resp) => {
-  return {
-    type: ActionTypes.UPDATE_PROFILE_FAILURE,
-    error: true,
-    message: resp.message || resp.response.message,
-  };
-};
+const updateProfileFailure = (resp) => ({
+  type: ActionTypes.UPDATE_PROFILE_FAILURE,
+  error: true,
+  message: resp.message || resp.response.message,
+});
 
-const uploadImageRequest = () => {
-  return {
-    type: ActionTypes.UPLOAD_IMAGE_REQUEST,
-  };
-};
+const uploadImageRequest = () => ({
+  type: ActionTypes.UPLOAD_IMAGE_REQUEST,
+});
 
-const uploadImageSuccess = (resp) => {
-  return {
-    type: ActionTypes.UPLOAD_IMAGE_SUCCESS,
-    message: resp.message || resp.response.message,
-  };
-};
+const uploadImageSuccess = (resp) => ({
+  type: ActionTypes.UPLOAD_IMAGE_SUCCESS,
+  message: resp.message || resp.response.message,
+});
 
-const uploadImageFailure = (resp) => {
-  return {
-    type: ActionTypes.UPLOAD_IMAGE_FAILURE,
-    error: true,
-    message: resp.message || resp.response.message,
-  };
-};
+const uploadImageFailure = (resp) => ({
+  type: ActionTypes.UPLOAD_IMAGE_FAILURE,
+  error: true,
+  message: resp.message || resp.response.message,
+});
 
 export const loadProfile = () => (dispatch) => {
   dispatch(loadProfileRequest());

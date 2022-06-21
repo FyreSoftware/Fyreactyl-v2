@@ -13,8 +13,8 @@ const fetchUsers = async () => {
     });
     if (response.status === 401) {
       authApi.clearJWT();
-      const error = new Error('Unauthorized!');
-      throw error;
+
+      throw new Error('Unauthorised');
     }
     return await response.json();
   } catch (err) {
@@ -34,8 +34,7 @@ const fetchUser = async (userId) => {
     });
     if (response.status === 401) {
       authApi.clearJWT();
-      const error = new Error('Unauthorized!');
-      throw error;
+      throw new Error('Unauthorized!');
     }
     return await response.json();
   } catch (err) {
@@ -58,8 +57,7 @@ const updateUser = async (user, userId) => {
     });
     if (response.status === 401) {
       authApi.clearJWT();
-      const error = new Error('Unauthorized!');
-      throw error;
+      throw new Error('Unauthorized!');
     }
     return await response.json();
   } catch (err) {
@@ -80,8 +78,7 @@ const deleteUser = async (userId) => {
     });
     if (response.status === 401) {
       authApi.clearJWT();
-      const error = new Error('Unauthorized!');
-      throw error;
+      throw new Error('Unauthorized!');
     }
     return await response.json();
   } catch (err) {
@@ -90,7 +87,6 @@ const deleteUser = async (userId) => {
 };
 
 const uploadProfileImage = async (file, userId) => {
-  console.log('userId in uploadProfileImage', userId);
   let jwt;
   if (authApi.isAuthenticated()) jwt = authApi.isAuthenticated();
 
@@ -107,8 +103,7 @@ const uploadProfileImage = async (file, userId) => {
     });
     if (response.status === 401) {
       authApi.clearJWT();
-      const error = new Error('Unauthorized!');
-      throw error;
+      throw new Error('Unauthorized!');
     }
     return await response.json();
   } catch (err) {

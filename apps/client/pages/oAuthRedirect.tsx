@@ -1,19 +1,19 @@
-import React from "react";
-import Head from "next/head";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
-import Router from "next/router";
-import LoadingBar from "../components/LoadingBar";
-import * as classes from "../lib/styles/styles";
-import auth from "../lib/api/authApi";
+import React from 'react';
+import Head from 'next/head';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
+import Router from 'next/router';
+import LoadingBar from '../components/LoadingBar';
+import * as classes from '../lib/styles/styles';
+import auth from '../lib/api/authApi';
 
 class OAuthRedirect extends React.Component<
-  {},
-  {
-    shouldRedirect: boolean;
-  }
+Record<string, never>,
+{
+  shouldRedirect: boolean;
+}
 > {
   constructor(props) {
     super(props);
@@ -25,8 +25,8 @@ class OAuthRedirect extends React.Component<
   componentDidMount() {
     setTimeout(() => {
       if (document.cookie) {
-        const cookie = document.cookie.split("=");
-        if (cookie[0] === "nest-cookie") {
+        const cookie = document.cookie.split('=');
+        if (cookie[0] === 'nest-cookie') {
           auth.authenticate(cookie[1], () => {
             this.setState({ shouldRedirect: true });
           });
@@ -36,7 +36,7 @@ class OAuthRedirect extends React.Component<
   }
 
   render() {
-    if (this.state.shouldRedirect) Router.push("/");
+    if (this.state.shouldRedirect) Router.push('/');
     return (
       <div>
         <Head>

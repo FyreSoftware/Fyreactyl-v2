@@ -1,23 +1,31 @@
-import React from "react";
-import { notify } from "../Notifier";
-import UserProfile from "./UserProfile";
-import auth from "../../lib/api/authApi";
-import IUser from "../../lib/interfaces/user";
+import React from 'react';
+import { notify } from '../Notifier';
+import UserProfile from './UserProfile';
+import auth from '../../lib/api/authApi';
+import IUser from '../../lib/interfaces/user';
+
 export interface IProps {
   user: IUser;
   message: string;
   loadProfile: any;
   updateProfile: any;
   uploadImage: any;
-  error: boolean;
 }
-class UserDashBoard extends React.Component<IProps> {
-  state = {
-    shouldRerender: false,
-    openEditForm: false,
-    openImageForm: false,
-    openConfirmEmailForm: false,
-  };
+export interface IState {
+  shouldRerender: boolean;
+  openEditForm: boolean;
+  openImageForm: boolean;
+  openConfirmEmailForm: boolean;
+}
+class UserDashBoard extends React.Component<IProps, IState> {
+  constructor(props) {
+    super(props, {
+      shouldRerender: false,
+      openEditForm: false,
+      openImageForm: false,
+      openConfirmEmailForm: false,
+    });
+  }
 
   componentDidMount() {
     this.props.loadProfile();

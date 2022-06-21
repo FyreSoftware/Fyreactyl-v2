@@ -4,18 +4,18 @@
 // import dynamic from 'next/dynamic';
 // const Header = dynamic(import('../components/Header'), {ssr: false});
 
-import App from "next/app";
-import Head from "next/head";
-import React from "react";
-import { Provider } from "react-redux";
-import ConfigStore from "../lib/redux/configStore";
-import { ThemeProvider } from "@mui/material/styles";
-import { CssBaseline, CircularProgress } from "@mui/material";
-import Header from "../components/Header/Header";
-import { Notifier } from "../components/Notifier";
-import theme from "../lib/styles/theme";
+import App from 'next/app';
+import Head from 'next/head';
+import React from 'react';
+import { Provider } from 'react-redux';
+import { ThemeProvider } from '@mui/material/styles';
+import { CssBaseline, CircularProgress } from '@mui/material';
+import ConfigStore from '../lib/redux/configStore';
+import Header from '../components/Header/Header';
+import { Notifier } from '../components/Notifier';
+import theme from '../lib/styles/theme';
 
-let store = ConfigStore();
+const store = ConfigStore();
 
 export interface IProps {
   Component: any;
@@ -34,7 +34,7 @@ export default class MyApp extends App<IProps, IState> {
 
   componentDidMount() {
     this.setState({ loading: false });
-    const jssStyles = document.querySelector("#jss-server-side");
+    const jssStyles = document.querySelector('#jss-server-side');
     if (jssStyles && jssStyles.parentNode) {
       jssStyles.parentNode.removeChild(jssStyles);
     }
@@ -43,10 +43,7 @@ export default class MyApp extends App<IProps, IState> {
   render() {
     const { Component, pageProps } = this.props;
 
-    // @ts-ignore
-    return this.state.loading ? (
-      <CircularProgress />
-    ) : (
+    return !(this.state as IState).loading ? (
       <Provider store={store}>
         <ThemeProvider theme={theme}>
           <Head>
@@ -61,6 +58,8 @@ export default class MyApp extends App<IProps, IState> {
           <Notifier />
         </ThemeProvider>
       </Provider>
+    ) : (
+      <CircularProgress />
     );
   }
 }

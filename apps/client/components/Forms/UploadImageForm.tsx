@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   InputLabel,
   Button,
@@ -7,27 +7,31 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-} from "@mui/material";
+} from '@mui/material';
 
-type CustomProps = {
+export interface CustomProps {
   openImage: any;
   handleClose: any;
   uploadImage: any;
-};
+}
+export interface CustomState {
+  file: string;
+  fileName: string;
+  error: string;
+}
 
-class UploadImageForm extends React.Component<CustomProps> {
+class UploadImageForm extends React.Component<CustomProps, CustomState> {
   constructor(props: CustomProps) {
     super({
       openImage: props.openImage,
       handleClose: props.handleClose,
       uploadImage: props.uploadImage,
+    }, {
+      file: '',
+      fileName: '',
+      error: '',
     });
   }
-  state = {
-    file: "",
-    fileName: "",
-    error: "",
-  };
 
   handleOnChange = (e) => {
     const fileName = e.target.value;
@@ -40,9 +44,9 @@ class UploadImageForm extends React.Component<CustomProps> {
     if (this.isValid()) {
       this.props.uploadImage(this.state.file, this.state.fileName);
       this.setState({
-        file: "",
-        fileName: "",
-        error: "",
+        file: '',
+        fileName: '',
+        error: '',
       });
       this.props.handleClose();
     }
@@ -50,15 +54,15 @@ class UploadImageForm extends React.Component<CustomProps> {
 
   isValid = () => {
     if (!this.state.fileName) {
-      this.setState({ error: "File is Required" });
+      this.setState({ error: 'File is Required' });
       return false;
     }
     const { fileName } = this.state;
-    if (!["jpg", "jpeg", "png", "gif"].includes(fileName.split(".")[1])) {
-      this.setState({ error: "jpg/jpeg/gif/png file is required. " });
+    if (!['jpg', 'jpeg', 'png', 'gif'].includes(fileName.split('.')[1])) {
+      this.setState({ error: 'jpg/jpeg/gif/png file is required. ' });
       return false;
     }
-    this.setState({ error: "" });
+    this.setState({ error: '' });
     return true;
   };
 
@@ -80,12 +84,12 @@ class UploadImageForm extends React.Component<CustomProps> {
           <input
             type="file"
             name="imageFile"
-            style={{ margin: "20px 0" }}
+            style={{ margin: '20px 0' }}
             onChange={this.handleOnChange}
             value={this.state.fileName}
           />
           {this.state.error ? (
-            <span style={{ color: "red" }}>{this.state.error}</span>
+            <span style={{ color: 'red' }}>{this.state.error}</span>
           ) : (
             <span />
           )}

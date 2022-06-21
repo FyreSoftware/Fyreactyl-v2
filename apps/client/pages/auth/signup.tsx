@@ -3,8 +3,8 @@
  * All rights reserved
  */
 
-import React from "react";
-import Head from "next/head";
+import React from 'react';
+import Head from 'next/head';
 import {
   Card,
   CardActions,
@@ -13,14 +13,14 @@ import {
   Typography,
   Grid,
   TextField,
-} from "@mui/material";
-import Link from "next/link";
-import Router from "next/router";
-import * as classes from "../../lib/styles/styles";
-import LoadingBar from "../../components/LoadingBar";
-import auth from "../../lib/api/authApi";
-import { notify } from "../../components/Notifier";
-import withAuth from "../../lib/withAuth";
+} from '@mui/material';
+import Link from 'next/link';
+import Router from 'next/router';
+import * as classes from '../../lib/styles/styles';
+import LoadingBar from '../../components/LoadingBar';
+import auth from '../../lib/api/authApi';
+import { notify } from '../../components/Notifier';
+import withAuth from '../../lib/withAuth';
 
 type SignupState = {
   signUpInProgress: boolean;
@@ -34,18 +34,18 @@ type SignupState = {
   };
   error: any;
 };
-class SignUp extends React.Component<{}, SignupState> {
+class SignUp extends React.Component<Record<string, never>, SignupState> {
   constructor(props) {
     super(props);
     this.state = {
       signUpInProgress: false,
       shouldRedirect: false,
       user: {
-        firstName: "",
-        lastName: "",
-        username: "",
-        password: "",
-        email: "",
+        firstName: '',
+        lastName: '',
+        username: '',
+        password: '',
+        email: '',
       },
       error: {},
     };
@@ -56,7 +56,6 @@ class SignUp extends React.Component<{}, SignupState> {
 
   handleOnChange = (e) => {
     const { name } = e.target;
-    console.log("name", name);
     const user = { ...this.state.user };
     user[name] = e.target.value;
     this.setState({ user, error: {} });
@@ -64,25 +63,25 @@ class SignUp extends React.Component<{}, SignupState> {
 
   isValid = () => {
     if (!this.state.user.username) {
-      this.setState({ error: { username: "Username is Required." } });
+      this.setState({ error: { username: 'Username is Required.' } });
       return false;
     }
     if (!this.state.user.email) {
-      this.setState({ error: { email: "Email is Required." } });
+      this.setState({ error: { email: 'Email is Required.' } });
       return false;
     }
     if (!this.state.user.password) {
-      this.setState({ error: { password: "Password is Required." } });
+      this.setState({ error: { password: 'Password is Required.' } });
       return false;
     }
     if (!(this.state.user.password.length >= 8)) {
       this.setState({
-        error: { password: "Invalid Password. Please try again!" },
+        error: { password: 'Invalid Password. Please try again!' },
       });
       return false;
     }
     if (!this.state.user.email.trim().match(/.+@.+\..+/)) {
-      this.setState({ error: { email: "Invalid Email. Please try agains!" } });
+      this.setState({ error: { email: 'Invalid Email. Please try agains!' } });
       return false;
     }
     this.setState({ error: {} });
@@ -105,13 +104,13 @@ class SignUp extends React.Component<{}, SignupState> {
           notify({ message: resp.message });
         }
       } catch (err) {
-        console.log(err);
+        notify({ message: 'An error has occurred' });
       }
     }
   };
 
   render() {
-    if (this.state.shouldRedirect) Router.push(`/dashboard`);
+    if (this.state.shouldRedirect) Router.push('/dashboard');
     return (
       <div>
         <Head>
@@ -130,10 +129,10 @@ class SignUp extends React.Component<{}, SignupState> {
             <Card variant="outlined" style={classes.card}>
               <CardContent
                 style={{
-                  display: "grid",
-                  justifyContent: "center",
-                  justifyItems: "center",
-                  alignItems: "center",
+                  display: 'grid',
+                  justifyContent: 'center',
+                  justifyItems: 'center',
+                  alignItems: 'center',
                 }}
               >
                 <Typography
@@ -152,8 +151,8 @@ class SignUp extends React.Component<{}, SignupState> {
                   variant="contained"
                   style={{
                     ...classes.oAuthLoginBtn,
-                    backgroundColor: "#f50057",
-                    color: "#fff",
+                    backgroundColor: '#f50057',
+                    color: '#fff',
                   }}
                   href="http://localhost:3000/auth/google"
                 >
@@ -193,7 +192,7 @@ class SignUp extends React.Component<{}, SignupState> {
                   helperText={
                     this.state.error.username
                       ? this.state.error.username
-                      : "Username is Required"
+                      : 'Username is Required'
                   }
                   error={!!this.state.error.username}
                 />
@@ -222,7 +221,7 @@ class SignUp extends React.Component<{}, SignupState> {
                   helperText={
                     this.state.error.email
                       ? this.state.error.email
-                      : "Email is Required. Email should be like abc@example.com"
+                      : 'Email is Required. Email should be like abc@example.com'
                   }
                   error={!!this.state.error.email}
                 />
@@ -232,17 +231,15 @@ class SignUp extends React.Component<{}, SignupState> {
                   variant="contained"
                   color="secondary"
                   size="large"
-                  style={{ margin: "0 auto" }}
+                  style={{ margin: '0 auto' }}
                   onClick={this.handleSubmit}
                 >
                   Submit
                 </Button>
               </CardActions>
               <p>
-                Already An User?{" "}
-                <Link href="/auth/login">
-                  <a>Log In</a>
-                </Link>
+                Already An User?
+                <Link href="/auth/login">Log in</Link>
               </p>
             </Card>
           </Grid>

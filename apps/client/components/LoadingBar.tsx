@@ -1,8 +1,6 @@
-import React from "react";
-import { LinearProgress } from "@mui/material";
+import React from 'react';
+import { LinearProgress } from '@mui/material';
 
-const LoadingBar = () => {
-  return <LinearProgress color="secondary" />;
-};
+const LoadingBar = () => <LinearProgress color="secondary" />;
 
 export default LoadingBar;

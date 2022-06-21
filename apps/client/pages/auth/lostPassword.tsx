@@ -3,8 +3,8 @@
  * All rights reserved
  */
 
-import React from "react";
-import Head from "next/head";
+import React from 'react';
+import Head from 'next/head';
 import {
   Card,
   CardActions,
@@ -13,12 +13,12 @@ import {
   Typography,
   Grid,
   TextField,
-} from "@mui/material";
-import Router from "next/router";
-import * as classes from "../../lib/styles/styles";
-import LoadingBar from "../../components/LoadingBar";
-import auth from "../../lib/api/authApi";
-import { notify } from "../../components/Notifier";
+} from '@mui/material';
+import Router from 'next/router';
+import * as classes from '../../lib/styles/styles';
+import LoadingBar from '../../components/LoadingBar';
+import auth from '../../lib/api/authApi';
+import { notify } from '../../components/Notifier';
 
 export interface IState {
   loading: boolean;
@@ -27,14 +27,17 @@ export interface IState {
   email: string;
   error: any;
 }
-export default class LostPassword extends React.Component<{}, IState> {
+export default class LostPassword extends React.Component<
+Record<string, never>,
+IState
+> {
   constructor(props) {
     super(props);
     this.state = {
       loading: false,
       shouldRedirect: false,
-      password: "",
-      email: "",
+      password: '',
+      email: '',
       error: {},
     };
     this.handleOnChange = this.handleOnChange.bind(this);
@@ -50,21 +53,21 @@ export default class LostPassword extends React.Component<{}, IState> {
 
   isValid = () => {
     if (!this.state.password) {
-      this.setState({ error: { password: "Password is Required." } });
+      this.setState({ error: { password: 'Password is Required.' } });
       return false;
     }
     if (!this.state.email) {
-      this.setState({ error: { email: "Email is Required." } });
+      this.setState({ error: { email: 'Email is Required.' } });
       return false;
     }
     if (!(this.state.password.length >= 8)) {
       this.setState({
-        error: { password: "Invalid Password. Please try again!" },
+        error: { password: 'Invalid Password. Please try again!' },
       });
       return false;
     }
     if (!this.state.email.trim().match(/.+@.+\..+/)) {
-      this.setState({ error: { email: "Invalid Email. Please try again!" } });
+      this.setState({ error: { email: 'Invalid Email. Please try again!' } });
       return false;
     }
     this.setState({ error: {} });
@@ -78,7 +81,7 @@ export default class LostPassword extends React.Component<{}, IState> {
         this.setState({ loading: true });
         const resp = await auth.sendNewPassword(
           this.state.password,
-          this.state.email
+          this.state.email,
         );
         if (resp.success) {
           this.setState({
@@ -90,13 +93,13 @@ export default class LostPassword extends React.Component<{}, IState> {
         }
         notify({ message: resp.message });
       } catch (err) {
-        console.log(err);
+        notify({ message: 'An error has occurred' });
       }
     }
   };
 
   render() {
-    if (this.state.shouldRedirect) Router.push("/login");
+    if (this.state.shouldRedirect) Router.push('/login');
     return (
       <div>
         <Head>
@@ -149,7 +152,7 @@ export default class LostPassword extends React.Component<{}, IState> {
                   helperText={
                     this.state.error.email
                       ? this.state.error.email
-                      : "Email is Required. Email should be like abc@example.com"
+                      : 'Email is Required. Email should be like abc@example.com'
                   }
                   error={!!this.state.error.email}
                 />
@@ -159,7 +162,7 @@ export default class LostPassword extends React.Component<{}, IState> {
                   variant="contained"
                   color="secondary"
                   size="large"
-                  style={{ margin: "0 auto" }}
+                  style={{ margin: '0 auto' }}
                   onClick={this.handleSubmit}
                 >
                   Submit

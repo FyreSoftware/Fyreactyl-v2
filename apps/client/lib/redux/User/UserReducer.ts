@@ -6,7 +6,7 @@ const initialState = {
   error: false,
 };
 
-const UserReducer = function (state = initialState, action) {
+const UserReducer = (state = initialState, action) => {
   switch (action.type) {
     case ActionTypes.LOAD_PROFILE_REQUEST:
       return state;
