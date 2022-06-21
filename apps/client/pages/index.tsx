@@ -6,9 +6,12 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Link from "next/link";
-import withAuth from "../lib/withAuth";
-
-function Index() {
+import withAuth, { IProps } from "../lib/withAuth";
+import Router from "next/router";
+function Index(props: IProps) {
+  if (props.user) {
+    return Router.push("/dashboard");
+  }
   return (
     <div>
       <Grid
@@ -19,13 +22,20 @@ function Index() {
       >
         <Grid item xs={12} md={6}>
           <Card>
-              <CardContent>
-                <Typography style={{ textAlign: "center"}} gutterBottom variant="h5" component="h2">
-                  Welcome to your dashboard
-                </Typography>
-              </CardContent>
-            <CardActions style={{ justifyContent: "center", justifyItems: "center"}}>
-              <Button size="small" color="secondary" href="/login">
+            <CardContent>
+              <Typography
+                style={{ textAlign: "center" }}
+                gutterBottom
+                variant="h5"
+                component="h2"
+              >
+                Please login/signup to access your dashboard
+              </Typography>
+            </CardContent>
+            <CardActions
+              style={{ justifyContent: "center", justifyItems: "center" }}
+            >
+              <Button size="small" color="secondary" href="/auth/login">
                 Login
               </Button>
               <Button size="small" color="secondary">
