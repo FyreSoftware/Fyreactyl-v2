@@ -4,7 +4,7 @@ import authApi from "./api/authApi";
 import userApi from "./api/userApi";
 
 export interface IProps {
-  user: any,
+  user: any;
 }
 export default function withAuth(
   BaseComponent,
@@ -46,7 +46,6 @@ export default function withAuth(
       props = { ...compProps, user };
       return props;
     }
-
     componentDidMount() {
       const { user } = this.props;
       if (loginRequired && !logoutRequired && !user) {
@@ -77,8 +76,6 @@ export default function withAuth(
       );
     }
   }
-
-
 
   return App;
 }
