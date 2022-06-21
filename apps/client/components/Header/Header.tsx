@@ -11,7 +11,7 @@ const optionsMenu = [
   },
   {
     text: "My Account",
-    href: "/profile",
+    href: "/dashboard/profile",
   },
   {
     text: "Log out",

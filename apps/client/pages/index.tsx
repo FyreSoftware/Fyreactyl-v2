@@ -8,10 +8,7 @@ import Grid from "@mui/material/Grid";
 import Link from "next/link";
 import withAuth, { IProps } from "../lib/withAuth";
 import Router from "next/router";
-function Index(props: IProps) {
-  if (props.user) {
-    return Router.push("/dashboard");
-  }
+function Index() {
   return (
     <div>
       <Grid

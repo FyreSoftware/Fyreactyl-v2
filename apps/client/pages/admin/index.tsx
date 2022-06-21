@@ -15,4 +15,8 @@ function AdminDashboard() {
   );
 }
 
-export default withAuth(AdminDashboard);
+export default withAuth(AdminDashboard, {
+  loginRequired: true,
+  logoutRequired: false,
+  adminRequired: true,
+});

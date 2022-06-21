@@ -83,7 +83,7 @@ export default class MenuWithAvatar extends React.Component<
           onClose={this.handleClose}
         >
           {this.props.isAdmin && (
-            <Link href="/admin/index">
+            <Link href="/admin/">
               <MenuItem>Admin Dashboard</MenuItem>
             </Link>
           )}

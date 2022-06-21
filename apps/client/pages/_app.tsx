@@ -10,7 +10,7 @@ import React from "react";
 import { Provider } from "react-redux";
 import ConfigStore from "../lib/redux/configStore";
 import { ThemeProvider } from "@mui/material/styles";
-import { CssBaseline } from "@mui/material";
+import { CssBaseline, CircularProgress } from "@mui/material";
 import Header from "../components/Header/Header";
 import { Notifier } from "../components/Notifier";
 import theme from "../lib/styles/theme";
@@ -21,11 +21,19 @@ export interface IProps {
   Component: any;
   pageProps: any;
 }
-export default class MyApp extends App<IProps> {
+export interface IState {
+  loading: boolean;
+}
+export default class MyApp extends App<IProps, IState> {
   constructor(props) {
     super(props);
+    this.state = {
+      loading: true,
+    };
   }
+
   componentDidMount() {
+    this.setState({ loading: false });
     const jssStyles = document.querySelector("#jss-server-side");
     if (jssStyles && jssStyles.parentNode) {
       jssStyles.parentNode.removeChild(jssStyles);
@@ -36,7 +44,9 @@ export default class MyApp extends App<IProps> {
     const { Component, pageProps } = this.props;
 
     // @ts-ignore
-    return (
+    return this.state.loading ? (
+      <CircularProgress />
+    ) : (
       <Provider store={store}>
         <ThemeProvider theme={theme}>
           <Head>
