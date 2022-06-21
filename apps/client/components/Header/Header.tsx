@@ -1,11 +1,8 @@
 import Link from "next/link";
-import Toolbar from "@material-ui/core/Toolbar";
-import Grid from "@material-ui/core/Grid";
-import Avatar from "@material-ui/core/Avatar";
-import { FilterVintage } from "@material-ui/icons";
 import MenuWithAvatar from "./MenuWithAvatar";
+import { FilterVintage } from "@mui/icons-material";
 import { styledToolbar } from "../../lib/styles/styles";
-import { Button } from "@material-ui/core";
+import { Button, Toolbar, Grid, Avatar } from "@mui/material";
 
 const optionsMenu = [
   {

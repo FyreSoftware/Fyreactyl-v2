@@ -1,4 +1,7 @@
 import React from "react";
+import UserProfile from "../User/UserProfile";
+import * as classes from "../../lib/styles/styles";
+import userAuth from "../../lib/api/authApi";
 import {
   Grid,
   Paper,
@@ -9,26 +12,22 @@ import {
   Avatar,
   ListItemAvatar,
   IconButton,
-} from "@material-ui/core";
-import { ArrowForward } from "@material-ui/icons";
+} from "@mui/material";
+import { ArrowForward } from "@mui/icons-material";
 import { notify } from "../Notifier";
-import UserProfile from "../UserProfile";
-import * as classes from "../../lib/styles/styles";
-import userAuth from "../../lib/api/authApi"
 
 export interface IProps {
-  users: any[],
-  user: any,
-  message: string,
-  loadUsers: any,
-  loadProfile: any,
-  updateProfile: any,
-  deleteProfile: any,
-  uploadImage: any,
-  error: boolean
+  users: any[];
+  user: any;
+  message: string;
+  loadUsers: any;
+  loadProfile: any;
+  updateProfile: any;
+  deleteProfile: any;
+  uploadImage: any;
+  error: boolean;
 }
 class AdminDashBoard extends React.Component<IProps> {
-
   state = {
     showUserProfile: false,
     shouldRerender: false,

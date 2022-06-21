@@ -7,7 +7,7 @@ import Document, {
   Main,
   NextScript,
 } from "next/document";
-import { ServerStyleSheets } from "@material-ui/styles";
+import { ServerStyleSheets } from "@mui/styles";
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
@@ -70,7 +70,6 @@ class MyDocument extends Document {
             fontWeight: 300,
             padding: 0,
             margin: 0,
-            backgroundColor: "#f7f7f7",
           }}
         >
           <Main />

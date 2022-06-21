@@ -1,18 +1,17 @@
-import React from 'react';
-import { notify } from '../Notifier';
-import UserProfile from '../UserProfile';
-import auth from '../../lib/api/authApi';
-import IUser from "../../lib/interfaces/user"
+import React from "react";
+import { notify } from "../Notifier";
+import UserProfile from "./UserProfile";
+import auth from "../../lib/api/authApi";
+import IUser from "../../lib/interfaces/user";
 export interface IProps {
-  user: IUser,
-  message: string,
-  loadProfile: any,
-  updateProfile: any,
-  uploadImage: any,
-  error: boolean
+  user: IUser;
+  message: string;
+  loadProfile: any;
+  updateProfile: any;
+  uploadImage: any;
+  error: boolean;
 }
 class UserDashBoard extends React.Component<IProps> {
-
   state = {
     shouldRerender: false,
     openEditForm: false,
@@ -46,7 +45,7 @@ class UserDashBoard extends React.Component<IProps> {
   handleSendEmail = async () => {
     this.toggleConfirmEmailForm();
     const resp = await auth.sendConfirmEmail(this.props.user.id);
-    notify({ message: resp.message || resp.response.message});
+    notify({ message: resp.message || resp.response.message });
   };
 
   toggleEditForm = () => {

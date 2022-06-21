@@ -1,17 +1,20 @@
 import React from "react";
 import Head from "next/head";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
 import Router from "next/router";
 import LoadingBar from "../components/LoadingBar";
 import * as classes from "../lib/styles/styles";
 import auth from "../lib/api/authApi";
 
-class OAuthRedirect extends React.Component<{}, {
-  shouldRedirect: boolean
-}> {
+class OAuthRedirect extends React.Component<
+  {},
+  {
+    shouldRedirect: boolean;
+  }
+> {
   constructor(props) {
     super(props);
     this.state = {

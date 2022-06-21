@@ -1,22 +1,25 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import * as classes from "../lib/styles/styles";
+import {
+  TextField,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material";
+
+import * as classes from "../../lib/styles/styles";
 export interface IState {
-  user: any,
-  error: any
+  user: any;
+  error: any;
 }
 export interface IProps {
-  user: any,
-  error: any,
-  handleClose: any,
-  handleUpdate: any,
-  openEdit: any
+  user: any;
+  error: any;
+  handleClose: any;
+  handleUpdate: any;
+  openEdit: any;
 }
 
 class EditProfileForm extends React.Component<IProps, IState> {
@@ -27,7 +30,7 @@ class EditProfileForm extends React.Component<IProps, IState> {
       email: this.props.user.email || "",
     },
     error: {
-      email: false
+      email: false,
     },
   };
 
@@ -106,7 +109,7 @@ class EditProfileForm extends React.Component<IProps, IState> {
             style={classes.textField}
             helperText={
               this.state.error.email
-                 ? this.state.error.email
+                ? this.state.error.email
                 : "Email is Required. Email should be like abc@example.com"
             }
             error={!!this.state.error.email}

@@ -1,12 +1,10 @@
 import React from "react";
-import Snackbar from "@material-ui/core/Snackbar";
-import Fade from "@material-ui/core/Fade";
-
+import { Fade, Snackbar } from "@mui/material";
 let openNotifier;
 
 export interface IState {
-  open: boolean,
-  message: string
+  open: boolean;
+  message: string;
 }
 export class Notifier extends React.Component<{}, IState> {
   constructor(props) {

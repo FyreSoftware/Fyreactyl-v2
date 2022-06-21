@@ -1,11 +1,10 @@
 import React from "react";
-import Admin from "../components/Admin/Main";
-import withAuth from "../lib/withAuth";
+import Admin from "../../components/Admin/Main";
+import withAuth from "../../lib/withAuth";
 import Head from "next/head";
-
 function AdminDashboard() {
   // @ts-ignore
-    return (
+  return (
     <>
       <Head>
         <title>Admin Dashboard</title>
