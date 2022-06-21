@@ -2,13 +2,13 @@ import React from "react";
 import Router from "next/router";
 import authApi from "./api/authApi";
 import userApi from "./api/userApi";
-
+import IUser from "./interfaces/user";
 export interface IProps {
-  user: any,
+  user: IUser;
 }
 export default function withAuth(
   BaseComponent,
-  { loginRequired = true, logoutRequired = false } = {}
+  { loginRequired = true, logoutRequired = false, adminRequired = false } = {}
 ) {
   class App extends React.Component<IProps> {
     // Using getInitialProps() insteads of getStaticProps() or getServerSideProps()
@@ -24,7 +24,7 @@ export default function withAuth(
         resp = await userApi.fetchProfile();
       }
 
-      // If withAuth HOC is called on the browser => ctx.req is availale
+      // If withAuth HOC is called on the browser => ctx.req is available
       if (
         ctx.req &&
         ctx.req.headers.cookie &&
@@ -46,30 +46,22 @@ export default function withAuth(
       props = { ...compProps, user };
       return props;
     }
-
     componentDidMount() {
       const { user } = this.props;
+
       if (loginRequired && !logoutRequired && !user) {
         Router.push("/auth/login");
         return;
       }
-
+      if (user && adminRequired && !user.isAdmin) {
+        Router.push("/dashboard");
+      }
       if (logoutRequired && user) {
         Router.push("/dashboard");
       }
     }
 
     render() {
-      const { user } = this.props;
-
-      if (loginRequired && !logoutRequired && !user) {
-        return null;
-      }
-
-      if (logoutRequired && user) {
-        return null;
-      }
-
       return (
         <>
           <BaseComponent {...this.props} />
@@ -77,8 +69,6 @@ export default function withAuth(
       );
     }
   }
-
-
 
   return App;
 }

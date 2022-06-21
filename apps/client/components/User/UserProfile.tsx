@@ -1,24 +1,28 @@
 import React from "react";
-import Grid from "@material-ui/core/Grid";
-import Avatar from "@material-ui/core/Avatar";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Badge from "@material-ui/core/Badge";
-import Chip from "@material-ui/core/Chip";
-import CardHeader from "@material-ui/core/CardHeader";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-import { Edit, DeleteSharp, ArrowBack } from "@material-ui/icons";
-import Divider from "@material-ui/core/Divider";
-import { green, red } from "@material-ui/core/colors";
-import Tooltip from "@material-ui/core/Tooltip";
-import Fab from "@material-ui/core/Fab";
-import * as classes from "../lib/styles/styles";
+import { green, red } from "@mui/material/colors";
+import { Edit, DeleteSharp, ArrowBack } from "@mui/icons-material";
 
-import UploadImageForm from "./UploadImageForm";
-import EditProfileForm from "./EditProfileForm";
-import DeleteForm from "./DeleteForm";
-import ConfirmEmailForm from "./ConfirmEmailForm";
+import * as classes from "../../lib/styles/styles";
+
+import UploadImageForm from "../Forms/UploadImageForm";
+import EditProfileForm from "../Forms/EditProfileForm";
+import DeleteForm from "../Forms/DeleteForm";
+import ConfirmEmailForm from "../Forms/ConfirmEmailForm";
+
+import {
+  Grid,
+  Avatar,
+  Card,
+  CardContent,
+  Badge,
+  Chip,
+  CardHeader,
+  IconButton,
+  Typography,
+  Divider,
+  Tooltip,
+  Fab,
+} from "@mui/material";
 
 function UserProfile(props) {
   return (

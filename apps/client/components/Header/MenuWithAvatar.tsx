@@ -1,10 +1,10 @@
 import React from "react";
-import { MenuItem, Menu, IconButton, Avatar } from "@material-ui/core";
-import { Person } from "@material-ui/icons";
 import authApi from "../../lib/api/authApi";
 import Router from "next/router";
-import { notify } from "../Notifier";
 import Link from "next/link";
+import { MenuItem, Menu, IconButton, Avatar } from "@mui/material";
+import { Person } from "@mui/icons-material";
+import { notify } from "../Notifier";
 
 export default class MenuWithAvatar extends React.Component<
   {
@@ -83,7 +83,7 @@ export default class MenuWithAvatar extends React.Component<
           onClose={this.handleClose}
         >
           {this.props.isAdmin && (
-            <Link href="/admin">
+            <Link href="/admin/">
               <MenuItem>Admin Dashboard</MenuItem>
             </Link>
           )}

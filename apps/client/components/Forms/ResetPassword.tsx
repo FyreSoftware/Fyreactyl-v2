@@ -1,23 +1,25 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import * as classes from "../lib/styles/styles";
-import auth from "../lib/api/authApi";
-import { notify } from "./Notifier";
+import * as classes from "../../lib/styles/styles";
+import auth from "../../lib/api/authApi";
+import { notify } from "../Notifier";
+import {
+  TextField,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material";
 
-class ResetPassword extends React.Component<
+export default class ResetPassword extends React.Component<
   {
     handleClose: any;
     open: any;
   },
   {
-    email: string;
-    error: any;
+    email?: string;
+    error?: any;
   }
 > {
   constructor(props) {
@@ -41,7 +43,7 @@ class ResetPassword extends React.Component<
       return false;
     }
     if (!this.state.email.trim().match(/.+@.+\..+/)) {
-      this.setState({ error: { email: "Invalid Email. Please try agains!" } });
+      this.setState({ error: { email: "Invalid Email. Please try again!" } });
       return false;
     }
     this.setState({ error: {} });
@@ -101,5 +103,3 @@ class ResetPassword extends React.Component<
     );
   }
 }
-
-export default ResetPassword;
