@@ -1,14 +1,14 @@
 import React from 'react';
 import {
-  Grid,
-  Paper,
-  List,
-  Typography,
-  ListItem,
-  ListItemText,
   Avatar,
-  ListItemAvatar,
+  Grid,
   IconButton,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Paper,
+  Typography,
 } from '@mui/material';
 import { ArrowForward } from '@mui/icons-material';
 import UserProfile from '../User/UserProfile';
