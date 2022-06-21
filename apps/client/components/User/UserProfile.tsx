@@ -1,13 +1,6 @@
-import React from "react";
-import { green, red } from "@mui/material/colors";
-import { Edit, DeleteSharp, ArrowBack } from "@mui/icons-material";
-
-import * as classes from "../../lib/styles/styles";
-
-import UploadImageForm from "../Forms/UploadImageForm";
-import EditProfileForm from "../Forms/EditProfileForm";
-import DeleteForm from "../Forms/DeleteForm";
-import ConfirmEmailForm from "../Forms/ConfirmEmailForm";
+import React from 'react';
+import { green, red } from '@mui/material/colors';
+import { Edit, DeleteSharp, ArrowBack } from '@mui/icons-material';
 
 import {
   Grid,
@@ -22,7 +15,13 @@ import {
   Divider,
   Tooltip,
   Fab,
-} from "@mui/material";
+} from '@mui/material';
+import * as classes from '../../lib/styles/styles';
+
+import UploadImageForm from '../Forms/UploadImageForm';
+import EditProfileForm from '../Forms/EditProfileForm';
+import DeleteForm from '../Forms/DeleteForm';
+import ConfirmEmailForm from '../Forms/ConfirmEmailForm';
 
 function UserProfile(props) {
   return (
@@ -33,7 +32,7 @@ function UserProfile(props) {
       style={classes.container}
     >
       {props.backToUserList && (
-        <Grid item xs={12} style={{ textAlign: "center" }}>
+        <Grid item xs={12} style={{ textAlign: 'center' }}>
           <Tooltip title="Back to User List" aria-label="add">
             <Fab color="primary">
               <IconButton onClick={props.backToUserList}>
@@ -48,52 +47,52 @@ function UserProfile(props) {
           <div>
             <CardHeader
               style={{
-                textAlign: "center",
-                textTransform: "uppercase",
-                fontSize: "16px",
+                textAlign: 'center',
+                textTransform: 'uppercase',
+                fontSize: '16px',
               }}
               color="primary"
               title="User Profile"
             />
             <Divider />
             <br />
-            <div style={{ textAlign: "center" }}>
+            <div style={{ textAlign: 'center' }}>
               <Badge
                 overlap="circular"
                 anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "right",
+                  vertical: 'bottom',
+                  horizontal: 'right',
                 }}
-                badgeContent={
+                badgeContent={(
                   <IconButton
                     style={{
-                      width: "22",
-                      height: "22",
+                      width: '22',
+                      height: '22',
                       backgroundColor: green[500],
-                      color: "#fff",
-                      border: "2px solid #FFF",
+                      color: '#fff',
+                      border: '2px solid #FFF',
                     }}
                     onClick={props.toggleImageForm}
                   >
                     <Edit />
                   </IconButton>
-                }
+                )}
               >
                 <Avatar
                   style={{
-                    borderRadius: "50%",
-                    width: "150px",
-                    height: "150px",
+                    borderRadius: '50%',
+                    width: '150px',
+                    height: '150px',
                   }}
                   src={
-                    props.user.avatarUrl ||
-                    "https://cdn4.iconfinder.com/data/icons/green-shopper/1068/user.png"
+                    props.user.avatarUrl
+                    || 'https://cdn4.iconfinder.com/data/icons/green-shopper/1068/user.png'
                   }
                   alt="User Profile Image"
                 />
               </Badge>
             </div>
-            <CardContent style={{ padding: "20px" }}>
+            <CardContent style={{ padding: '20px' }}>
               <Typography component="h5" variant="h5">
                 {props.user.displayName}
               </Typography>
@@ -104,27 +103,27 @@ function UserProfile(props) {
               <Divider />
               <p
                 style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
                 }}
               >
                 <span>
                   <Chip
-                    style={{ marginTop: "5px", marginRight: "10px" }}
-                    label={props.user.isAdmin ? "Admin" : "User"}
+                    style={{ marginTop: '5px', marginRight: '10px' }}
+                    label={props.user.isAdmin ? 'Admin' : 'User'}
                     color="secondary"
                     variant="outlined"
                   />
                   <Chip
-                    style={{ marginTop: "5px" }}
+                    style={{ marginTop: '5px' }}
                     clickable
                     label={
                       props.user.emailActivated
-                        ? "Active Email"
-                        : "Activate Email Now"
+                        ? 'Active Email'
+                        : 'Activate Email Now'
                     }
-                    color={props.user.emailActivated ? "secondary" : "primary"}
+                    color={props.user.emailActivated ? 'secondary' : 'primary'}
                     onClick={
                       !props.user.emailActivated && props.toggleConfirmEmailForm
                     }
@@ -133,7 +132,7 @@ function UserProfile(props) {
                 <span>
                   <IconButton
                     style={{
-                      display: "inline-block",
+                      display: 'inline-block',
                       color: green[500],
                     }}
                     onClick={props.toggleEditForm}
@@ -153,13 +152,15 @@ function UserProfile(props) {
                 </span>
               </p>
               <p>
-                <strong>First Name:</strong> {props.user.firstName}
+                <strong>First Name:</strong>
+                {props.user.firstName}
               </p>
               <p>
-                <strong>Last Name:</strong> {props.user.lastName}
+                <strong>Last Name:</strong>
+                {props.user.lastName}
               </p>
               <p>
-                <strong>Joined at:</strong>{" "}
+                <strong>Joined at:</strong>
                 {new Date(props.user.createdAt).toDateString()}
               </p>
               <EditProfileForm

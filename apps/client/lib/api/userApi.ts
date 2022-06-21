@@ -1,22 +1,23 @@
-import authApi from "./authApi";
-import baseUrl from "../baseUrl";
+import authApi from './authApi';
+import baseUrl from '../baseUrl';
 
-const fetchProfile = async (jwt = "") => {
+const fetchProfile = async (jwt = '') => {
   if (!jwt) {
+    // eslint-disable-next-line no-param-reassign
     if (authApi.isAuthenticated()) jwt = authApi.isAuthenticated();
   }
   try {
     const response = await fetch(`${baseUrl}/users/profile`, {
-      method: "GET",
+      method: 'GET',
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${jwt}`,
       },
     });
     if (response.status === 401) {
       authApi.clearJWT();
-      throw Error("Unauthorized!");
+      throw new Error('Unauthorized!');
     }
     return await response.json();
   } catch (err) {
@@ -29,20 +30,18 @@ const updateProfile = async (profile) => {
   if (authApi.isAuthenticated()) jwt = authApi.isAuthenticated();
   try {
     const response = await fetch(`${baseUrl}/users/profile`, {
-      method: "PUT",
+      method: 'PUT',
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${jwt}`,
       },
       body: JSON.stringify(profile),
     });
     if (response.status === 401) {
       authApi.clearJWT();
-      const error = new Error("Unauthorized!")
-      throw error;
+      throw new Error('Unauthorized!');
     }
-    console.log(response.json());
     return await response.json();
   } catch (err) {
     return err;
@@ -54,11 +53,11 @@ const uploadProfileImage = async (file) => {
   if (authApi.isAuthenticated()) jwt = authApi.isAuthenticated();
 
   const fd = new FormData();
-  fd.append("imageFile", file, file.name);
+  fd.append('imageFile', file, file.name);
 
   try {
     const response = await fetch(`${baseUrl}/users/profile/uploadImage`, {
-      method: "POST",
+      method: 'POST',
       headers: {
         Authorization: `Bearer ${jwt}`,
       },
@@ -66,8 +65,7 @@ const uploadProfileImage = async (file) => {
     });
     if (response.status === 401) {
       authApi.clearJWT();
-      const error = new Error("Unauthorized!");
-      throw error;
+      throw new Error('Unauthorized!');
     }
     return await response.json();
   } catch (err) {

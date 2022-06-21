@@ -1,9 +1,3 @@
----
-name: Pull request template
-about: Contribute to us
-assignees: tovade
----
-
 # Description
 
 Please include a summary of the changes and the related issue. Please also include relevant motivation and context. List any dependencies that are required for this change.
@@ -12,7 +6,7 @@ Fixes # (issue if relevant)
 
 ## Type of change
 
-Please delete options that are not relevant.
+Please delete options that are not relevant. (If any options of these are not relevant describe whats changed)
 
 - [ ] Bug fix (non-breaking change which fixes an issue)
 - [ ] New feature (non-breaking change which adds functionality)
@@ -26,5 +20,3 @@ Please delete options that are not relevant.
 - [ ] I have performed a self-review of my code
 - [ ] I have commented my code, particularly in hard-to-understand areas
 - [ ] My changes generate no new warnings
-- [ ] I have added tests that prove my fix is effective or that my feature works
-- [ ] New and existing unit tests pass locally with my changes

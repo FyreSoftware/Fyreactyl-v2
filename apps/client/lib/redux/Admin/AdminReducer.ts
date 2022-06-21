@@ -7,7 +7,7 @@ const initialState = {
   error: false,
 };
 
-const AdminReducer = function (state = initialState, action) {
+const AdminReducer = (state = initialState, action) => {
   switch (action.type) {
     case ActionTypes.LOAD_USERS_REQUEST:
       return state;

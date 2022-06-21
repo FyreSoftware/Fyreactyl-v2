@@ -1,17 +1,18 @@
-import React from "react";
-import { Fade, Snackbar } from "@mui/material";
+import React from 'react';
+import { Fade, Snackbar } from '@mui/material';
+
 let openNotifier;
 
 export interface IState {
   open: boolean;
   message: string;
 }
-export class Notifier extends React.Component<{}, IState> {
+export class Notifier extends React.Component<Record<string, never>, IState> {
   constructor(props) {
     super(props);
     this.state = {
       open: false,
-      message: "",
+      message: '',
     };
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -27,7 +28,7 @@ export class Notifier extends React.Component<{}, IState> {
 
   handleClose = () => {
     this.setState({
-      message: "",
+      message: '',
       open: false,
     });
   };
@@ -36,7 +37,7 @@ export class Notifier extends React.Component<{}, IState> {
     return (
       <div>
         <Snackbar
-          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
           open={this.state.open}
           onClick={this.handleClose}
           TransitionComponent={Fade}

@@ -1,7 +1,4 @@
-import React from "react";
-import * as classes from "../../lib/styles/styles";
-import auth from "../../lib/api/authApi";
-import { notify } from "../Notifier";
+import React from 'react';
 import {
   TextField,
   Button,
@@ -10,22 +7,25 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-} from "@mui/material";
+} from '@mui/material';
+import * as classes from '../../lib/styles/styles';
+import auth from '../../lib/api/authApi';
+import { notify } from '../Notifier';
 
 export default class ResetPassword extends React.Component<
-  {
-    handleClose: any;
-    open: any;
-  },
-  {
-    email?: string;
-    error?: any;
-  }
+{
+  handleClose: any;
+  open: any;
+},
+{
+  email?: string;
+  error?: any;
+}
 > {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
+      email: '',
       error: {},
     };
     this.handleOnChange = this.handleOnChange.bind(this);
@@ -39,11 +39,11 @@ export default class ResetPassword extends React.Component<
 
   isValid = () => {
     if (!this.state.email) {
-      this.setState({ error: { email: "Email is Required." } });
+      this.setState({ error: { email: 'Email is Required.' } });
       return false;
     }
     if (!this.state.email.trim().match(/.+@.+\..+/)) {
-      this.setState({ error: { email: "Invalid Email. Please try again!" } });
+      this.setState({ error: { email: 'Invalid Email. Please try again!' } });
       return false;
     }
     this.setState({ error: {} });
@@ -56,7 +56,7 @@ export default class ResetPassword extends React.Component<
       const resp = await auth.sendResetPasswordEmail(this.state.email);
       if (resp.message) notify({ message: resp.message });
       this.setState({
-        email: "",
+        email: '',
       });
       this.props.handleClose();
     }
@@ -86,7 +86,7 @@ export default class ResetPassword extends React.Component<
             helperText={
               this.state.error.email
                 ? this.state.error.email
-                : "Email is Required. Email should be like abc@example.com"
+                : 'Email is Required. Email should be like abc@example.com'
             }
             error={!!this.state.error.email}
           />

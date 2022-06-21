@@ -1,20 +1,20 @@
-import React from "react";
-import UserProfile from "../User/UserProfile";
-import * as classes from "../../lib/styles/styles";
-import userAuth from "../../lib/api/authApi";
+import React from 'react';
 import {
-  Grid,
-  Paper,
-  List,
-  Typography,
-  ListItem,
-  ListItemText,
   Avatar,
-  ListItemAvatar,
+  Grid,
   IconButton,
-} from "@mui/material";
-import { ArrowForward } from "@mui/icons-material";
-import { notify } from "../Notifier";
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Paper,
+  Typography,
+} from '@mui/material';
+import { ArrowForward } from '@mui/icons-material';
+import UserProfile from '../User/UserProfile';
+import * as classes from '../../lib/styles/styles';
+import userAuth from '../../lib/api/authApi';
+import { notify } from '../Notifier';
 
 export interface IProps {
   users: any[];
@@ -25,18 +25,28 @@ export interface IProps {
   updateProfile: any;
   deleteProfile: any;
   uploadImage: any;
-  error: boolean;
 }
-class AdminDashBoard extends React.Component<IProps> {
-  state = {
-    showUserProfile: false,
-    shouldRerender: false,
-    openEditForm: false,
-    openImageForm: false,
-    openDeleteForm: false,
-    openConfirmEmailForm: false,
-    userId: "",
-  };
+export interface IState {
+  showUserProfile: boolean;
+  shouldRerender: boolean;
+  openEditForm: boolean;
+  openImageForm: boolean;
+  openDeleteForm: boolean;
+  openConfirmEmailForm: boolean;
+  userId: string;
+}
+class AdminDashBoard extends React.Component<IProps, IState> {
+  constructor(props) {
+    super(props, {
+      showUserProfile: false,
+      shouldRerender: false,
+      openEditForm: false,
+      openImageForm: false,
+      openDeleteForm: false,
+      openConfirmEmailForm: false,
+      userId: '',
+    });
+  }
 
   componentDidMount() {
     this.props.loadUsers();
@@ -74,7 +84,7 @@ class AdminDashBoard extends React.Component<IProps> {
   handleSendEmail = async () => {
     this.toggleConfirmEmailForm();
     const resp = await userAuth.sendConfirmEmail(this.state.userId);
-    resp.message && notify({ message: resp.message });
+    notify({ message: resp.message });
   };
 
   toggleEditForm = () => {
@@ -94,11 +104,11 @@ class AdminDashBoard extends React.Component<IProps> {
   };
 
   backToUserList = () => {
-    this.setState({ showUserProfile: false, userId: "" });
+    this.setState({ showUserProfile: false, userId: '' });
   };
 
   render() {
-    if (this.state.showUserProfile && this.props.user)
+    if (this.state.showUserProfile && this.props.user) {
       return (
         <UserProfile
           toggleImageForm={this.toggleImageForm}
@@ -117,6 +127,7 @@ class AdminDashBoard extends React.Component<IProps> {
           handleSendEmail={this.handleSendEmail}
         />
       );
+    }
     return (
       <div>
         <Grid
@@ -126,45 +137,43 @@ class AdminDashBoard extends React.Component<IProps> {
           style={classes.container}
         >
           <Grid item xs={10} sm={8} md={4}>
-            <Paper style={{ padding: "10px" }} elevation={4}>
+            <Paper style={{ padding: '10px' }} elevation={4}>
               <Typography
-                style={{ margin: "20px" }}
+                style={{ margin: '20px' }}
                 color="secondary"
                 variant="h6"
               >
                 Users List
               </Typography>
               <List>
-                {this.props.users.length > 0 &&
-                  this.props.users.map((user, idx) => {
-                    return (
-                      <ListItem key={idx}>
-                        <ListItemAvatar style={{ marginRight: "20px" }}>
-                          <Avatar
-                            style={{
-                              width: "50px",
-                              height: "auto",
-                              borderRadius: "50%",
-                            }}
-                            src={
-                              user.avatarUrl ||
-                              "https://cdn4.iconfinder.com/data/icons/green-shopper/1068/user.png"
+                {this.props.users.length > 0
+                  && this.props.users.map((user, idx) => (
+                    <ListItem key={idx}>
+                      <ListItemAvatar style={{ marginRight: '20px' }}>
+                        <Avatar
+                          style={{
+                            width: '50px',
+                            height: 'auto',
+                            borderRadius: '50%',
+                          }}
+                          src={
+                              user.avatarUrl
+                              || 'https://cdn4.iconfinder.com/data/icons/green-shopper/1068/user.png'
                             }
-                            alt="User Profile Image"
-                          />
-                        </ListItemAvatar>
-                        <ListItemText
-                          primary={user.displayName}
-                          secondary={user.email}
+                          alt="User Profile Image"
                         />
-                        <IconButton
-                          onClick={() => this.showUserProfile(user._id)}
-                        >
-                          <ArrowForward />
-                        </IconButton>
-                      </ListItem>
-                    );
-                  })}
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={user.displayName}
+                        secondary={user.email}
+                      />
+                      <IconButton
+                        onClick={() => this.showUserProfile(user.id)}
+                      >
+                        <ArrowForward />
+                      </IconButton>
+                    </ListItem>
+                  ))}
               </List>
             </Paper>
           </Grid>

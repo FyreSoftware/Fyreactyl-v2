@@ -1,7 +1,7 @@
-import React from "react";
-import Head from "next/head";
-import UserProfile from "../../components/User/Main";
-import withAuth from "../../lib/withAuth";
+import React from 'react';
+import Head from 'next/head';
+import UserProfile from '../../components/User/Main';
+import withAuth from '../../lib/withAuth';
 
 function Profile() {
   return (

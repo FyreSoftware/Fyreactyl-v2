@@ -1,5 +1,5 @@
-import React from "react";
-import Head from "next/head";
+import React from 'react';
+import Head from 'next/head';
 import {
   Card,
   CardActions,
@@ -8,28 +8,28 @@ import {
   Typography,
   Grid,
   TextField,
-} from "@mui/material";
-import Router from "next/router";
-import * as classes from "../../lib/styles/styles";
-import LoadingBar from "../../components/LoadingBar";
-import auth from "../../lib/api/authApi";
-import { notify } from "../../components/Notifier";
-import ResetPassword from "../../components/Forms/ResetPassword";
-import baseUrl from "../../lib/baseUrl";
-import withAuth from "../../lib/withAuth";
+} from '@mui/material';
+import Router from 'next/router';
+import * as classes from '../../lib/styles/styles';
+import LoadingBar from '../../components/LoadingBar';
+import auth from '../../lib/api/authApi';
+import { notify } from '../../components/Notifier';
+import ResetPassword from '../../components/Forms/ResetPassword';
+import baseUrl from '../../lib/baseUrl';
+import withAuth from '../../lib/withAuth';
 
 class Login extends React.Component<
-  {},
-  {
-    loginInProgress: boolean;
-    shouldRedirect: boolean;
-    user: {
-      username: string;
-      password: string;
-    };
-    openResetPassword: boolean;
-    error: any;
-  }
+Record<string, never>,
+{
+  loginInProgress: boolean;
+  shouldRedirect: boolean;
+  user: {
+    username: string;
+    password: string;
+  };
+  openResetPassword: boolean;
+  error: any;
+}
 > {
   constructor(props) {
     super(props);
@@ -37,8 +37,8 @@ class Login extends React.Component<
       loginInProgress: false,
       shouldRedirect: false,
       user: {
-        username: "",
-        password: "",
+        username: '',
+        password: '',
       },
       openResetPassword: false,
       error: {},
@@ -60,16 +60,16 @@ class Login extends React.Component<
   isValid = () => {
     const { username, password } = this.state.user;
     if (!username) {
-      this.setState({ error: { username: "Username is Required." } });
+      this.setState({ error: { username: 'Username is Required.' } });
       return false;
     }
     if (!password) {
-      this.setState({ error: { password: "Password is Required." } });
+      this.setState({ error: { password: 'Password is Required.' } });
       return false;
     }
     if (!(password.length >= 8)) {
       this.setState({
-        error: { password: "Invalid Password. Please try again!" },
+        error: { password: 'Invalid Password. Please try again!' },
       });
       return false;
     }
@@ -86,7 +86,7 @@ class Login extends React.Component<
         if (resp.success) {
           document.cookie = resp.cookie;
           if (document.cookie) {
-            const token = document.cookie.split("=")[1];
+            const token = document.cookie.split('=')[1];
             auth.authenticate(token, () => {
               this.setState({
                 shouldRedirect: true,
@@ -97,7 +97,7 @@ class Login extends React.Component<
         this.setState({ loginInProgress: false });
         notify({ message: resp.message });
       } catch (err) {
-        console.log(err);
+        notify({ message: 'An error has occurred' });
       }
     }
   };
@@ -107,9 +107,7 @@ class Login extends React.Component<
   };
 
   render() {
-    if (this.state.shouldRedirect) Router.push("/");
-    // until webstorm fixes bug
-    // @ts-ignore
+    if (this.state.shouldRedirect) Router.push('/');
     return (
       <div>
         <Head>
@@ -127,10 +125,10 @@ class Login extends React.Component<
             <Card variant="outlined" style={classes.card}>
               <CardContent
                 style={{
-                  display: "grid",
-                  justifyContent: "center",
-                  justifyItems: "center",
-                  alignItems: "center",
+                  display: 'grid',
+                  justifyContent: 'center',
+                  justifyItems: 'center',
+                  alignItems: 'center',
                 }}
               >
                 <Typography
@@ -149,8 +147,8 @@ class Login extends React.Component<
                   variant="contained"
                   style={{
                     ...classes.oAuthLoginBtn,
-                    backgroundColor: "#f50057",
-                    color: "#fff",
+                    backgroundColor: '#f50057',
+                    color: '#fff',
                   }}
                   href={`${baseUrl}/auth/google`}
                 >
@@ -171,7 +169,7 @@ class Login extends React.Component<
                   label="User Name"
                   margin="normal"
                   style={classes.textField}
-                  helperText={this.state.error.username || ""}
+                  helperText={this.state.error.username || ''}
                   error={!!this.state.error.username}
                 />
                 <TextField
@@ -181,7 +179,7 @@ class Login extends React.Component<
                   label="Password"
                   margin="normal"
                   style={classes.textField}
-                  helperText={this.state.error.password || ""}
+                  helperText={this.state.error.password || ''}
                   error={!!this.state.error.password}
                 />
               </CardContent>
@@ -190,7 +188,7 @@ class Login extends React.Component<
                   variant="contained"
                   color="secondary"
                   size="large"
-                  style={{ margin: "0 auto" }}
+                  style={{ margin: '0 auto' }}
                   onClick={this.handleSubmit}
                 >
                   Submit

@@ -1,20 +1,23 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import React from "react";
+import React from 'react';
 import Document, {
   DocumentContext,
   Head,
   Html,
   Main,
   NextScript,
-} from "next/document";
-import { ServerStyleSheets } from "@mui/styles";
+} from 'next/document';
+import { ServerStyleSheets } from '@mui/styles';
 
-class MyDocument extends Document {
-  static async getInitialProps(ctx: DocumentContext) {
+export interface IProps {
+  styles: any;
+}
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+class DocumentImp extends Document<IProps> {
+  public static async getInitialProps(ctx: DocumentContext) {
     const sheets = new ServerStyleSheets();
-    const enhanceApp = (App: any) => {
-      return (props: any) => sheets.collect(<App {...props} />);
-    };
+    const enhanceApp = (App: any) => (props: any) => sheets.collect(<App {...props} />);
 
     const { html, head } = await ctx.renderPage({ enhanceApp });
     const initialProps = await Document.getInitialProps(ctx);
@@ -66,7 +69,7 @@ class MyDocument extends Document {
         </Head>
         <body
           style={{
-            font: "18px Muli",
+            font: '18px Muli',
             fontWeight: 300,
             padding: 0,
             margin: 0,
@@ -80,4 +83,4 @@ class MyDocument extends Document {
   }
 }
 
-export default MyDocument;
+export default DocumentImp;

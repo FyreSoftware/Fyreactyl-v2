@@ -1,13 +1,13 @@
-import React from "react";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
-import Link from "next/link";
-import withAuth, { IProps } from "../lib/withAuth";
-import Router from "next/router";
+import React from 'react';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
+import Link from 'next/link';
+import withAuth from '../lib/withAuth';
+
 function Index() {
   return (
     <div>
@@ -15,13 +15,13 @@ function Index() {
         container
         spacing={3}
         justifyContent="center"
-        style={{ paddingTop: "40px", paddingBottom: "40px" }}
+        style={{ paddingTop: '40px', paddingBottom: '40px' }}
       >
         <Grid item xs={12} md={6}>
           <Card>
             <CardContent>
               <Typography
-                style={{ textAlign: "center" }}
+                style={{ textAlign: 'center' }}
                 gutterBottom
                 variant="h5"
                 component="h2"
@@ -30,7 +30,7 @@ function Index() {
               </Typography>
             </CardContent>
             <CardActions
-              style={{ justifyContent: "center", justifyItems: "center" }}
+              style={{ justifyContent: 'center', justifyItems: 'center' }}
             >
               <Button size="small" color="secondary" href="/auth/login">
                 Login

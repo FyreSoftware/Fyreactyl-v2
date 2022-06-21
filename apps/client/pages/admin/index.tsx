@@ -1,9 +1,9 @@
-import React from "react";
-import Admin from "../../components/Admin/Main";
-import withAuth from "../../lib/withAuth";
-import Head from "next/head";
+import React from 'react';
+import Head from 'next/head';
+import Admin from '../../components/Admin/Main';
+import withAuth from '../../lib/withAuth';
+
 function AdminDashboard() {
-  // @ts-ignore
   return (
     <>
       <Head>

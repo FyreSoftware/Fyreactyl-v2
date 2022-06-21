@@ -1,20 +1,46 @@
-import baseUrl from "../baseUrl";
+import baseUrl from '../baseUrl';
+
+/**
+ * JWT retrieval and storage
+ */
+const clearJWT = () => {
+  if (typeof window !== 'undefined') {
+    localStorage.removeItem('jwt');
+    document.cookie = 'nest-cookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+  }
+};
+const authenticate = async (jwt, cb) => {
+  if (typeof window !== 'undefined') {
+    await localStorage.setItem('jwt', JSON.stringify(jwt));
+    cb();
+  }
+};
+
+const isAuthenticated = () => {
+  if (typeof window === 'undefined') return false;
+  if (
+    localStorage.getItem('jwt')
+    && JSON.parse(localStorage.getItem('jwt')) !== undefined
+  ) {
+    return JSON.parse(localStorage.getItem('jwt'));
+  }
+  return false;
+};
 /**
  * Authentication API
  */
 const signup = async (user) => {
   try {
     const response = await fetch(`${baseUrl}/auth/local/signup`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(user),
     });
     return await response.json();
   } catch (err) {
-    console.log(err);
     return err;
   }
 };
@@ -22,17 +48,15 @@ const signup = async (user) => {
 const login = async (user) => {
   try {
     const response = await fetch(`${baseUrl}/auth/local/login`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(user),
     });
     if (response.status === 401) {
-      const error = new Error("Unauthorized!");
-      error
-      throw error;
+      throw new Error('Unauthorized!');
     }
     return await response.json();
   } catch (err) {
@@ -40,54 +64,21 @@ const login = async (user) => {
   }
 };
 
-
-
 const logout = async () => {
   try {
     const response = await fetch(`${baseUrl}/auth/logout`, {
-      method: "GET",
+      method: 'GET',
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
     });
     clearJWT();
     return await response.json();
   } catch (err) {
-    console.log(err);
     return err;
   }
 };
-
-const clearJWT = () => {
-  if (typeof window !== "undefined") {
-    localStorage.removeItem("jwt");
-    document.cookie = "nest-cookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
-  }
-};
-/**
- * JWT retrieval and storage
- */
-const authenticate = async (jwt, cb) => {
-  if (typeof window !== "undefined") {
-    await localStorage.setItem("jwt", JSON.stringify(jwt));
-    cb();
-  }
-};
-
-const isAuthenticated = () => {
-  if (typeof window === "undefined") return false;
-  if (
-    localStorage.getItem("jwt") &&
-    JSON.parse(localStorage.getItem("jwt")) !== undefined
-  ) {
-    return JSON.parse(localStorage.getItem("jwt"));
-  }
-  return false;
-};
-
-
-
 /**
  * Send Confirmation Email
  */
@@ -96,18 +87,17 @@ const sendConfirmEmail = async (userId) => {
     const response = await fetch(
       `${baseUrl}/email/sendConfirmEmail/${userId}`,
       {
-        method: "GET",
+        method: 'GET',
         headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
         },
-      }
+      },
     );
     if (response.status === 401) {
-      const error = new Error(
-        "Unauthorized. Please log into your account to continue."
+      throw new Error(
+        'Unauthorized. Please log into your account to continue.',
       );
-      throw error;
     }
     return await response.json();
   } catch (err) {
@@ -121,10 +111,10 @@ const sendConfirmEmail = async (userId) => {
 const sendResetPasswordEmail = async (email) => {
   try {
     const response = await fetch(`${baseUrl}/email/resetPassword`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({ email }),
     });
@@ -136,17 +126,14 @@ const sendResetPasswordEmail = async (email) => {
 
 const sendNewPassword = async (password, email) => {
   try {
-    const response = await fetch(
-      `${baseUrl}/email/resetPassword/password`,
-      {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ password, email }),
-      }
-    );
+    const response = await fetch(`${baseUrl}/email/resetPassword/password`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ password, email }),
+    });
     return await response.json();
   } catch (err) {
     return err;
