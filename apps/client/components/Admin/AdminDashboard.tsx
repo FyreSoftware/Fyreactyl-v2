@@ -11,20 +11,17 @@ import {
   Typography,
 } from '@mui/material';
 import { ArrowForward } from '@mui/icons-material';
+import { authApi } from '../../lib/api';
 import UserProfile from '../User/UserProfile';
 import * as classes from '../../lib/styles/styles';
-import userAuth from '../../lib/api/authApi';
+import {
+  loadUsers, loadProfile, updateProfile, deleteProfile, uploadImage,
+} from '../../lib/api/actions/AdminActions';
 import { notify } from '../Notifier';
 
 export interface IProps {
-  users: any[];
   user: any;
   message: string;
-  loadUsers: any;
-  loadProfile: any;
-  updateProfile: any;
-  deleteProfile: any;
-  uploadImage: any;
 }
 export interface IState {
   showUserProfile: boolean;
@@ -36,6 +33,8 @@ export interface IState {
   userId: string;
 }
 class AdminDashBoard extends React.Component<IProps, IState> {
+  private users: any[];
+
   constructor(props) {
     super(props, {
       showUserProfile: false,
@@ -46,44 +45,45 @@ class AdminDashBoard extends React.Component<IProps, IState> {
       openConfirmEmailForm: false,
       userId: '',
     });
+    this.users = [];
   }
 
   componentDidMount() {
-    this.props.loadUsers();
+    this.users = loadUsers();
     if (this.props.message) notify({ message: this.props.message });
   }
 
   componentDidUpdate() {
     if (this.state.shouldRerender) {
       this.setState({ shouldRerender: false });
-      this.props.loadUsers();
+      this.users = loadUsers();
       if (this.props.message) notify({ message: this.props.message });
     }
   }
 
   showUserProfile = (userId) => {
-    this.props.loadProfile(userId);
+    loadProfile(userId);
     this.setState({ showUserProfile: true, userId });
   };
 
   handleUpdateProfile = (profile) => {
-    this.props.updateProfile(profile, this.state.userId);
+    updateProfile(profile, this.state.userId);
     this.setState({ shouldRerender: true });
   };
 
   handleDeleteProfile = () => {
-    this.props.deleteProfile(this.state.userId);
+    deleteProfile(this.state.userId);
     this.setState({ shouldRerender: true });
   };
 
   handleUploadImage = (file) => {
-    this.props.uploadImage(file, this.state.userId);
+    uploadImage(file, this.state.userId);
     this.setState({ shouldRerender: true });
   };
 
   handleSendEmail = async () => {
     this.toggleConfirmEmailForm();
-    const resp = await userAuth.sendConfirmEmail(this.state.userId);
+    const resp = await authApi.sendConfirmEmail(this.state.userId);
     notify({ message: resp.message });
   };
 
@@ -146,8 +146,8 @@ class AdminDashBoard extends React.Component<IProps, IState> {
                 Users List
               </Typography>
               <List>
-                {this.props.users.length > 0
-                  && this.props.users.map((user, idx) => (
+                {this.users.length > 0
+                  && this.users.map((user, idx) => (
                     <ListItem key={idx}>
                       <ListItemAvatar style={{ marginRight: '20px' }}>
                         <Avatar

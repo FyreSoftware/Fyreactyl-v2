@@ -1,15 +1,13 @@
 import React from 'react';
 import { notify } from '../Notifier';
 import UserProfile from './UserProfile';
-import auth from '../../lib/api/authApi';
+import { authApi } from '../../lib/api';
 import IUser from '../../lib/interfaces/user';
+import { loadProfile, uploadImage, updateProfile } from '../../lib/api/actions/UserActions';
 
 export interface IProps {
   user: IUser;
   message: string;
-  loadProfile: any;
-  updateProfile: any;
-  uploadImage: any;
 }
 export interface IState {
   shouldRerender: boolean;
@@ -28,31 +26,31 @@ class UserDashBoard extends React.Component<IProps, IState> {
   }
 
   componentDidMount() {
-    this.props.loadProfile();
+    loadProfile();
     if (this.props.message) notify({ message: this.props.message });
   }
 
   componentDidUpdate() {
     if (this.state.shouldRerender) {
       this.setState({ shouldRerender: false });
-      this.props.loadProfile();
+      loadProfile();
       if (this.props.message) notify({ message: this.props.message });
     }
   }
 
   handleUpdateProfile = (profile) => {
     this.setState({ shouldRerender: true });
-    this.props.updateProfile(profile);
+    updateProfile(profile);
   };
 
   handleUploadImage = (file) => {
     this.setState({ shouldRerender: true });
-    this.props.uploadImage(file);
+    uploadImage(file);
   };
 
   handleSendEmail = async () => {
     this.toggleConfirmEmailForm();
-    const resp = await auth.sendConfirmEmail(this.props.user.id);
+    const resp = await authApi.sendConfirmEmail(this.props.user.id);
     notify({ message: resp.message || resp.response.message });
   };
 

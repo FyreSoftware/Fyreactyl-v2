@@ -16,7 +16,6 @@ import auth from '../../lib/api/authApi';
 import { notify } from '../../components/Notifier';
 import ResetPassword from '../../components/Forms/ResetPassword';
 import baseUrl from '../../lib/baseUrl';
-import withAuth from '../../lib/withAuth';
 
 class Login extends React.Component<
 Record<string, never>,
@@ -210,4 +209,4 @@ Record<string, never>,
   }
 }
 
-export default withAuth(Login, { loginRequired: false, logoutRequired: true });
+export default Login;

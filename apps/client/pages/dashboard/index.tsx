@@ -3,33 +3,47 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
-import withAuth from '../../lib/withAuth';
+import { Skeleton } from '@mui/material';
+import { router } from 'next/client';
+import useAuth from '../../lib/hooks/useAuth';
+import Header from '../../components/Header/Header';
 
 function DashboardIndex() {
+  const { user, error } = useAuth();
+
+  if (error) {
+    router.push('/auth/login');
+  }
   return (
-    <div>
-      <Grid
-        container
-        spacing={3}
-        justifyContent="center"
-        style={{ paddingTop: '40px', paddingBottom: '40px' }}
-      >
-        <Grid item xs={12} md={6}>
-          <Card>
-            <CardContent>
-              <Typography
-                style={{ textAlign: 'center' }}
-                gutterBottom
-                variant="h5"
-                component="h2"
-              >
-                Welcome to your dashboard
-              </Typography>
-            </CardContent>
-          </Card>
+    <>
+      {user ? <Header user={user} /> : <Skeleton />}
+      <div>
+        <Grid
+          container
+          spacing={3}
+          justifyContent="center"
+          style={{ paddingTop: '40px', paddingBottom: '40px' }}
+        >
+          <Grid item xs={12} md={6}>
+            <Card>
+              <CardContent>
+                <Typography
+                  style={{ textAlign: 'center' }}
+                  gutterBottom
+                  variant="h5"
+                  component="h2"
+                >
+                  👋 Hello
+                  {' '}
+                  { user?.displayName ? user.displayName : <Skeleton />}
+                  !
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
         </Grid>
-      </Grid>
-    </div>
+      </div>
+    </>
   );
 }
-export default withAuth(DashboardIndex, { loginRequired: true });
+export default DashboardIndex;

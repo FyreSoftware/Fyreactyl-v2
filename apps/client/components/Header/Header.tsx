@@ -1,16 +1,13 @@
-import Link from 'next/link';
-import { FilterVintage } from '@mui/icons-material';
 import {
-  Button, Toolbar, Grid, Avatar,
+  Button, Toolbar, Grid,
+  Avatar,
 } from '@mui/material';
+import Link from 'next/link';
 import MenuWithAvatar from './MenuWithAvatar';
 import { styledToolbar } from '../../lib/styles/styles';
+import { config } from '../../lib/config';
 
 const optionsMenu = [
-  {
-    text: 'Source Code',
-    href: 'https://github.com/huyenNguyen20',
-  },
   {
     text: 'My Account',
     href: '/dashboard/profile',
@@ -18,6 +15,10 @@ const optionsMenu = [
   {
     text: 'Log out',
     href: '/logout',
+  },
+  {
+    text: 'Dashboard',
+    href: '/dashboard',
   },
 ];
 
@@ -32,13 +33,9 @@ function Header({ user }) {
           alignItems="center"
         >
           <Grid item sm={11} xs={9} style={{ textAlign: 'left' }}>
-            {user ? null : (
-              <Link href="/">
-                <Avatar>
-                  <FilterVintage />
-                </Avatar>
-              </Link>
-            )}
+            <Link href="/">
+              <Avatar alt="Fyre Software" src={`${config.server_url}/images/logo.png`} />
+            </Link>
           </Grid>
           <Grid item sm={1} xs={3} style={{ textAlign: 'right' }}>
             {user ? (
