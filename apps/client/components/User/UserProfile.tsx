@@ -168,7 +168,6 @@ function UserProfile(props) {
                 openEdit={props.openEditForm}
                 handleClose={props.toggleEditForm}
                 handleUpdate={props.handleUpdateProfile}
-                error={false}
               />
               <UploadImageForm
                 openImage={props.openImageForm}

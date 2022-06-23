@@ -20,7 +20,6 @@ import * as classes from '../../lib/styles/styles';
 import LoadingBar from '../../components/LoadingBar';
 import auth from '../../lib/api/authApi';
 import { notify } from '../../components/Notifier';
-import withAuth from '../../lib/withAuth';
 
 type SignupState = {
   signUpInProgress: boolean;
@@ -249,4 +248,4 @@ class SignUp extends React.Component<Record<string, never>, SignupState> {
   }
 }
 
-export default withAuth(SignUp, { loginRequired: false, logoutRequired: true });
+export default SignUp;

@@ -10,10 +10,12 @@ module.exports = {
     "react",
     "jsx-a11y",
     "import",
+    "react-hooks"
   ],
   extends: [
     "airbnb-typescript",
     "plugin:@typescript-eslint/recommended",
+    "plugin:react-hooks/recommended"
   ],
   root: true,
   env: {

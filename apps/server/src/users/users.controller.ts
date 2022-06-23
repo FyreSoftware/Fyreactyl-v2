@@ -175,7 +175,7 @@ export class UsersController {
     const img = file.filename;
     try {
       const resp = await this.usersService.modifyUser(req.user.id, {
-        avatarUrl: `${process.env.SERVER_SIDE_URL}/images/${img}`,
+        avatarUrl: `${process.env.SERVER_SIDE_URL}/images/users/${img}`,
       });
       if (resp.success) {
         res.status(200).json(resp);

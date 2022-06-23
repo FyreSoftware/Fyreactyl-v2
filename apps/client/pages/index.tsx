@@ -6,43 +6,58 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Link from 'next/link';
-import withAuth from '../lib/withAuth';
+import useAuth from '../lib/hooks/useAuth';
+import Header from '../components/Header/Header';
 
 function Index() {
+  const { user } = useAuth();
   return (
-    <div>
-      <Grid
-        container
-        spacing={3}
-        justifyContent="center"
-        style={{ paddingTop: '40px', paddingBottom: '40px' }}
-      >
-        <Grid item xs={12} md={6}>
-          <Card>
-            <CardContent>
-              <Typography
-                style={{ textAlign: 'center' }}
-                gutterBottom
-                variant="h5"
-                component="h2"
+    <>
+      <Header user={user} />
+      <div>
+        <Grid
+          container
+          spacing={3}
+          justifyContent="center"
+          style={{ paddingTop: '40px', paddingBottom: '40px' }}
+        >
+          <Grid item xs={12} md={6}>
+            <Card>
+              <CardContent>
+                <Typography
+                  style={{ textAlign: 'center' }}
+                  gutterBottom
+                  variant="h5"
+                  component="h2"
+                >
+                  Please login/signup to access your dashboard
+                </Typography>
+              </CardContent>
+              <CardActions
+                style={{ justifyContent: 'center', justifyItems: 'center' }}
               >
-                Please login/signup to access your dashboard
-              </Typography>
-            </CardContent>
-            <CardActions
-              style={{ justifyContent: 'center', justifyItems: 'center' }}
-            >
-              <Button size="small" color="secondary" href="/auth/login">
-                Login
-              </Button>
-              <Button size="small" color="secondary">
-                <Link href="/auth/signup">Sign Up</Link>
-              </Button>
-            </CardActions>
-          </Card>
+                {user ? (
+                  <>
+                    <Button size="small" color="secondary">
+                      <Link href="/dashboard">Sign Up</Link>
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button size="small" variant="contained" color="secondary" href="/auth/login">
+                      Login
+                    </Button>
+                    <Button size="small" variant="contained" color="primary">
+                      Sign Up
+                    </Button>
+                  </>
+                )}
+              </CardActions>
+            </Card>
+          </Grid>
         </Grid>
-      </Grid>
-    </div>
+      </div>
+    </>
   );
 }
-export default withAuth(Index, { loginRequired: false });
+export default Index;
