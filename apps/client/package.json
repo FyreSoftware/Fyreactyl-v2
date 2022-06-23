@@ -17,7 +17,7 @@
     "@mui/styles": "^5.8.4",
     "@types/react": "17.0.2",
     "dotenv": "^16.0.1",
-    "fontsource-roboto": "^3.0.3",
+    "fontsource-roboto": "^4.0.0",
     "fs": "^0.0.1-security",
     "next": "^12.1.6",
     "nprogress": "^0.2.0",
@@ -31,11 +31,11 @@
     "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
-    "@types/node": "^14.14.7",
+    "@types/node": "^18.0.0",
     "@types/react": "^16.9.56",
     "@typescript-eslint/eslint-plugin": "^4.6.1",
     "@typescript-eslint/parser": "^4.6.1",
-    "eslint": "^7.12.1",
+    "eslint": "^8.18.0",
     "eslint-config-airbnb-typescript": "^12.3.1",
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-import": "^2.22.1",
