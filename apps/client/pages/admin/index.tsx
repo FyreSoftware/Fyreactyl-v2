@@ -11,7 +11,7 @@ function AdminDashboard() {
         <title>Admin Dashboard</title>
         <meta name="description" content="Admin Dashboard" />
       </Head>
-      <Admin user={user} message={null} />
+      <Admin user={user} />
     </>
   );
 }

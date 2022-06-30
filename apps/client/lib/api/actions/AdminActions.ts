@@ -5,7 +5,7 @@ export const loadUsers = (): IUser[] | any => {
   adminApi
     .fetchUsers()
     .then((resp) => {
-      if (resp.success) return resp.response.users;
+      if (resp.success) return resp;
       return resp;
     })
     .catch((err) => ({
@@ -52,11 +52,16 @@ export const deleteProfile = (userId) => {
     }));
 };
 
-export const uploadImage = (file, userId) => {
+export const uploadImage = (file, userId): any => {
   adminApi
     .uploadProfileImage(file, userId)
     .then((resp) => {
-      if (resp.success) return true;
+      if (resp.success) {
+        return {
+          message: resp.message,
+          success: true,
+        };
+      }
       throw resp;
     })
     .catch((err) => ({

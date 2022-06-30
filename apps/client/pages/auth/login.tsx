@@ -208,5 +208,4 @@ Record<string, never>,
     );
   }
 }
-
 export default Login;

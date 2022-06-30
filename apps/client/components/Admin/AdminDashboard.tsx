@@ -21,7 +21,6 @@ import { notify } from '../Notifier';
 
 export interface IProps {
   user: any;
-  message: string;
 }
 export interface IState {
   showUserProfile: boolean;
@@ -31,10 +30,10 @@ export interface IState {
   openDeleteForm: boolean;
   openConfirmEmailForm: boolean;
   userId: string;
+  message: string;
+  users: any[]
 }
 class AdminDashBoard extends React.Component<IProps, IState> {
-  private users: any[];
-
   constructor(props) {
     super(props, {
       showUserProfile: false,
@@ -44,20 +43,21 @@ class AdminDashBoard extends React.Component<IProps, IState> {
       openDeleteForm: false,
       openConfirmEmailForm: false,
       userId: '',
+      message: '',
+      users: [],
     });
-    this.users = [];
   }
 
   componentDidMount() {
-    this.users = loadUsers();
-    if (this.props.message) notify({ message: this.props.message });
+    this.loadUsersState();
+    if (this.state?.message) notify({ message: this.state?.message });
   }
 
   componentDidUpdate() {
-    if (this.state.shouldRerender) {
+    if (this.state?.shouldRerender) {
+      this.loadUsersState();
       this.setState({ shouldRerender: false });
-      this.users = loadUsers();
-      if (this.props.message) notify({ message: this.props.message });
+      if (this.state?.message) notify({ message: this.state?.message });
     }
   }
 
@@ -76,14 +76,14 @@ class AdminDashBoard extends React.Component<IProps, IState> {
     this.setState({ shouldRerender: true });
   };
 
-  handleUploadImage = (file) => {
-    uploadImage(file, this.state.userId);
-    this.setState({ shouldRerender: true });
+  handleUploadImage = async (file) => {
+    const resp = await uploadImage(file, this.state?.userId);
+    this.setState({ shouldRerender: true, message: resp.message });
   };
 
   handleSendEmail = async () => {
     this.toggleConfirmEmailForm();
-    const resp = await authApi.sendConfirmEmail(this.state.userId);
+    const resp = await authApi.sendConfirmEmail(this.state?.userId);
     notify({ message: resp.message });
   };
 
@@ -103,12 +103,19 @@ class AdminDashBoard extends React.Component<IProps, IState> {
     this.setState({ openConfirmEmailForm: !this.state.openConfirmEmailForm });
   };
 
+  loadUsersState = async () => {
+    console.log('test?');
+    const users = await loadUsers();
+    console.log(users);
+    this.setState({ users });
+  };
+
   backToUserList = () => {
     this.setState({ showUserProfile: false, userId: '' });
   };
 
   render() {
-    if (this.state.showUserProfile && this.props.user) {
+    if (this.state?.showUserProfile && this.props.user) {
       return (
         <UserProfile
           toggleImageForm={this.toggleImageForm}
@@ -146,8 +153,8 @@ class AdminDashBoard extends React.Component<IProps, IState> {
                 Users List
               </Typography>
               <List>
-                {this.users.length > 0
-                  && this.users.map((user, idx) => (
+                {this.state?.users?.length > 0
+                  && this.state?.users?.map((user, idx) => (
                     <ListItem key={idx}>
                       <ListItemAvatar style={{ marginRight: '20px' }}>
                         <Avatar

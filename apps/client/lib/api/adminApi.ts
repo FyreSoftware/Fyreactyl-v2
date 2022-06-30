@@ -86,7 +86,7 @@ const deleteUser = async (userId) => {
   }
 };
 
-const uploadProfileImage = async (file, userId) => {
+const uploadProfileImage = async (file, userId): Promise<any> => {
   let jwt;
   if (authApi.isAuthenticated()) jwt = authApi.isAuthenticated();
 
