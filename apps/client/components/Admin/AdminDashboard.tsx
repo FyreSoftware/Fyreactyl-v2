@@ -1,3 +1,4 @@
+/* eslint no-underscore-dangle: 0 */
 import React from 'react';
 import {
   Avatar,
@@ -11,17 +12,14 @@ import {
   Typography,
 } from '@mui/material';
 import { ArrowForward } from '@mui/icons-material';
-import { authApi } from '../../lib/api';
+import { authApi, adminApi } from '../../lib/api';
 import UserProfile from '../User/UserProfile';
 import * as classes from '../../lib/styles/styles';
 import {
-  loadUsers, loadProfile, updateProfile, deleteProfile, uploadImage,
+  updateProfile, deleteProfile, uploadImage,
 } from '../../lib/api/actions/AdminActions';
 import { notify } from '../Notifier';
 
-export interface IProps {
-  user: any;
-}
 export interface IState {
   showUserProfile: boolean;
   shouldRerender: boolean;
@@ -31,9 +29,10 @@ export interface IState {
   openConfirmEmailForm: boolean;
   userId: string;
   message: string;
-  users: any[]
+  users: any[];
+  user: any
 }
-class AdminDashBoard extends React.Component<IProps, IState> {
+class AdminDashBoard extends React.Component<Record<string, never>, IState> {
   constructor(props) {
     super(props, {
       showUserProfile: false,
@@ -45,11 +44,12 @@ class AdminDashBoard extends React.Component<IProps, IState> {
       userId: '',
       message: '',
       users: [],
+      user: {},
     });
   }
 
-  componentDidMount() {
-    this.loadUsersState();
+  async componentDidMount() {
+    await this.loadUsersState();
     if (this.state?.message) notify({ message: this.state?.message });
   }
 
@@ -61,9 +61,9 @@ class AdminDashBoard extends React.Component<IProps, IState> {
     }
   }
 
-  showUserProfile = (userId) => {
-    loadProfile(userId);
-    this.setState({ showUserProfile: true, userId });
+  showUserProfile = async (userId) => {
+    const profile = await adminApi.fetchUser(userId);
+    this.setState({ showUserProfile: true, userId, user: profile.response.user });
   };
 
   handleUpdateProfile = (profile) => {
@@ -104,10 +104,8 @@ class AdminDashBoard extends React.Component<IProps, IState> {
   };
 
   loadUsersState = async () => {
-    console.log('test?');
-    const users = await loadUsers();
-    console.log(users);
-    this.setState({ users });
+    const users = await adminApi.fetchUsers();
+    this.setState({ ...this.state, users: users.response.users });
   };
 
   backToUserList = () => {
@@ -115,7 +113,7 @@ class AdminDashBoard extends React.Component<IProps, IState> {
   };
 
   render() {
-    if (this.state?.showUserProfile && this.props.user) {
+    if (this.state?.showUserProfile && this.state?.user) {
       return (
         <UserProfile
           toggleImageForm={this.toggleImageForm}
@@ -123,7 +121,7 @@ class AdminDashBoard extends React.Component<IProps, IState> {
           toggleDeleteForm={this.toggleDeleteForm}
           toggleConfirmEmailForm={this.toggleConfirmEmailForm}
           backToUserList={this.backToUserList}
-          user={this.props.user}
+          user={this.state?.user}
           openEditForm={this.state.openEditForm}
           openImageForm={this.state.openImageForm}
           openDeleteForm={this.state.openDeleteForm}
@@ -175,7 +173,7 @@ class AdminDashBoard extends React.Component<IProps, IState> {
                         secondary={user.email}
                       />
                       <IconButton
-                        onClick={() => this.showUserProfile(user.id)}
+                        onClick={() => this.showUserProfile(user._id)}
                       >
                         <ArrowForward />
                       </IconButton>

@@ -22,11 +22,7 @@ export interface CustomState {
 
 class UploadImageForm extends React.Component<CustomProps, CustomState> {
   constructor(props: CustomProps) {
-    super({
-      openImage: props.openImage,
-      handleClose: props.handleClose,
-      uploadImage: props.uploadImage,
-    }, {
+    super(props, {
       file: '',
       fileName: '',
       error: '',
@@ -86,10 +82,10 @@ class UploadImageForm extends React.Component<CustomProps, CustomState> {
             name="imageFile"
             style={{ margin: '20px 0' }}
             onChange={this.handleOnChange}
-            value={this.state.fileName}
+            value={this.state?.fileName}
           />
-          {this.state.error ? (
-            <span style={{ color: 'red' }}>{this.state.error}</span>
+          {this.state?.error ? (
+            <span style={{ color: 'red' }}>{this.state?.error}</span>
           ) : (
             <span />
           )}

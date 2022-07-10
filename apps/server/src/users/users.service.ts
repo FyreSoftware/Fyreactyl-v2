@@ -248,8 +248,7 @@ export class UsersService implements UserService {
   async deleteUsers(): Promise<respMessage> {
     try {
       const user = await this.userModel.remove({ admin: false }).exec();
-      // @ts-ignore
-      if (!user) throw new Error('Something went wrong');
+      if (!(user as any)) throw new Error('Something went wrong');
       return {
         success: true,
         response: { message: 'Delete Users Successfully' },

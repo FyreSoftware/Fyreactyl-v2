@@ -4,12 +4,9 @@ import IUser from '../../interfaces/user';
 export const loadUsers = (): IUser[] | any => {
   adminApi
     .fetchUsers()
-    .then((resp) => {
-      if (resp.success) return resp;
-      return resp;
-    })
+    .then((resp) => resp)
     .catch((err) => ({
-      err: true,
+      error: true,
       message: err.message,
     }));
 };

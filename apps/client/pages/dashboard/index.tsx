@@ -11,9 +11,14 @@ import Header from '../../components/Header/Header';
 function DashboardIndex() {
   const { user, error } = useAuth();
 
-  if (error) {
-    router.push('/auth/login');
-  }
+  React.useEffect((): any => {
+    if (!router.isReady) return;
+    if (error) router.push('/auth/login');
+  },
+  [
+    router,
+    error,
+  ]);
   return (
     <>
       {user ? <Header user={user} /> : <Skeleton />}
@@ -35,7 +40,7 @@ function DashboardIndex() {
                 >
                   👋 Hello
                   {' '}
-                  { user?.displayName ? user.displayName : <Skeleton />}
+                  {user?.displayName ? user.displayName : <Skeleton />}
                   !
                 </Typography>
               </CardContent>
@@ -46,4 +51,5 @@ function DashboardIndex() {
     </>
   );
 }
+
 export default DashboardIndex;

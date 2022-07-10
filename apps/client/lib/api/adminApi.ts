@@ -10,13 +10,13 @@ const fetchUsers = async () => {
       headers: {
         Authorization: `Bearer ${jwt}`,
       },
-    });
+    }).then((res) => res.json());
     if (response.status === 401) {
       authApi.clearJWT();
 
       throw new Error('Unauthorised');
     }
-    return await response.json();
+    return response;
   } catch (err) {
     return err;
   }

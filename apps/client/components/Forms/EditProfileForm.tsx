@@ -88,7 +88,7 @@ class EditProfileForm extends React.Component<IProps, IState> {
           </DialogContentText>
           <TextField
             name="firstName"
-            value={this.state.user.firstName}
+            value={this.state?.user.firstName}
             onChange={this.handleOnChange}
             label="First Name"
             margin="normal"
@@ -96,7 +96,7 @@ class EditProfileForm extends React.Component<IProps, IState> {
           />
           <TextField
             name="lastName"
-            value={this.state.user.lastName}
+            value={this.state?.user.lastName}
             onChange={this.handleOnChange}
             label="Last Name"
             margin="normal"
@@ -104,17 +104,17 @@ class EditProfileForm extends React.Component<IProps, IState> {
           />
           <TextField
             name="email"
-            value={this.state.user.email}
+            value={this.state?.user.email}
             onChange={this.handleOnChange}
             label="Email"
             margin="normal"
             style={classes.textField}
             helperText={
-              this.state.error.email
-                ? this.state.error.email
+              this.state?.error.email
+                ? this.state?.error.email
                 : 'Email is Required. Email should be like abc@example.com'
             }
-            error={!!this.state.error.email}
+            error={!!this.state?.error.email}
           />
         </DialogContent>
         <DialogActions>
