@@ -92,7 +92,6 @@ const uploadProfileImage = async (file, userId): Promise<any> => {
 
   const fd = new FormData();
   fd.append('imageFile', file, file.name);
-
   try {
     const response = await fetch(`${baseUrl}/users/uploadImage/${userId}`, {
       method: 'POST',

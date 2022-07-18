@@ -67,6 +67,33 @@ export class UsersController {
     return res.status(HttpStatus.OK).json(resp);
   }
 
+  @ApiOperation({ summary: 'Upload image for user - Admin Only' })
+  @ApiResponse({ status: 200, description: 'Updated user profile picture!' })
+  @Post('/uploadImage/:id')
+  @UseGuards(PoliciesGuard)
+  @CheckPolicies((ability: AppAbility) => ability.can(Action.Update, Users))
+  @UseInterceptors(FileInterceptor('imageFile'))
+  async uploadImageAdmin(
+    @Response() res,
+    @Request() req,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    console.log(file);
+    const img = file.filename;
+    try {
+      const resp = await this.usersService.modifyUser(req.params.id, {
+        avatarUrl: `${process.env.SERVER_SIDE_URL}/images/users/${img}`,
+      });
+      if (resp.success) {
+        res.status(200).json(resp);
+      } else throw Error(resp.response.message || 'Something went wrong');
+    } catch (err) {
+      res
+        .status(500)
+        .json({ success: false, message: err.message || err.toString() });
+    }
+  }
+
   @ApiOperation({ summary: 'Fetch User Profile - Admin and User with the ID' })
   @ApiResponse({
     status: 200,

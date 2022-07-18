@@ -16,7 +16,7 @@ import { authApi, adminApi } from '../../lib/api';
 import UserProfile from '../User/UserProfile';
 import * as classes from '../../lib/styles/styles';
 import {
-  updateProfile, deleteProfile, uploadImage,
+  updateProfile, deleteProfile,
 } from '../../lib/api/actions/AdminActions';
 import { notify } from '../Notifier';
 
@@ -53,9 +53,9 @@ class AdminDashBoard extends React.Component<Record<string, never>, IState> {
     if (this.state?.message) notify({ message: this.state?.message });
   }
 
-  componentDidUpdate() {
+  async componentDidUpdate() {
     if (this.state?.shouldRerender) {
-      this.loadUsersState();
+      await this.loadUsersState();
       this.setState({ shouldRerender: false });
       if (this.state?.message) notify({ message: this.state?.message });
     }
@@ -77,7 +77,7 @@ class AdminDashBoard extends React.Component<Record<string, never>, IState> {
   };
 
   handleUploadImage = async (file) => {
-    const resp = await uploadImage(file, this.state?.userId);
+    const resp = await adminApi.uploadProfileImage(file, this.state?.userId);
     this.setState({ shouldRerender: true, message: resp.message });
   };
 
