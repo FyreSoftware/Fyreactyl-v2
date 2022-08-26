@@ -1,6 +1,8 @@
+// eslint-disable-next-line max-classes-per-file
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import * as passportLocalMongoose from 'passport-local-mongoose';
+import { PterodactylInfo } from '../interfaces/userService.interface';
 
 export type UserDocument = User & Document;
 export class Users {
@@ -39,6 +41,9 @@ export class User {
 
   @Prop({ default: false })
   emailActivated: boolean;
+
+  @Prop({ type: Object, default: {} })
+  pterodactyl: PterodactylInfo;
 }
 
 const UserSchema = SchemaFactory.createForClass(User);

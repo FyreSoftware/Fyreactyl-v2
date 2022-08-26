@@ -13,6 +13,6 @@
     "incremental": true,
     "skipLibCheck": true
   },
-  "include": [".eslintrc.js", "**/*.ts"],
+  "include": ["../../.eslintrc.js", "**/*.ts"],
   "exclude": ["node_modules"]
 }

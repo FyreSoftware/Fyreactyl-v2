@@ -165,7 +165,7 @@ Record<string, never>,
                   name="username"
                   value={this.state.user.username}
                   onChange={this.handleOnChange}
-                  label="User Name"
+                  label="Username or Email"
                   margin="normal"
                   style={classes.textField}
                   helperText={this.state.error.username || ''}
@@ -176,6 +176,7 @@ Record<string, never>,
                   value={this.state.user.password}
                   onChange={this.handleOnChange}
                   label="Password"
+                  type="password"
                   margin="normal"
                   style={classes.textField}
                   helperText={this.state.error.password || ''}
@@ -196,6 +197,10 @@ Record<string, never>,
               <p>
                 Forgot Password? Click
                 <Button onClick={this.toggleResetPassword}>here</Button>
+              </p>
+              <p>
+                Don&apos;t have an account? Click
+                <Button href="/auth/signup">here</Button>
               </p>
             </Card>
           </Grid>

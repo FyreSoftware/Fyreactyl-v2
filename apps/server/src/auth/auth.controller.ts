@@ -17,6 +17,7 @@ import { CreateUserLocalDto } from '../shared/dto/createUserLocal.dto';
 import { LoginUserDto } from '../shared/dto/loginUser.dto';
 
 require('dotenv').config();
+
 @ApiTags('User Authentication')
 @Controller('auth')
 export class AuthController {
@@ -30,8 +31,8 @@ export class AuthController {
   @Post('/local/signup')
   async signupLocal(@Response() res, @Body() user: CreateUserLocalDto) {
     const result = await this.usersService.signUpWithLocalStrategy(user);
-    if (result.success) return res.status(HttpStatus.CREATED).json(result);
-    else return res.status(HttpStatus.BAD_REQUEST).json(result);
+    if (result.success) return res.status(HttpStatus.CREATED).json(await this.authService.signup(user));
+    return res.status(HttpStatus.BAD_REQUEST).json(result);
   }
 
   @ApiOperation({ summary: 'Login User By UserName and Password' })
@@ -71,10 +72,11 @@ export class AuthController {
   @Get('/google/callback')
   @UseGuards(GoogleAuthGuard)
   async authWithGoogleCallBack(@Request() req, @Response() res) {
-    if (!req.user)
+    if (!req.user) {
       return res
         .status(HttpStatus.SERVICE_UNAVAILABLE)
         .redirect(`${process.env.CLIENT_SIDE_URL}/login`);
+    }
     const resp = await this.authService.login(req.user);
     res.cookie('nest-cookie', resp.token, {
       expires: new Date(Date.now() + 60 * 60 * 1000),

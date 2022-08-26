@@ -3,6 +3,9 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { EmailModule } from './email/email.module';
+import { PterodactylModule } from './pterodactyl/pterodactyl.module';
+import { ConfigModule } from './config/config.module';
+import { SettingsModule } from './settings/settings.module';
 
 require('dotenv').config({ path: '../../.env' });
 @Module({
@@ -14,6 +17,9 @@ require('dotenv').config({ path: '../../.env' });
     AuthModule,
     UsersModule,
     EmailModule,
+    PterodactylModule,
+    ConfigModule,
+    SettingsModule,
   ],
 })
 export class AppModule {}

@@ -1,19 +1,22 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { User } from '../shared/interfaces/user.interface';
 import { PassportLocalModel } from 'mongoose';
+import * as lodash from 'lodash';
+import { User } from '../shared/interfaces/user.interface';
 import { CreateUserLocalDto } from '../shared/dto/createUserLocal.dto';
 import { CreateUserOAuthDto } from '../shared/dto/createUserOAuth.dto';
 import { respMessage } from '../shared/interfaces/respMessage.interface';
 import { UserService } from './interfaces/userService.interface';
-import * as lodash from 'lodash';
+import { PterodactylService } from '../pterodactyl/pterodactyl.service';
 
 @Injectable()
 export class UsersService implements UserService {
   constructor(
     @InjectModel('User') private userModel: PassportLocalModel<User>,
+    private pterodactylService: PterodactylService,
   ) {}
 
+  // eslint-disable-next-line class-methods-use-this
   publicFields(): string[] {
     return [
       'id',
@@ -44,26 +47,25 @@ export class UsersService implements UserService {
     const registeredEmail = await this.userModel.findOne({ email });
     const registeredUsername = await this.userModel.findOne({ username });
 
-    if (!email)
-      result = { success: false, response: { message: 'Email is Required' } };
-    else if (!username)
+    if (!email) result = { success: false, response: { message: 'Email is Required' } };
+    else if (!username) {
       result = {
         success: false,
         response: { message: 'Username is Required' },
       };
-    else if (!password)
+    } else if (!password) {
       result = {
         success: false,
         response: { message: 'Password is Required' },
       };
-    else if (!email.match(/.+@.+\..+/))
+    } else if (!email.match(/.+@.+\..+/)) {
       result = {
         success: false,
         response: {
           message: 'Invalid Email. Email should be like abc@example.com',
         },
       };
-    else if (password.trim().length < 8)
+    } else if (password.trim().length < 8) {
       result = {
         success: false,
         response: {
@@ -71,7 +73,7 @@ export class UsersService implements UserService {
             'Invalid Password. Password need to be at least 8 characters.',
         },
       };
-    else if (registeredEmail)
+    } else if (registeredEmail) {
       result = {
         success: false,
         response: {
@@ -79,31 +81,105 @@ export class UsersService implements UserService {
             'Email already exists. Please sign up with different email or login.',
         },
       };
-    else if (registeredUsername)
-      result = {
+    } else if (registeredUsername) {
+      return {
         success: false,
         response: {
           message:
             'Username already exists. Please sign up with different username or login.',
         },
       };
-    else {
+    } else if (await this.isFirstUser()) {
+      const ptero = await this.pterodactylService.createUser({
+        username,
+        first_name: firstName,
+        last_name: lastName,
+        email,
+        password,
+        admin: true,
+      });
+      if (ptero?.error) {
+        return {
+          success: false,
+          response: {
+            message:
+            ptero?.data,
+          },
+        };
+      }
       await this.userModel.register(
+        // eslint-disable-next-line new-cap
         new this.userModel({
           username,
           firstName,
           lastName,
           displayName: username,
           email,
+          isAdmin: true,
+          pterodactyl: {
+            id: ptero.id,
+            username: ptero.username,
+            email: ptero.email,
+            first_name: ptero.first_name,
+            last_name: ptero.last_name,
+            root_admin: ptero.root_admin,
+            created_at: ptero.created_at,
+          },
         }),
         password.trim(),
         (err) => {
-          if (err)
-            result = { success: false, response: { message: err.toString() } };
+          if (err) result = { success: false, response: { message: err.toString() } };
+        },
+      );
+    } else {
+      const ptero = await this.pterodactylService.createUser({
+        username,
+        first_name: firstName,
+        last_name: lastName,
+        email,
+        password,
+      });
+      if (ptero.error) {
+        return {
+          success: false,
+          response: {
+            message:
+                ptero.data,
+          },
+        };
+      }
+      await this.userModel.register(
+        // eslint-disable-next-line new-cap
+        new this.userModel({
+          username,
+          firstName,
+          lastName,
+          displayName: username,
+          email,
+          pterodactyl: {
+            id: ptero.id,
+            username: ptero.username,
+            email: ptero.email,
+            first_name: ptero.first_name,
+            last_name: ptero.last_name,
+            root_admin: ptero.root_admin,
+            created_at: ptero.created_at,
+          },
+        }),
+        password.trim(),
+        (err) => {
+          if (err) result = { success: false, response: { message: err.toString() } };
         },
       );
     }
     return result;
+  }
+
+  async isFirstUser(): Promise<boolean> {
+    const userArr = await this.userModel.find({});
+
+    if (userArr.length) return false;
+    return true;
   }
 
   async signUpOrSignInWithOAuth({
@@ -117,14 +193,42 @@ export class UsersService implements UserService {
     const registeredUser = await this.userModel.findOne({ OAuthId });
     if (registeredEmail) user = registeredEmail;
     else if (!registeredUser) {
-      const newUser = await this.userModel.create({
-        OAuthId,
-        email,
-        displayName,
-        avatarUrl,
-        username: OAuthId,
-      });
-      user = newUser;
+      if (await this.isFirstUser()) {
+        const ptero = await this.pterodactylService.createUser({
+          username: displayName,
+          first_name: displayName,
+          last_name: displayName,
+          email,
+          admin: true,
+        });
+        const newUser = await this.userModel.create({
+          OAuthId,
+          email,
+          displayName,
+          avatarUrl,
+          username: OAuthId,
+          isAdmin: true,
+          pterodactyl: ptero,
+        });
+        user = newUser;
+      } else {
+        const ptero = await this.pterodactylService.createUser({
+          username: displayName,
+          first_name: displayName,
+          last_name: displayName,
+          email,
+          admin: false,
+        });
+        const newUser = await this.userModel.create({
+          OAuthId,
+          email,
+          displayName,
+          avatarUrl,
+          username: OAuthId,
+          pterodactyl: ptero,
+        });
+        user = newUser;
+      }
     } else {
       user = registeredUser;
     }
@@ -193,8 +297,7 @@ export class UsersService implements UserService {
 
   async getProfile(userId: string): Promise<any> {
     const user = await this.userModel.findById(userId).exec();
-    if (!user)
-      return { success: false, response: { message: 'User Not Found' } };
+    if (!user) return { success: false, response: { message: 'User Not Found' } };
     return {
       success: true,
       response: { user: lodash.pick(user, this.publicFields()) },
@@ -202,11 +305,11 @@ export class UsersService implements UserService {
   }
 
   async getUser(userId: string): Promise<User | null> {
-    return await this.userModel.findById(userId).exec();
+    return this.userModel.findById(userId).exec();
   }
 
   async getUserByEmail(email: string): Promise<User | null> {
-    return await this.userModel.findOne({ email }).exec();
+    return this.userModel.findOne({ email }).exec();
   }
 
   async modifyUser(userId: string, updatedFields: any): Promise<respMessage> {

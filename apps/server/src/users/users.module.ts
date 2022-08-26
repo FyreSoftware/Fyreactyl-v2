@@ -1,14 +1,19 @@
 import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
+import { MulterModule } from '@nestjs/platform-express';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
-import { MongooseModule } from '@nestjs/mongoose';
 import { UserSchema } from './schemas/users.schema';
 import { JwtStrategy } from '../auth/strategies/jwt.strategy';
 import { PoliciesGuard } from './guards/casl-policy.guard';
 import { CaslAbilityFactory } from '../shared/casl/casl-ability.factory';
-import { MulterModule } from '@nestjs/platform-express';
+import { PterodactylModule } from '../pterodactyl/pterodactyl.module';
+import { ConfigModule } from '../config/config.module';
+
 @Module({
   imports: [
+    PterodactylModule,
+    ConfigModule,
     MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
     MulterModule.register({
       dest: 'public/images/users',

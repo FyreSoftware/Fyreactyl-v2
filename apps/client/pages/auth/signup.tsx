@@ -95,12 +95,11 @@ class SignUp extends React.Component<Record<string, never>, SignupState> {
         const resp = await auth.signup(this.state.user);
         if (resp.success) {
           this.setState({
-            signUpInProgress: false,
             shouldRedirect: true,
           });
         } else {
           this.setState({ signUpInProgress: false });
-          notify({ message: resp.message });
+          notify({ message: resp.response.message });
         }
       } catch (err) {
         notify({ message: 'An error has occurred' });
@@ -109,7 +108,7 @@ class SignUp extends React.Component<Record<string, never>, SignupState> {
   };
 
   render() {
-    if (this.state.shouldRedirect) Router.push('/dashboard');
+    if (this.state.shouldRedirect) Router.push('/auth/login');
     return (
       <div>
         <Head>

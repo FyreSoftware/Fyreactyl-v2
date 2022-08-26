@@ -1,4 +1,5 @@
 import { PassportLocalDocument } from 'mongoose';
+import { PterodactylInfo } from '../../users/interfaces/userService.interface';
 
 export interface User extends PassportLocalDocument {
   readonly firstName: string;
@@ -12,4 +13,5 @@ export interface User extends PassportLocalDocument {
   readonly isAdmin: boolean;
   readonly OAuthId: string;
   readonly username: string;
+  readonly pterodactyl: PterodactylInfo
 }

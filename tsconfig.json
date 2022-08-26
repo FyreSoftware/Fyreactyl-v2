@@ -13,6 +13,9 @@
       "es6"
     ]
   },
+  "include": [
+    "./.eslintrc.js"
+  ],
   "exclude": [
     "node_modules",
     "**/*.spec.ts"
