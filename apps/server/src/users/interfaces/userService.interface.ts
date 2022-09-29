@@ -18,3 +18,6 @@ export interface PterodactylInfo {
   root_admin: boolean;
   created_at: string;
 }
+export interface UserResources {
+  coins: number;
+}

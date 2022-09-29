@@ -20,6 +20,7 @@ const isAuthenticated = () => {
   if (typeof window === 'undefined') return false;
   if (
     localStorage.getItem('jwt')
+      && localStorage.getItem('jwt') !== 'undefined'
     && JSON.parse(localStorage.getItem('jwt')) !== undefined
   ) {
     return JSON.parse(localStorage.getItem('jwt'));

@@ -30,7 +30,7 @@ function Index() {
                   variant="h5"
                   component="h2"
                 >
-                  {user ? 'Please login/signup to access your dashboard' : 'View dashboard below'}
+                  {user ? 'View dashboard below.' : 'Please login/signup to access your dashboard'}
                 </Typography>
               </CardContent>
               <CardActions
@@ -44,10 +44,10 @@ function Index() {
                   </>
                 ) : (
                   <>
-                    <Button size="small" variant="contained" color="secondary" href="/auth/login">
+                    <Button size="small" color="secondary" href="/auth/login">
                       Login
                     </Button>
-                    <Button size="small" variant="contained" color="primary" href="/auth/signup">
+                    <Button size="small" color="primary" href="/auth/signup">
                       Sign Up
                     </Button>
                   </>

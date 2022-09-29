@@ -105,6 +105,12 @@ Record<string, never>,
     this.setState({ openResetPassword: !this.state.openResetPassword });
   };
 
+  handleKeyPress = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+    if (event.key === 'Enter') {
+      document.getElementById('btn').click();
+    }
+  };
+
   render() {
     if (this.state.shouldRedirect) Router.push('/');
     return (
@@ -186,10 +192,12 @@ Record<string, never>,
               <CardActions>
                 <Button
                   variant="contained"
+                  id="btn"
                   color="secondary"
                   size="large"
                   style={{ margin: '0 auto' }}
                   onClick={this.handleSubmit}
+                  onKeyPress={this.handleKeyPress}
                 >
                   Submit
                 </Button>

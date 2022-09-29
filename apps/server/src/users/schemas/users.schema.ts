@@ -2,7 +2,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import * as passportLocalMongoose from 'passport-local-mongoose';
-import { PterodactylInfo } from '../interfaces/userService.interface';
+import { PterodactylInfo, UserResources } from '../interfaces/userService.interface';
 
 export type UserDocument = User & Document;
 export class Users {
@@ -44,6 +44,19 @@ export class User {
 
   @Prop({ type: Object, default: {} })
   pterodactyl: PterodactylInfo;
+
+  @Prop({
+    type: Object,
+    default: {
+      coins: 0,
+    },
+  })
+  resources: UserResources;
+
+  @Prop({
+    type: Number,
+  })
+  package: number;
 }
 
 const UserSchema = SchemaFactory.createForClass(User);

@@ -8,12 +8,14 @@ import { CreateUserOAuthDto } from '../shared/dto/createUserOAuth.dto';
 import { respMessage } from '../shared/interfaces/respMessage.interface';
 import { UserService } from './interfaces/userService.interface';
 import { PterodactylService } from '../pterodactyl/pterodactyl.service';
+import { SettingsService } from '../settings/settings.service';
 
 @Injectable()
 export class UsersService implements UserService {
   constructor(
     @InjectModel('User') private userModel: PassportLocalModel<User>,
     private pterodactylService: PterodactylService,
+    private settingService: SettingsService,
   ) {}
 
   // eslint-disable-next-line class-methods-use-this
@@ -90,6 +92,7 @@ export class UsersService implements UserService {
         },
       };
     } else if (await this.isFirstUser()) {
+      const settings = await this.settingService.getSettings();
       const ptero = await this.pterodactylService.createUser({
         username,
         first_name: firstName,
@@ -107,7 +110,7 @@ export class UsersService implements UserService {
           },
         };
       }
-      await this.userModel.register(
+      this.userModel.register(
         // eslint-disable-next-line new-cap
         new this.userModel({
           username,
@@ -116,6 +119,10 @@ export class UsersService implements UserService {
           displayName: username,
           email,
           isAdmin: true,
+          resources: {
+            coins: 0,
+          },
+          package: settings.packages[0].id,
           pterodactyl: {
             id: ptero.id,
             username: ptero.username,
@@ -132,6 +139,8 @@ export class UsersService implements UserService {
         },
       );
     } else {
+      const settings = await this.settingService.getSettings();
+
       const ptero = await this.pterodactylService.createUser({
         username,
         first_name: firstName,
@@ -156,6 +165,10 @@ export class UsersService implements UserService {
           lastName,
           displayName: username,
           email,
+          resources: {
+            coins: 0,
+          },
+          package: settings.packages[0].id,
           pterodactyl: {
             id: ptero.id,
             username: ptero.username,
@@ -194,6 +207,8 @@ export class UsersService implements UserService {
     if (registeredEmail) user = registeredEmail;
     else if (!registeredUser) {
       if (await this.isFirstUser()) {
+        const settings = await this.settingService.getSettings();
+
         const ptero = await this.pterodactylService.createUser({
           username: displayName,
           first_name: displayName,
@@ -207,11 +222,17 @@ export class UsersService implements UserService {
           displayName,
           avatarUrl,
           username: OAuthId,
+          resources: {
+            coins: 0,
+          },
+          package: settings.packages[0].id,
           isAdmin: true,
           pterodactyl: ptero,
         });
         user = newUser;
       } else {
+        const settings = await this.settingService.getSettings();
+
         const ptero = await this.pterodactylService.createUser({
           username: displayName,
           first_name: displayName,
@@ -224,8 +245,13 @@ export class UsersService implements UserService {
           email,
           displayName,
           avatarUrl,
+          resources: {
+            coins: 0,
+          },
           username: OAuthId,
           pterodactyl: ptero,
+          package: settings.packages[0].id,
+
         });
         user = newUser;
       }

@@ -9,10 +9,12 @@ import { PoliciesGuard } from './guards/casl-policy.guard';
 import { CaslAbilityFactory } from '../shared/casl/casl-ability.factory';
 import { PterodactylModule } from '../pterodactyl/pterodactyl.module';
 import { ConfigModule } from '../config/config.module';
+import { SettingsModule } from '../settings/settings.module';
 
 @Module({
   imports: [
     PterodactylModule,
+    SettingsModule,
     ConfigModule,
     MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
     MulterModule.register({

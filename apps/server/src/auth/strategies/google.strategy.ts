@@ -4,7 +4,8 @@ import { Injectable } from '@nestjs/common';
 import { AuthService } from '../auth.service';
 import { UsersService } from '../../users/users.service';
 
-require('dotenv').config();
+import('dotenv/config');
+
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy) {
   constructor(

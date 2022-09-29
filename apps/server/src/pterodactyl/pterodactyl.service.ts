@@ -103,7 +103,7 @@ export class PterodactylService {
 
   async getAllEggs() {
     const nests = await this.getAllNests();
-    return nests.data.map((d) => d.attributes.relationships.eggs.data.map((e) => e.attributes))[0];
+    return nests.data.map((d) => d.attributes.relationships.eggs.data.map((e) => e.attributes));
   }
 
   async getEggEnvironment(id: string, nestId: string) {
@@ -118,6 +118,13 @@ export class PterodactylService {
     return this.request({
       method: 'GET',
       path: '/api/application/nests?include=eggs',
+    });
+  }
+
+  async getAllNodes() {
+    return this.request({
+      method: 'GET',
+      path: '/api/application/nodes',
     });
   }
 }

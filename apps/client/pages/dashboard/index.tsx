@@ -4,12 +4,13 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import { Skeleton } from '@mui/material';
-import { router } from 'next/client';
+import { useRouter } from 'next/router';
 import useAuth from '../../lib/hooks/useAuth';
 import Header from '../../components/Header/Header';
 
 function DashboardIndex() {
   const { user, error } = useAuth();
+  const router = useRouter();
 
   React.useEffect((): any => {
     if (!router.isReady) return;

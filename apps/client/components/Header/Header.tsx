@@ -1,11 +1,14 @@
 import {
   Button, Toolbar, Grid,
-  Avatar,
+  Avatar, IconButton, Stack,
 } from '@mui/material';
 import Link from 'next/link';
+import React from 'react';
+import MenuIcon from '@mui/icons-material/Menu';
 import MenuWithAvatar from './MenuWithAvatar';
 import { styledToolbar } from '../../lib/styles/styles';
 import { config } from '../../lib/config';
+import Sidebar from './Sidebar';
 
 const optionsMenu = [
   {
@@ -22,7 +25,8 @@ const optionsMenu = [
   },
 ];
 
-function Header({ user }) {
+function Header({ user, sidebar = false }) {
+  const [open, setOpen] = React.useState(false);
   return (
     <div>
       <Toolbar style={styledToolbar}>
@@ -33,9 +37,30 @@ function Header({ user }) {
           alignItems="center"
         >
           <Grid item sm={11} xs={9} style={{ textAlign: 'left' }}>
-            <Link href="/">
-              <Avatar alt="Fyre Software" src={`${config.server_url}/images/logo.png`} />
-            </Link>
+            {sidebar ? (
+              <>
+                {' '}
+                <Stack direction="row" spacing={1}>
+                  <IconButton
+                    color="inherit"
+                    aria-label="open drawer"
+                    edge="start"
+                    onClick={() => setOpen(!open)}
+                    sx={{ mr: 3, alignItems: 'left' }}
+                  >
+                    <MenuIcon />
+                  </IconButton>
+                  <Link href="/">
+                    <Avatar alt="Fyre Software" src={`${config.server_url}/images/logo.png`} />
+                  </Link>
+                </Stack>
+                <Sidebar user={user} open={open} setOpen={setOpen} />
+              </>
+            ) : (
+              <Link href="/">
+                <Avatar alt="Fyre Software" src={`${config.server_url}/images/logo.png`} />
+              </Link>
+            )}
           </Grid>
           <Grid item sm={1} xs={3} style={{ textAlign: 'right' }}>
             {user ? (
