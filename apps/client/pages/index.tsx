@@ -38,7 +38,7 @@ function Index() {
               >
                 {user ? (
                   <>
-                    <Button size="small" color="secondary">
+                    <Button variant="contained" size="small" color="primary">
                       <Link href="/dashboard">Go to dashboard</Link>
                     </Button>
                   </>

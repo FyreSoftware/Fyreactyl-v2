@@ -145,22 +145,6 @@ class SignUp extends React.Component<Record<string, never>, SignupState> {
                 {this.state.signUpInProgress ? <LoadingBar /> : <span />}
                 <br />
                 <br />
-                <Button
-                  variant="contained"
-                  style={{
-                    ...classes.oAuthLoginBtn,
-                    backgroundColor: '#f50057',
-                    color: '#fff',
-                  }}
-                  href="http://localhost:3000/auth/google"
-                >
-                  Sign up with Google
-                </Button>
-                <br />
-                <br />
-                <Typography align="center" variant="h6">
-                  OR
-                </Typography>
                 <Typography align="center" variant="h6">
                   Register a New Account
                 </Typography>

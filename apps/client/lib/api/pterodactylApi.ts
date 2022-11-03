@@ -1,4 +1,5 @@
 import baseUrl from '../baseUrl';
+import { AddPackagePayload, EditPackagePayload } from '../interfaces/settings';
 
 export const getSettings = async () => {
   try {
@@ -135,6 +136,75 @@ export const addNode = async (id: string, name: string) => {
 export const removeNode = async (id: string) => {
   try {
     const response = await fetch(`${baseUrl}/settings/nodes`, {
+      method: 'DELETE',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id,
+      }),
+    }).then((res) => res.json());
+    if (response.status === 401) {
+      throw new Error('Unauthorised');
+    }
+    return response;
+  } catch (err) {
+    return err;
+  }
+};
+export const getPackages = async () => {
+  try {
+    const response = await fetch(`${baseUrl}/settings`, {
+      method: 'GET',
+    }).then((res) => res.json());
+    if (response.status === 401) {
+      throw new Error('Unauthorised');
+    }
+    return response.packages;
+  } catch (err) {
+    return err;
+  }
+};
+export const addPackage = async (newpackage: AddPackagePayload) => {
+  try {
+    const response = await fetch(`${baseUrl}/settings/packages`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newpackage),
+    }).then((res) => res.json());
+    if (response.status === 401) {
+      throw new Error('Unauthorised');
+    }
+    return response;
+  } catch (err) {
+    return err;
+  }
+};
+export const editPackage = async (id: string, editedPackage: EditPackagePayload) => {
+  try {
+    const response = await fetch(`${baseUrl}/settings/packages?id=${id}`, {
+      method: 'PATCH',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(editedPackage),
+    }).then((res) => res.json());
+    if (response.status === 401) {
+      throw new Error('Unauthorised');
+    }
+    return response;
+  } catch (err) {
+    return err;
+  }
+};
+export const removePackage = async (id: string) => {
+  try {
+    const response = await fetch(`${baseUrl}/settings/packages`, {
       method: 'DELETE',
       headers: {
         Accept: 'application/json',

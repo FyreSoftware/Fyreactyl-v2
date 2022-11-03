@@ -1,6 +1,6 @@
 import {
   Body,
-  Controller, Delete, Get, Param, Post, Query, Req, Res,
+  Controller, Delete, Get, Param, Post, Query, Req, Res, Patch,
 } from '@nestjs/common';
 import { PterodactylService } from '../pterodactyl/pterodactyl.service';
 import { SettingsService } from './settings.service';
@@ -59,10 +59,10 @@ export class SettingsController {
     if (!id) {
       return res.status(400).json({ error: true, message: 'Invalid json body' });
     }
-    if (settings.eggs.filter((eg) => eg.id === id).length < 0) {
+    if (settings.eggs.filter((eg) => eg.id.toString() === id.toString()).length < 0) {
       return res.status(400).json({ error: true, message: 'Egg doesn\'t exist in the database' });
     }
-    settings.eggs = settings.eggs.filter((eg) => eg.id === id);
+    settings.eggs = settings.eggs.filter((eg) => eg.id.toString() === id.toString());
     await settings.markModified('eggs');
     await settings.save();
     return res.status(200).json({ error: false, message: 'Removed egg successfully.' });
@@ -93,11 +93,11 @@ export class SettingsController {
     const {
       name, memory, cpu, disk, servers, price, buyable,
     } = req.body;
-    if (!memory || !cpu || !disk || !servers || !price || !buyable || !name) {
+    if (!memory || !cpu || !disk || !servers || !price || buyable === undefined || !name) {
       return res.status(400).json({ error: true, message: 'Invalid json body' });
     }
     settings.packages && settings.packages.length ? settings.packages.push({
-      id: settings.packages.length + 1,
+      id: settings.packages[settings.packages.length - 1].id + 1,
       name,
       memory,
       cpu,
@@ -106,7 +106,7 @@ export class SettingsController {
       price,
       buyable,
     }) : settings.packages = [{
-      id: 0,
+      id: 1,
       name,
       memory,
       cpu,
@@ -117,7 +117,29 @@ export class SettingsController {
     }];
     await settings.markModified('packages');
     await settings.save();
-    return res.status(200).json({ error: false, message: 'Added package successfully.' });
+    return res.status(200).json({ error: false, message: 'Added package successfully.', data: settings.packages });
+  }
+
+  @Patch('/packages')
+  async editPackage(@Req() req, @Res() res) {
+    const settings = await this.settingsService.getSettings();
+    const { id } = req.query;
+    const {
+      name, memory, cpu, disk, servers, price, buyable,
+    } = req.body;
+    if (!memory && !cpu && !disk && !servers && !price && !buyable && !name) {
+      return res.status(400).json({ error: true, message: 'Invalid json body' });
+    }
+    if (settings.packages.filter((p) => p.id.toString() === id.toString()).length < 0) {
+      return res.status(400).json({ error: true, message: 'Package doesn\'t exist in the database' });
+    }
+    const newPackage = settings.packages.find((p) => p.id.toString() === id.toString());
+    const oldPackages = settings.packages.filter((p) => p.id.toString() === id.toString());
+    oldPackages.push({ ...newPackage, ...req.body });
+    settings.packages = oldPackages;
+    await settings.markModified('packages');
+    await settings.save();
+    return res.status(200).json({ error: false, message: 'Updated package successfully.' });
   }
 
   @Delete('/packages')
@@ -127,10 +149,11 @@ export class SettingsController {
     if (!id) {
       return res.status(400).json({ error: true, message: 'Invalid json body' });
     }
+    console.log(id);
     if (settings.packages.filter((p) => p.id.toString() === id.toString()).length < 0) {
       return res.status(400).json({ error: true, message: 'Package doesn\'t exist in the database' });
     }
-    settings.packages = settings.packages.filter((p) => p.id === id);
+    settings.packages = settings.packages.length === 1 ? [] : settings.packages.filter((p) => p.id === parseInt(id));
     await settings.markModified('packages');
     await settings.save();
     return res.status(200).json({ error: false, message: 'Removed package successfully.' });

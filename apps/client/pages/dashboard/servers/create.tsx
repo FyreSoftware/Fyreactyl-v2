@@ -87,6 +87,17 @@ export default function Create() {
               />
               <br />
               <TextField
+                name="cpu"
+                id="server-cpu"
+                variant="outlined"
+                label="Cpu"
+                value={server.memory}
+                onChange={handleOnChange}
+                style={{ ...classes.textField, marginBottom: '40px' }}
+                required
+              />
+              <br />
+              <TextField
                 name="memory"
                 id="server-memory"
                 variant="outlined"

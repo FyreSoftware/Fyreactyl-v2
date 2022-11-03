@@ -8,6 +8,7 @@ import AddNodeDialog from '../../Dialogs/AddNodeDialog';
 export default function NodeSettings() {
   const [open, setOpen] = React.useState(false);
   const [nodes, setNodes] = React.useState([]);
+  const [loaded, setLoaded] = React.useState(false);
 
   const handleClose = async ({ id, name }) => {
     const rese = await addNode(id, name);
@@ -22,8 +23,9 @@ export default function NodeSettings() {
     notify({ message: res.message });
   };
   React.useEffect(() => {
-    if (window && window.location && !nodes.length) {
+    if (window && window.location && !nodes.length && !loaded) {
       getSettings().then((es) => setNodes(es.nodes ?? []));
+      setLoaded(true);
     }
   }, [nodes]);
   return (

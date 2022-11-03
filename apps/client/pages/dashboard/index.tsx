@@ -22,7 +22,7 @@ function DashboardIndex() {
   ]);
   return (
     <>
-      {user ? <Header user={user} /> : <Skeleton />}
+      {user ? <Header user={user} sidebar /> : <Skeleton />}
       <div>
         <Grid
           container

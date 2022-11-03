@@ -5,6 +5,7 @@ import TabPanel from '../TabPanel';
 import EggSettings from './settings/EggSettings';
 import NodeSettings from './settings/NodeSettings';
 import MainSettings from './settings/MainSettings';
+import PackageSettings from './settings/PackageSettings';
 
 function a11yProps(index: number) {
   return {
@@ -35,6 +36,7 @@ export default function AdminSettingsComponent() {
           <Tab label="Main" {...a11yProps(0)} />
           <Tab label="Eggs" {...a11yProps(1)} />
           <Tab label="Nodes" {...a11yProps(2)} />
+          <Tab label="Packages" {...a11yProps(3)} />
         </Tabs>
       </div>
       <TabPanel value={value} id="0">
@@ -45,6 +47,9 @@ export default function AdminSettingsComponent() {
       </TabPanel>
       <TabPanel value={value} id="2">
         <NodeSettings />
+      </TabPanel>
+      <TabPanel id="3" value={value}>
+        <PackageSettings />
       </TabPanel>
     </div>
   );

@@ -7,6 +7,8 @@ import { notify } from '../../Notifier';
 
 export default function EggSettings() {
   const [open, setOpen] = React.useState(false);
+  const [loaded, setLoaded] = React.useState(false);
+
   const [eggs, setEggs] = React.useState([]);
 
   const handleClose = async ({ id, nest, name }) => {
@@ -22,8 +24,9 @@ export default function EggSettings() {
     notify({ message: res.message });
   };
   React.useEffect(() => {
-    if (window && window.location && !eggs.length) {
+    if (window && window.location && !eggs.length && !loaded) {
       getDBEggs().then((es) => setEggs(es));
+      setLoaded(true);
     }
   }, [eggs]);
   return (
