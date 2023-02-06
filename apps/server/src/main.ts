@@ -1,25 +1,16 @@
-import { NestFactory } from '@nestjs/core';
-import { NestExpressApplication } from '@nestjs/platform-express';
-import { AppModule } from './app.module';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { join } from 'path';
+import { ValidationPipe } from "@nestjs/common";
+import { NestFactory } from "@nestjs/core";
+import { useContainer } from "class-validator";
+import { TrimStringsPipe } from "./modules/common/transformer/trim-strings.pipe";
+import { AppModule } from "./modules/main/app.module";
+import { setupSwagger } from "./swagger";
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
-
-  //Bootstrap Swagger API
-  const config = new DocumentBuilder()
-    .setTitle('Nest Boilerplate')
-    .setDescription('The Nest Boilerplate API description')
-    .setVersion('1.0')
-    .addTag('Boilerplate')
-    .build();
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
-
-  //Set up /public for serving static assets
-  app.useStaticAssets(join(__dirname, '..', 'public'));
-  app.enableCors({ origin: true });
-  await app.listen(3000);
+  const app = await NestFactory.create(AppModule);
+  setupSwagger(app);
+  app.enableCors();
+  app.useGlobalPipes(new TrimStringsPipe(), new ValidationPipe());
+  useContainer(app.select(AppModule), { fallbackOnErrors: true });
+  await app.listen(3001);
 }
 bootstrap();

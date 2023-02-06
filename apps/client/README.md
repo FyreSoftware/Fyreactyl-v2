@@ -1,1 +1,5 @@
-This is a starter template for [Learn Next.js](https://nextjs.org/learn).
+# Frontend
+
+## credits
+
+- [Rayologist](https://github.com/Rayologist/rhf-zod-mantine-typescript-template)
