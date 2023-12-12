@@ -1,0 +1,113 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mongodb"
+    url      = env("DATABASE_URL")
+}
+
+model Announcement {
+    id        String @id @default(auto()) @map("_id") @db.ObjectId
+    name      String
+    description String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@index([name])
+}
+
+model User {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+    first_name String
+    last_name String
+    username String @unique
+    email String @unique
+    password String
+    language Languages @default(ENGLISH)
+    connections Connection?
+    role Roles @default(User)
+    redeemedVouchers String[] @default([])
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Settings {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+    name String @default("Fyreactyl")
+    availableEggs String[] @default([])
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Voucher {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+    code String @unique
+    currency Int
+    amount Int
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@index([amount(sort: Asc)])
+}
+
+model ActivityLog {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+    user String 
+    description String
+    type ActivityTypes @default(Generic)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    @@index([createdAt(sort: Desc)])    
+}
+
+model Product {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+    name String @unique
+    description String
+    price Int
+    type ProductTypes
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@index([price(sort: Asc)])
+}
+
+enum ProductTypes {
+    OneTime
+    Monthly
+    Yearly
+    Weekly
+}
+
+enum ActivityTypes {
+    Addition
+    Deletion
+    Generic
+}
+
+enum Roles {
+    Admin
+    Moderator
+    Support
+    User
+}
+
+type UserSettings {
+    creation Boolean @default(true)
+}
+
+type Connection {
+    pterodactyl String?
+}
+enum Languages {
+    ENGLISH
+}
