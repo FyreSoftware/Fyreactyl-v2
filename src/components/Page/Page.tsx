@@ -24,7 +24,7 @@ export function Page({ children, seo }: PageProps) {
         title={seo?.title ?? "Page"}
         description={seo?.description ?? "Page description"}
       />
-      <AppShell header={{ height: 60 }} footer={{ height: 100 }}>
+      <AppShell header={{ height: 60 }} footer={{ height: 60 }}>
         <AppShell.Header>
           <Header
             toggle={toggleDrawer}
@@ -33,8 +33,10 @@ export function Page({ children, seo }: PageProps) {
           />
         </AppShell.Header>
         <AppShell.Main>{children}</AppShell.Main>
-        <AppShell.Footer>
-          <Footer />
+        <AppShell.Footer p="md">
+          <Container fluid px="lg">
+            <Footer />
+          </Container>
         </AppShell.Footer>
       </AppShell>
     </>

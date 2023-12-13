@@ -1,8 +1,8 @@
 // this file is a wrapper with defaults to be used in both API routes and `getServerSideProps` functions
 import type { User } from "@prisma/client";
-import type { SessionOptions } from "iron-session";
+import type { IronSessionOptions } from "iron-session";
 
-export const sessionOptions: SessionOptions = {
+export const sessionOptions: IronSessionOptions = {
   password: process.env.SECRET_PASSWORD!,
   cookieName: "fyreactyl-token",
   cookieOptions: {

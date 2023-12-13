@@ -2,6 +2,8 @@ import { Container, Paper, type PaperProps, Stack, Text } from "@mantine/core";
 import { DashboardPage } from "~/components/Page/Page";
 import PageHeader from "~/components/Page/PageHeader";
 import Surface from "~/components/Surface/Surface";
+import { withIronSessionSsr } from "iron-session/next";
+import { sessionOptions } from "~/utils/session";
 
 const PAPER_PROPS: PaperProps = {
   p: "md",
@@ -27,3 +29,21 @@ export default function DashboardIndexPage() {
     </DashboardPage>
   );
 }
+export const getServerSideProps = withIronSessionSsr(
+  async function getServerSideProps({ req }) {
+    if (req.session && !req.session.user) {
+      return {
+        redirect: {
+          permanent: false,
+          destination: "/",
+        },
+      };
+    }
+    return {
+      props: {
+        user: req.session.user,
+      },
+    };
+  },
+  sessionOptions
+);
