@@ -1,18 +1,28 @@
 import { ActionIcon, Box, Flex, Group, ScrollArea, Text } from "@mantine/core";
-import { IconAdjustmentsFilled, IconX } from "@tabler/icons-react";
+import {
+  IconAdjustmentsFilled,
+  IconShoppingBag,
+  IconX,
+} from "@tabler/icons-react";
 import { useMediaQuery } from "@mantine/hooks";
 import classes from "./navigation.module.css";
 import Logo from "../Logo";
 import { LinksGroup } from "./Links/Links";
+import { useRouter } from "next/router";
 
 const mockdata = [
   {
     title: "Dashboard",
     links: [
       {
-        label: "Home",
+        label: "Dashboard",
         icon: IconAdjustmentsFilled,
         link: "/dashboard",
+      },
+      {
+        label: "Store",
+        icon: IconShoppingBag,
+        link: "/dashboard/store",
       },
     ],
   },
@@ -24,6 +34,7 @@ type NavigationProps = {
 
 const Navigation = ({ onClose, ...others }: NavigationProps) => {
   const tablet_match = useMediaQuery("(max-width: 768px)");
+  const router = useRouter();
 
   const links = mockdata.map((m) => (
     <Box pl={0} mb="md" key={m.title}>
@@ -38,7 +49,11 @@ const Navigation = ({ onClose, ...others }: NavigationProps) => {
         {m.title}
       </Text>
       {m.links.map((item) => (
-        <LinksGroup {...item} key={item.label} />
+        <LinksGroup
+          {...item}
+          key={item.label}
+          initiallyOpened={router.pathname === item.link}
+        />
       ))}
     </Box>
   ));

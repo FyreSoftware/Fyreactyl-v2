@@ -18,6 +18,7 @@ import {
   IconLayoutSidebarLeftExpand,
 } from "@tabler/icons-react";
 import LanguagePicker from "../LanguagePicker";
+import Logo from "../Logo";
 
 export interface HeaderProps {
   toggle: () => void;
@@ -29,23 +30,7 @@ export function Header({ toggle, close, drawerOpened }: HeaderProps) {
     <Box pb={120}>
       <header className={classes.header}>
         <Group justify="space-between" h="100%">
-          <MantineLogo size={30} />
-
-          <Group h="100%" gap={0} visibleFrom="sm">
-            <a href="#" className={classes.link}>
-              Home
-            </a>
-            <a href="#" className={classes.link}>
-              Features
-            </a>
-            <a href="#" className={classes.link}>
-              Learn
-            </a>
-            <a href="#" className={classes.link}>
-              Academy
-            </a>
-          </Group>
-
+          <Logo size={36} />
           <Group visibleFrom="sm">
             <Button variant="default" component="a" href="/auth/login">
               Log in
@@ -69,21 +54,6 @@ export function Header({ toggle, close, drawerOpened }: HeaderProps) {
         zIndex={1000000}
       >
         <ScrollArea h={`calc(100vh - ${rem(80)})`} mx="-md">
-          <Divider my="sm" />
-
-          <a href="#" className={classes.link}>
-            Home
-          </a>
-          <a href="#" className={classes.link}>
-            Features
-          </a>
-          <a href="#" className={classes.link}>
-            Learn
-          </a>
-          <a href="#" className={classes.link}>
-            Academy
-          </a>
-
           <Divider my="sm" />
 
           <Group justify="center" grow pb="xl" px="md">

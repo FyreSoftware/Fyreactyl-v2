@@ -31,7 +31,6 @@ export function LinksGroup({
   const [opened, setOpened] = useState(initiallyOpened ?? false);
   const [currentPath, setCurrentPath] = useState<string | undefined>();
   const ChevronIcon = IconChevronRight;
-
   const items = (hasLinks ? links : []).map((link) => (
     <Text
       component={Link}
@@ -54,7 +53,15 @@ export function LinksGroup({
     <>
       <UnstyledButton
         onClick={() => {
-          setOpened((o) => !o);
+          if (hasLinks && opened) {
+            setOpened((o) => !o);
+          } else {
+            if (opened) {
+              return;
+            } else {
+              setOpened((o) => !o);
+            }
+          }
           link && router.push(link || "#");
         }}
         className={classes.control}

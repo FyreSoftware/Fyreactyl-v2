@@ -13,7 +13,7 @@ import superjson from "superjson";
 import { ZodError } from "zod";
 
 import { db } from "~/server/db";
-import { type IronSessionObject, sessionOptions } from "~/utils/session";
+import { sessionOptions } from "~/utils/session";
 
 /**
  * 1. CONTEXT
@@ -48,11 +48,7 @@ const createInnerTRPCContext = (_opts: CreateContextOptions) => {
  * @see https://trpc.io/docs/context
  */
 export const createTRPCContext = async (_opts: CreateNextContextOptions) => {
-  const session = await getIronSession<IronSessionObject>(
-    _opts.req,
-    _opts.res,
-    sessionOptions
-  );
+  const session = await getIronSession(_opts.req, _opts.res, sessionOptions);
   return { session, ...createInnerTRPCContext({}) };
 };
 

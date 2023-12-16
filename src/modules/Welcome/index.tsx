@@ -6,10 +6,14 @@ import { api } from "~/utils/api";
 
 export function Welcome() {
   const user = api.auth.user.useQuery(undefined, {
+    refetchOnMount: false,
     refetchInterval: false,
     refetchOnReconnect: false,
+    retry: 0,
     refetchOnWindowFocus: false,
+    refetchIntervalInBackground: false,
   });
+  console.log(user.isError);
   return (
     <>
       <Title className={classes.title} ta="center" mt={100}>
@@ -28,27 +32,16 @@ export function Welcome() {
         for hosting their project.
       </Text>
       <Center mt={20}>
-        {user.isError ? (
-          <Button
-            component="a"
-            href="/auth/introduction"
-            rightSection={<IconExternalLink size={20} />}
-            variant="gradient"
-            gradient={{ from: "cyan", to: "purple" }}
-          >
-            Get started
-          </Button>
-        ) : (
-          <Button
-            component="a"
-            href="/dashboard"
-            rightSection={<IconExternalLink size={20} />}
-            variant="gradient"
-            gradient={{ from: "cyan", to: "purple" }}
-          >
-            Go to dashboard
-          </Button>
-        )}
+        <Button
+          component="a"
+          href={user.isError ? "/auth/introduction" : "/dashboard" ?? "#"}
+          rightSection={<IconExternalLink size={30} />}
+          variant="gradient"
+          loading={user.isLoading}
+          gradient={{ from: "pink", to: "orange" }}
+        >
+          {user.isError ? "Get started" : "Go to dashboard"}
+        </Button>
       </Center>
     </>
   );

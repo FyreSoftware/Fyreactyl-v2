@@ -1,19 +1,27 @@
 .control {
   font-weight: 500;
   display: block;
-  width: 100%;
+  margin-top: 1%;
+  width: 90%;
+  margin-left: 5%;
   padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
   color: var(--mantine-color-white);
   font-size: var(--mantine-font-size-sm);
+  border-radius: 0.25rem;
 
   @mixin hover {
-    background-color: var(--mantine-color-gray-filled-hover);
+    background-color: light-dark(
+      var(--mantine-color-gray-0),
+      var(--mantine-color-dark-6)
+    );
+    color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
   }
 
   &[data-active] {
     &,
     &:hover {
-      background-color: var(--mantine-color-gray-filled-hover);
+      background-color: var(--mantine-color-blue-light);
+      color: var(--mantine-color-blue-light-color);
     }
   }
 }
@@ -30,13 +38,18 @@
     light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
 
   @mixin hover {
-    background-color: var(--mantine-color-gray-filled-hover);
+    background-color: light-dark(
+      var(--mantine-color-gray-0),
+      var(--mantine-color-dark-6)
+    );
+    color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
   }
 
   &[data-active] {
     &,
     &:hover {
-      background-color: var(--mantine-color-gray-filled-hover);
+      background-color: var(--mantine-color-blue-light);
+      color: var(--mantine-color-blue-light-color);
     }
   }
 }

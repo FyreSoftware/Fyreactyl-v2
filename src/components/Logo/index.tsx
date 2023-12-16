@@ -10,9 +10,10 @@ import Image from "next/image";
 
 type LogoProps = {
   href?: string;
+  size?: number;
 } & UnstyledButtonProps;
 
-const Logo = ({ href, ...others }: LogoProps) => {
+const Logo = ({ href, size, ...others }: LogoProps) => {
   return (
     <UnstyledButton
       className={classes.logo}
@@ -23,8 +24,8 @@ const Logo = ({ href, ...others }: LogoProps) => {
       <Group gap="xs">
         <Image
           src="/logo.png"
-          height={24}
-          width={24}
+          height={size ?? 24}
+          width={size ?? 24}
           alt="Fyreactyl logo"
           style={{
             borderRadius: "100%",
