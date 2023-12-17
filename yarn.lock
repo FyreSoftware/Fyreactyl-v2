@@ -1419,6 +1419,11 @@ make-dir@^3.1.0:
   dependencies:
     semver "^6.0.0"
 
+mantine-datatable@^7.3.0:
+  version "7.3.0"
+  resolved "https://registry.yarnpkg.com/mantine-datatable/-/mantine-datatable-7.3.0.tgz#a521e30c7ea8e41edb1e79f9957906a4445b734c"
+  integrity sha512-JcLYuQdG7H0yQm/aSTaGjCbMch64lgfqJLNcygXiM+L2gLJtA9E99jE5aFAr3dIVp7luSddHJgq7aYC4ragzIQ==
+
 merge2@^1.3.0, merge2@^1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/merge2/-/merge2-1.4.1.tgz#4368892f885e907455a6fd7dc55c0c9d404990ae"

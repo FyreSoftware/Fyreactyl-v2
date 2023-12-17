@@ -10,6 +10,7 @@ import { Notifications } from "@mantine/notifications";
 import { defaultTheme } from "~/utils/theme";
 import { Open_Sans } from "next/font/google";
 import "../styles/globals.css";
+import "mantine-datatable/styles.layer.css";
 
 const openSans = Open_Sans({
   subsets: ["latin"],

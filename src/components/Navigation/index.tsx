@@ -9,6 +9,7 @@ import classes from "./navigation.module.css";
 import Logo from "../Logo";
 import { LinksGroup } from "./Links/Links";
 import { useRouter } from "next/router";
+import { UserButton } from "../UserButton/UserButton";
 
 const mockdata = [
   {
@@ -79,6 +80,10 @@ const Navigation = ({ onClose, ...others }: NavigationProps) => {
       <ScrollArea className={classes.links}>
         <div className={classes.linksInner}>{links}</div>
       </ScrollArea>
+
+      <div className={classes.footer}>
+        <UserButton user={{ username: "Tovade" }} />
+      </div>
     </nav>
   );
 };
