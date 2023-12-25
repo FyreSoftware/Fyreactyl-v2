@@ -11,6 +11,7 @@ import { defaultTheme } from "~/utils/theme";
 import { Open_Sans } from "next/font/google";
 import "../styles/globals.css";
 import "mantine-datatable/styles.layer.css";
+import { ModalsProvider } from "@mantine/modals";
 
 const openSans = Open_Sans({
   subsets: ["latin"],
@@ -20,8 +21,10 @@ const MyApp: AppType = ({ Component, pageProps }) => {
   return (
     <div className={openSans.className}>
       <MantineProvider theme={defaultTheme} defaultColorScheme="auto">
-        <Notifications />
-        <Component {...pageProps} />
+        <ModalsProvider>
+          <Notifications />
+          <Component {...pageProps} />
+        </ModalsProvider>
       </MantineProvider>
     </div>
   );

@@ -88,6 +88,7 @@ export function Introduction() {
           >
             <Stepper.Step label="First step" description="Enter your email">
               <TextInput
+                mt={"md"}
                 withAsterisk
                 label="Email"
                 placeholder="your@email.com"

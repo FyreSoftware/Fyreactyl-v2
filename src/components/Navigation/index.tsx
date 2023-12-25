@@ -1,6 +1,8 @@
 import { ActionIcon, Box, Flex, Group, ScrollArea, Text } from "@mantine/core";
 import {
   IconAdjustmentsFilled,
+  IconCoin,
+  IconDiscount,
   IconShoppingBag,
   IconX,
 } from "@tabler/icons-react";
@@ -10,6 +12,7 @@ import Logo from "../Logo";
 import { LinksGroup } from "./Links/Links";
 import { useRouter } from "next/router";
 import { UserButton } from "../UserButton/UserButton";
+import { User } from "@prisma/client";
 
 const mockdata = [
   {
@@ -25,19 +28,63 @@ const mockdata = [
         icon: IconShoppingBag,
         link: "/dashboard/store",
       },
+      {
+        label: "Earn",
+        icon: IconCoin,
+        links: [
+          {
+            label: "Redeem voucher",
+            link: "/dashboard/earn/redeem",
+          },
+        ],
+      },
+    ],
+  },
+];
+const adminData = [
+  {
+    title: "Admin",
+    links: [
+      {
+        label: "Vouchers",
+        icon: IconDiscount,
+        link: "/dashboard/admin/vouchers",
+      },
     ],
   },
 ];
 
 type NavigationProps = {
   onClose: () => void;
+  user?: User;
 };
 
-const Navigation = ({ onClose, ...others }: NavigationProps) => {
+const Navigation = ({ onClose, user, ...others }: NavigationProps) => {
   const tablet_match = useMediaQuery("(max-width: 768px)");
   const router = useRouter();
 
   const links = mockdata.map((m) => (
+    <Box pl={0} mb="md" key={m.title}>
+      <Text
+        tt="uppercase"
+        size="xs"
+        pl="md"
+        fw={500}
+        mb="sm"
+        className={classes.linkHeader}
+      >
+        {m.title}
+      </Text>
+      {m.links.map((item) => (
+        <LinksGroup
+          {...item}
+          key={item.label}
+          initiallyOpened={router.pathname === item.link}
+        />
+      ))}
+    </Box>
+  ));
+  const adminLinks = adminData.map((m) => (
     <Box pl={0} mb="md" key={m.title}>
       <Text
         tt="uppercase"
@@ -78,12 +125,20 @@ const Navigation = ({ onClose, ...others }: NavigationProps) => {
       </div>
 
       <ScrollArea className={classes.links}>
-        <div className={classes.linksInner}>{links}</div>
+        {user && user.role === "Admin" ? (
+          <div className={classes.linksInner}>
+            {links}
+            {adminLinks}
+          </div>
+        ) : (
+          <div className={classes.linksInner}>{links}</div>
+        )}
       </ScrollArea>
-
-      <div className={classes.footer}>
-        <UserButton user={{ username: "Tovade" }} />
-      </div>
+      {user && (
+        <div className={classes.footer}>
+          <UserButton user={user} />
+        </div>
+      )}
     </nav>
   );
 };

@@ -6,6 +6,8 @@ import {
   Text,
   Button,
   Group,
+  TextInput,
+  LoadingOverlay,
 } from "@mantine/core";
 import { DashboardPage } from "~/components/Page/Page";
 import PageHeader from "~/components/Page/PageHeader";
@@ -17,6 +19,9 @@ import { IconChevronRight } from "@tabler/icons-react";
 import ProductsTable from "~/components/ProductsTable/ProductsTable";
 import { api } from "~/utils/api";
 import { User } from "@prisma/client";
+import { z } from "zod";
+import { notifications } from "@mantine/notifications";
+import { useForm, zodResolver } from "@mantine/form";
 
 const PAPER_PROPS: PaperProps = {
   p: "md",
@@ -26,15 +31,45 @@ const PAPER_PROPS: PaperProps = {
 type Props = {
   user: User;
 };
-export default function DashboardIndexPage({ user }: Props) {
+
+const schema = z.object({
+  code: z.string().max(10, "Code cannot be longer than 10 characters."),
+});
+export default function RedeemVoucherPage({ user }: Props) {
+  const redeemVoucherMutation = api.vouchers.redeem.useMutation({
+    onSuccess(data) {
+      notifications.show({
+        color: "Green",
+        title: "Redeemed!",
+        message: "You have redeemed the voucher successfully!",
+      });
+      return;
+    },
+    onError(error) {
+      return notifications.show({
+        color: "red",
+        title: "Error!",
+        message: error.message,
+      });
+    },
+  });
+  const form = useForm({
+    initialValues: {
+      code: "",
+    },
+    validate: zodResolver(schema),
+  });
+  const handleSubmit = (values: { code: string }) => {
+    redeemVoucherMutation.mutate(values);
+  };
   return (
     <DashboardPage
-      seo={{ title: "Dashboard", description: "View your dashboard!" }}
+      seo={{ title: "Redeem", description: "Redeem a voucher code." }}
       user={user}
     >
       <Container fluid>
         <Stack gap="lg">
-          <PageHeader title="Dashboard" withActions />
+          <PageHeader title="Redeem" withActions />
           <StatsGrid
             data={[
               {
@@ -43,7 +78,7 @@ export default function DashboardIndexPage({ user }: Props) {
               },
               {
                 title: "Active products",
-                value: "2",
+                value: "0",
               },
             ]}
             loading={false}
@@ -53,42 +88,24 @@ export default function DashboardIndexPage({ user }: Props) {
           <Surface component={Paper} {...PAPER_PROPS}>
             <Group justify="space-between" mb="md">
               <Text size="lg" fw={600}>
-                Products
+                Redeem voucher
               </Text>
-              <Button
-                variant="subtle"
-                rightSection={<IconChevronRight size={18} />}
-              >
-                View all
-              </Button>
             </Group>
-            <ProductsTable
-              data={[
-                {
-                  id: "2cfb8640-4c4e-431d-a02a-24f103027ecb",
-                  name: "Discord.py server",
-                  start_date: "2/2/2023",
-                  end_date: "2/2/2024",
-                  state: "Active",
-                },
-                {
-                  id: "a5fc92d3-73da-4be3-b94e-ea9b81c6a2fb",
-                  name: "Discord.js server",
-                  start_date: "12/20/2022",
-                  end_date: "12/20/2023",
-                  state: "Expiring",
-                },
-                {
-                  id: "2d745034-d666-4626-a1c6-9288954c0433",
-                  name: "Java server",
-                  start_date: "7/16/2022",
-                  end_date: "7/16/2023",
-                  state: "Expired",
-                },
-              ]}
-              loading={false}
-              error={undefined}
-            />
+            <form onSubmit={form.onSubmit(handleSubmit)}>
+              <LoadingOverlay visible={redeemVoucherMutation.isLoading} />
+              <TextInput
+                withAsterisk
+                mt={"md"}
+                required
+                label="Code"
+                description="The code for the voucher."
+                placeholder="Example: LAUNCH2023"
+                {...form.getInputProps("code")}
+              />
+              <Button mt={"md"} color="blue" type="submit">
+                Redeem
+              </Button>
+            </form>
           </Surface>
         </Stack>
       </Container>

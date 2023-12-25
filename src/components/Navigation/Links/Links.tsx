@@ -13,7 +13,7 @@ interface LinksGroupProps {
   initiallyOpened?: boolean;
   link?: string;
   links?: {
-    label: string;
+    label?: string;
     link: string;
   }[];
 }
@@ -33,11 +33,12 @@ export function LinksGroup({
   const ChevronIcon = IconChevronRight;
   const items = (hasLinks ? links : []).map((link) => (
     <Text
+      mt={"sm"}
       component={Link}
       className={classes.link}
       href={link.link}
       key={link.label}
-      data-active={link.label.toLowerCase() === currentPath || undefined}
+      data-active={pathname?.includes(link.link) || undefined}
     >
       {link.label}
     </Text>
@@ -45,7 +46,12 @@ export function LinksGroup({
 
   useEffect(() => {
     const paths = pathname.split("/");
-    setOpened(paths[1]!.toLowerCase() === label.toLowerCase());
+
+    setOpened(
+      pathname === link || links?.find((li) => li.link === pathname)
+        ? true
+        : false
+    );
     setCurrentPath(_.last(paths)?.toLowerCase() ?? undefined);
   }, [pathname, label]);
 

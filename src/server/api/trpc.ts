@@ -6,9 +6,10 @@
  * TL;DR - This is where all the tRPC server stuff is created and plugged in. The pieces you will
  * need to use are documented accordingly near the end.
  */
+import { User } from "@prisma/client";
 import { TRPCError, initTRPC } from "@trpc/server";
 import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
-import { getIronSession } from "iron-session";
+import { IronSessionData, getIronSession } from "iron-session";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
@@ -107,7 +108,11 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
     ctx: {
       db: ctx.db,
       // infers the `session` as non-nullable
-      session: { ...ctx.session, user: ctx.session.user },
+      session: ctx.session as {
+        destroy: () => void;
+        save: () => void;
+        user: User;
+      },
     },
   });
 });

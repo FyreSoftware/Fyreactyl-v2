@@ -31,6 +31,8 @@ model User {
     connections Connection?
     role Roles @default(User)
     redeemedVouchers String[] @default([])
+    coins Int @default(0)
+    products UserProducts?
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -40,6 +42,7 @@ model Settings {
     id String @id @default(auto()) @map("_id") @db.ObjectId
     name String @default("Fyreactyl")
     availableEggs String[] @default([])
+    mode PanelModes @default(Production)
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -93,6 +96,10 @@ enum ActivityTypes {
     Deletion
     Generic
 }
+enum PanelModes {
+    Production
+    Setup
+}
 
 enum Roles {
     Admin
@@ -103,6 +110,15 @@ enum Roles {
 
 type UserSettings {
     creation Boolean @default(true)
+}
+
+type UserProducts {
+    name String
+    description String
+    price Int
+    type ProductTypes
+    start_date DateTime
+    end_date DateTime
 }
 
 type Connection {

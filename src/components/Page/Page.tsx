@@ -42,7 +42,11 @@ export function Page({ children, seo }: PageProps) {
     </>
   );
 }
-export function DashboardPage({ children, seo }: PageProps & { user?: User }) {
+export function DashboardPage({
+  children,
+  seo,
+  user,
+}: PageProps & { user?: User }) {
   const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
   const [opened, setOpened] = React.useState(false);
   const theme = useMantineTheme();
@@ -78,7 +82,7 @@ export function DashboardPage({ children, seo }: PageProps & { user?: User }) {
           </Container>
         </AppShell.Header>
         <AppShell.Navbar>
-          <Navigation onClose={() => setOpened(false)} />
+          <Navigation onClose={() => setOpened(false)} user={user} />
         </AppShell.Navbar>
         <AppShell.Main>
           <Box py="lg" px="md" className={classes.main}>
