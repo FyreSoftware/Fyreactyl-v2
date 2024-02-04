@@ -15,10 +15,8 @@ import Surface from "~/components/Surface/Surface";
 import { withIronSessionSsr } from "iron-session/next";
 import { sessionOptions } from "~/utils/session";
 import StatsGrid from "~/components/StatsGrid/StatsGrid";
-import { IconChevronRight } from "@tabler/icons-react";
-import ProductsTable from "~/components/ProductsTable/ProductsTable";
 import { api } from "~/utils/api";
-import { User } from "@prisma/client";
+import { type User } from "@prisma/client";
 import { z } from "zod";
 import { notifications } from "@mantine/notifications";
 import { useForm, zodResolver } from "@mantine/form";
@@ -37,7 +35,7 @@ const schema = z.object({
 });
 export default function RedeemVoucherPage({ user }: Props) {
   const redeemVoucherMutation = api.vouchers.redeem.useMutation({
-    onSuccess(data) {
+    onSuccess() {
       notifications.show({
         color: "Green",
         title: "Redeemed!",

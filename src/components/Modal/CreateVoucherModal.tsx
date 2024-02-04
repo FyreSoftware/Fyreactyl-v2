@@ -22,7 +22,7 @@ const schema = z.object({
 });
 export function CreateVoucherModal(props: ModalProps) {
   const voucherCreationMutation = api.vouchers.create.useMutation({
-    onSuccess(data) {
+    onSuccess() {
       notifications.show({
         color: "Green",
         title: "Registered!",

@@ -4,7 +4,6 @@ import {
   type PaperProps,
   Stack,
   Text,
-  Button,
   Group,
   ActionIcon,
 } from "@mantine/core";
@@ -14,8 +13,8 @@ import { withIronSessionSsr } from "iron-session/next";
 import { sessionOptions } from "~/utils/session";
 import { IconPlus } from "@tabler/icons-react";
 import { api } from "~/utils/api";
-import { User, Voucher } from "@prisma/client";
-import VoucherTable from "~/components/VouchersTable/VouchersTable";
+import { type User } from "@prisma/client";
+import VoucherTable from "~/components/AdminTables/VouchersTable";
 import { useDisclosure } from "@mantine/hooks";
 import { CreateVoucherModal } from "~/components/Modal/CreateVoucherModal";
 
@@ -43,14 +42,14 @@ export default function DashboardIndexPage({ user }: Props) {
           <Paper {...PAPER_PROPS}>
             <Group justify="space-between" mb="md">
               <Text fz="lg" fw={600}>
-                Orders
+                Vouchers
               </Text>
               <ActionIcon onClick={open}>
                 <IconPlus size={18} />
               </ActionIcon>
             </Group>
             <VoucherTable
-              data={(vouchersList.data?.data as Voucher[]) ?? []}
+              data={vouchersList.data?.data ?? []}
               error={vouchersList.isError}
               loading={vouchersList.isLoading}
             />

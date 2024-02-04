@@ -15,8 +15,7 @@ import { sessionOptions } from "~/utils/session";
 import StatsGrid from "~/components/StatsGrid/StatsGrid";
 import { IconChevronRight } from "@tabler/icons-react";
 import ProductsTable from "~/components/ProductsTable/ProductsTable";
-import { api } from "~/utils/api";
-import { User } from "@prisma/client";
+import { type User } from "@prisma/client";
 
 const PAPER_PROPS: PaperProps = {
   p: "md",

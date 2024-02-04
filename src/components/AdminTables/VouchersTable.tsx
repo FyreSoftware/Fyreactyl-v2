@@ -1,23 +1,15 @@
-import React, { ReactNode, useEffect, useMemo, useState } from "react";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, { type ReactNode, useEffect, useState } from "react";
 import {
   DataTable,
-  DataTableProps,
-  DataTableSortStatus,
+  type DataTableProps,
+  type DataTableSortStatus,
 } from "mantine-datatable";
-import {
-  ActionIcon,
-  Badge,
-  Group,
-  MantineColor,
-  MultiSelect,
-  Text,
-  TextInput,
-  Tooltip,
-} from "@mantine/core";
+import { ActionIcon, Group, Text, Tooltip } from "@mantine/core";
 import sortBy from "lodash/sortBy";
 import { useDebouncedValue } from "@mantine/hooks";
-import { IconSearch, IconTrash } from "@tabler/icons-react";
-import { Voucher } from "@prisma/client";
+import { IconTrash } from "@tabler/icons-react";
+import { type Voucher } from "@prisma/client";
 import ErrorAlert from "../ErrorAlert/ErrorAlert";
 import { modals } from "@mantine/modals";
 import { api } from "~/utils/api";
@@ -33,7 +25,7 @@ type VoucherTableProps = {
 
 const VoucherTable = ({ data, loading, error }: VoucherTableProps) => {
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(PAGE_SIZES[0] as number);
+  const [pageSize, setPageSize] = useState(PAGE_SIZES[0]!);
   const [selectedRecords, setSelectedRecords] = useState<Voucher[]>([]);
   const [records, setRecords] = useState<Voucher[]>(data.slice(0, pageSize));
   const [sortStatus, setSortStatus] = useState<DataTableSortStatus>({
@@ -68,7 +60,9 @@ const VoucherTable = ({ data, loading, error }: VoucherTableProps) => {
       ),
       labels: { confirm: "Delete it!", cancel: "No don't delete it" },
       confirmProps: { color: "red" },
-      onCancel: () => {},
+      onCancel: () => {
+        return;
+      },
       onConfirm: () => deleteVoucherMutation.mutate({ code: code }),
     });
   const columns: DataTableProps<Voucher>["columns"] = [
@@ -113,8 +107,8 @@ const VoucherTable = ({ data, loading, error }: VoucherTableProps) => {
   useEffect(() => {
     const from = (page - 1) * pageSize;
     const to = from + pageSize;
-    const d = sortBy(data, sortStatus.columnAccessor) as Voucher[];
-    const dd = d.slice(from, to) as Voucher[];
+    const d = sortBy(data, sortStatus.columnAccessor);
+    const dd = d.slice(from, to);
     let filtered = sortStatus.direction === "desc" ? dd.reverse() : dd;
 
     if (debouncedQuery || selectedStatuses.length) {
@@ -136,17 +130,18 @@ const VoucherTable = ({ data, loading, error }: VoucherTableProps) => {
   }, [sortStatus, data, page, pageSize, debouncedQuery, selectedStatuses]);
 
   return error ? (
+    // eslint-disable-next-line @typescript-eslint/no-base-to-string
     <ErrorAlert title="Error loading orders" message={error.toString()} />
   ) : (
     <DataTable
       minHeight={200}
       verticalSpacing="sm"
       striped={true}
-      // @ts-ignore
+      // @ts-expect-error this is unfixable
       columns={columns}
       records={records}
       selectedRecords={selectedRecords}
-      // @ts-ignore
+      // @ts-expect-error this is unfixable
       onSelectedRecordsChange={setSelectedRecords}
       totalRecords={
         debouncedQuery || selectedStatuses.length > 0

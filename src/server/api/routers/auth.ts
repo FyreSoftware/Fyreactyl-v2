@@ -56,6 +56,7 @@ export const authRouter = createTRPCRouter({
           password: hashedPassword,
           connections: {},
           role: isFirstUser ? "Admin" : "User",
+          products: [],
         },
       });
       ctx.session.user = user;

@@ -3,6 +3,7 @@ import {
   IconAdjustmentsFilled,
   IconCoin,
   IconDiscount,
+  IconPackage,
   IconShoppingBag,
   IconX,
 } from "@tabler/icons-react";
@@ -12,7 +13,7 @@ import Logo from "../Logo";
 import { LinksGroup } from "./Links/Links";
 import { useRouter } from "next/router";
 import { UserButton } from "../UserButton/UserButton";
-import { User } from "@prisma/client";
+import { type User } from "@prisma/client";
 
 const mockdata = [
   {
@@ -50,6 +51,11 @@ const adminData = [
         icon: IconDiscount,
         link: "/dashboard/admin/vouchers",
       },
+      {
+        label: "Products",
+        icon: IconPackage,
+        link: "/dashboard/admin/products",
+      },
     ],
   },
 ];
@@ -59,6 +65,7 @@ type NavigationProps = {
   user?: User;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Navigation = ({ onClose, user, ...others }: NavigationProps) => {
   const tablet_match = useMediaQuery("(max-width: 768px)");
   const router = useRouter();

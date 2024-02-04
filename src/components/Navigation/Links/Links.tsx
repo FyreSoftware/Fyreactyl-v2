@@ -4,7 +4,7 @@ import { IconChevronRight } from "@tabler/icons-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import * as _ from "lodash";
-import classes from "./Links.module.css";
+import classes from "./links.module.css";
 
 interface LinksGroupProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
